@@ -1,4 +1,4 @@
-from servicos.motoboy_services import validacao_motoboy
+from validacoes.motoboy_validacao import validacao_motoboy
 
 class Motoboy:
     def __init__(self,id=None,nome="",idade=0,email=''):
@@ -10,5 +10,3 @@ class Motoboy:
     def __str__(self):
         return f'{self._nome},{self._idade}'
 
-    def Registrar_motoboy(self):
-        if validacao_motoboy()
