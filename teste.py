@@ -1,6 +1,0 @@
-from modelos.moto import Moto
-moto1 = Moto('Cg 160',"preta",0)
-moto1.RegistraManutencao('oleo',40,1000)
-moto1.RegistraAbastecimento(60,10,True,1000)
-print(moto1._manutencoes)
-print(moto1._abastecimento)

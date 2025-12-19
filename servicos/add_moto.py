@@ -1,11 +1,12 @@
 from modelos.moto import Moto
 from validacoes.moto_validacao import validacao_moto
+from BancoDeDados.moto_repositorio import salvar_moto
 
-def registra_moto(modelo='',cor='',quilometragem=0):
-    valido , erro = validacao_moto(modelo,cor,quilometragem)
+def registra_moto(marca='',modelo='',ano=0,quilometragem=0 ,consumo=0,motoboy=None):
+    valido , erro = validacao_moto(marca,modelo,ano,quilometragem,consumo)
     if not valido:
         return erro
     else:
-        moto = Moto(nome=nome,cor=cor,quilometragem=quilometragem)
+        moto = Moto(marca=marca,modelo=modelo,ano=ano,quilometragem=quilometragem,consumo=consumo,motoboy_id=motoboy)
         salvar_moto(moto)
         return moto

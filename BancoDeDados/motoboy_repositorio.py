@@ -1,4 +1,5 @@
 from BancoDeDados.conexao import get_conexao
+
 def salvar_motoboy(motoboy):
     conn = get_conexao()
     curso = conn.cursor()
