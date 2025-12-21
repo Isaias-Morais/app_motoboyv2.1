@@ -5,11 +5,25 @@ def salvar_moto(moto):
     curso = conn.cursor()
     curso.execute(
         '''
-            INSERT INTO moto(marca,modelo,ano,quilometragem,cosumo,motoboy_id)
+            INSERT INTO moto(
+                marca,
+                modelo,
+                ano,
+                quilometragem,
+                cosumo,
+                motoboy_id
+            )
             values (?,?,?,?,?,?)
-        ''',(moto._marca,moto._modelo,moto._ano,moto._quilometragem_total,moto._consumo,moto._motoboy)
-
+        ''',(moto._marca,
+             moto._modelo,
+             moto._ano,
+             moto._quilometragem_total,
+             moto._consumo,
+             moto._motoboy
+             )
     )
+    moto.id = curso.lastrowid
+
     conn.commit()
     conn.close()
 

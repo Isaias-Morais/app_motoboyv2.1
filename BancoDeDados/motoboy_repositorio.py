@@ -5,7 +5,7 @@ def salvar_motoboy(motoboy):
     curso = conn.cursor()
     curso.execute(
         """
-            INSERT INTO motoboy(nome, idade ,email)
+            INSERT INTO motoboy(nome,idade,email)
             VALUES (?,?,?)
         """,(motoboy._nome,motoboy._idade,motoboy._email)
     )
