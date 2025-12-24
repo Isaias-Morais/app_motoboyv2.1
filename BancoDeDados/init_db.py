@@ -3,6 +3,7 @@ def criar_tabelas():
     criar_tabela_motoboy()
     criar_tabela_motos()
     criar_tabela_abatecimento()
+    criar_tabela_manutencao()
 
 def criar_tabela_motoboy():
     conn = get_conexao()
@@ -16,7 +17,7 @@ def criar_tabela_motoboy():
             email TEXT NOT NULL
             )
         '''
-    )
+        )
     conn.commit()
     conn.close()
 
@@ -37,7 +38,7 @@ def criar_tabela_motos():
             FOREIGN KEY (motoboy_id) REFERENCES motoboy(id)
             )
         """
-    )
+        )
     conn.commit()
     conn.close()
 
@@ -56,10 +57,31 @@ def criar_tabela_abatecimento():
             litros REAL NOT NULL,
             valor_litro REAL NOT NULL,
             tanque_completo BOOLEAN NOT NULL,
+            quilometragem INTEGER NOT NULL,
             FOREIGN KEY (moto_id) references moto(id)
         )
         """
 
-    )
+        )
+    conn.commit()
+    conn.close()
+
+def criar_tabela_manutencao():
+    conn = get_conexao()
+    curso = conn.cursor()
+    curso.execute(
+        '''
+            CREATE TABLE IF NOT EXISTS manutencao(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            moto_id INTEGER NOT NULL,
+            data_manutencao DATA,
+            tipo TEXT NOT NULL,
+            descricao TEXT,
+            valor REAL NOT NULL,
+            quilometragem INTEGER NOT NULL,
+            FOREIGN KEY (moto_id) references moto(id)
+            )
+        '''
+        )
     conn.commit()
     conn.close()

@@ -2,7 +2,7 @@ from modelos.abastecimento import Abastecimento
 from validacoes.abasteciento_validacao import validacao_abastecimento
 from BancoDeDados.abastecimento_repositorio import salvar_abastecimeto
 from validacoes.valida_data import valida_data
-from datetime import datetime, date
+from datetime import date
 
 
 def registra_abastecimento(

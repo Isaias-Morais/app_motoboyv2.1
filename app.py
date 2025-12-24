@@ -1,11 +1,12 @@
 
-from BancoDeDados.abastecimento_repositorio import *
-from servicos.add_abastecimento import registra_abastecimento
-from BancoDeDados.moto_repositorio import listar_moto
+from BancoDeDados.manutecao_repositorio import *
+from servicos.add_manutecao import registra_manutencao
+from BancoDeDados.init_db import criar_tabelas
 
 import sqlite3
-registra_abastecimento(1,2,2025,'shell',10,60,True,17000,1)
-listar_abastecimento()
+criar_tabelas()
+registra_manutencao(None,None,None,'oleo','2 troca do mes ',40,17000,1)
+listar_manutencao()
 
 
 conn = get_conexao()

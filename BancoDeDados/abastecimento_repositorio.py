@@ -12,9 +12,10 @@ def salvar_abastecimeto(abastecimento):
                 litros,
                 valor_litro,
                 tanque_completo,
-                moto_id
+                moto_id,
+                quilometragem
             )
-            VALUES(?,?,?,?,?,?,?)
+            VALUES(?,?,?,?,?,?,?,?)
         ''',(
             abastecimento._data,
             abastecimento._posto,
@@ -22,7 +23,8 @@ def salvar_abastecimeto(abastecimento):
             abastecimento._litros,
             abastecimento.preco_litro,
             abastecimento._tcompleto,
-            abastecimento._moto
+            abastecimento._moto,
+            abastecimento._qilometragem
         )
             )
     abastecimento.id = curso.lastrowid
