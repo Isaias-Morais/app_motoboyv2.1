@@ -1,14 +1,12 @@
-from datetime import datetime
+from validacoes.valida_data import valida_data
 
 def validacao_abastecimento(
-        data = None,
         posto = "",
         litros = 0,
         valor = 0,
         completo = False,
         quilometragem_abastecimento = None,
         moto_id = None
-
     ):
 
     if not isinstance(posto,(str)) or len(posto) == 0:
@@ -23,14 +21,5 @@ def validacao_abastecimento(
         return False, f'Digite quilometragem valida'
     if not isinstance(moto_id,(int)) or moto_id <= 0:
         return False, f'Digite um id valido'
-    if not data:
-        data_final = datetime.now()
-    else:
-        try:
-            data_final = datetime.strptime(data, "%d-%m-%Y")
-        except ValueError:
-            return False, "Data inválida. Use DD-MM-AAAA"
 
-    return True, data_final
-
-
+    return True , None

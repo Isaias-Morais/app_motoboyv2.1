@@ -24,7 +24,7 @@ def salvar_abastecimeto(abastecimento):
             abastecimento._tcompleto,
             abastecimento._moto
         )
-    )
+            )
     abastecimento.id = curso.lastrowid
     conn.commit()
     conn.close()

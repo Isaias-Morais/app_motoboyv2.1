@@ -4,9 +4,9 @@ from servicos.add_abastecimento import registra_abastecimento
 from BancoDeDados.moto_repositorio import listar_moto
 
 import sqlite3
-registra_abastecimento(None,'shell',10,60,True,17000,1)
+registra_abastecimento(1,2,2025,'shell',10,60,True,17000,1)
 listar_abastecimento()
-listar_moto()
+
 
 conn = get_conexao()
 curso = conn.cursor()
@@ -15,7 +15,8 @@ curso.execute("""
             motoboy.nome,
             moto.modelo,
             abastecimento.litros,
-            abastecimento.valor
+            abastecimento.valor,
+            abastecimento.data_abastecimento
         FROM motoboy
         JOIN moto ON moto.motoboy_id = motoboy.id
         JOIN abastecimento ON abastecimento.moto_id = moto.id
@@ -30,3 +31,5 @@ for linha in resultados:
     print(linha)
 
 conn.close()
+
+
