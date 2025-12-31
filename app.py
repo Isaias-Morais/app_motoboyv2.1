@@ -1,10 +1,13 @@
-from BancoDeDados.abastecimento_repositorio import  *
-from servicos.add_abastecimento import registra_abastecimento
-from BancoDeDados.dia_de_trabalho_repositorio import *
-from servicos.add_dia_de_trabalho import registra_dia_de_trabalho
-from BancoDeDados.init_db import criar_tabelas
-
 import sqlite3
 
-registra_abastecimento(1,12,2025,'ipiranga',10,6,True,2000,1)
-listar_abastecimento()
+conn = sqlite3.connect("Motoboy-Finacias.db")
+cursor = conn.cursor()
+
+cursor.execute("""
+    SELECT name
+    FROM sqlite_master
+    WHERE type='table';
+""")
+resumo = cursor.fetchall()
+for i in resumo:
+    print i

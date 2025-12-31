@@ -46,16 +46,31 @@ def busca_abastecimento(moto_id):
     valor,litros,km = cursor.fetchone()
     conn.close()
     return {
-        'valor':valor,
+        'valor_abastecimento':valor,
         'litros':litros,
-        'km_mes': km
+        'km_abastecimento': km
     }
 
-
-
-
-def busca_manutencoes():
-    pass
+def busca_manutencoes(moto_id):
+    conn = get_conexao()
+    curso = conn.cursor()
+    sql = ''' 
+        SELECT
+            SUM(m.valor) AS valor,
+            MAX(m.quilometragem) - MIN(m.quilometragem) AS km
+        FROM manutencao m 
+        JOIN moto mo ON mo.id = m.moto_id
+        WHERE mo.id = ?
+        AND m.data_manutencao >= date('now','-30 days')
+        AND m.data_manutencao <= date('now')
+    '''
+    curso.execute(sql,(moto_id,))
+    valor,km = curso.fetchone()
+    conn.close()
+    return {
+        'valor_manutencao':valor,
+        'km_manutencao':km
+    }
 
 def busca_moto():
     pass
@@ -65,3 +80,5 @@ i = busca_abastecimento(1)
 print(i)
 a = buscar_dia_de_trabalho(1)
 print(a)
+e = busca_manutencoes(1)
+print(e)
