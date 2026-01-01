@@ -72,9 +72,6 @@ def busca_manutencoes(moto_id):
         'km_manutencao':km
     }
 
-def busca_moto():
-    pass
-
 
 i = busca_abastecimento(1)
 print(i)
