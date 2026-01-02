@@ -1,9 +1,9 @@
 def validacao_manutencao(
-        tipo='',
-        descricao='',
-        valor=0,
-        quilometragem=0,
-        moto_id=0
+        tipo,
+        descricao,
+        valor,
+        quilometragem,
+        moto_id
         ):
     if not isinstance(tipo,(str)) or len(tipo) == 0:
         return False, 'Tipo invalido'

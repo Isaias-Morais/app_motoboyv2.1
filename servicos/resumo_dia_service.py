@@ -1,5 +1,5 @@
-
 from BancoDeDados.conexao import get_conexao
+
 def buscar_dia_de_trabalho(moto_id):
     conn = get_conexao()
     cursor = conn.cursor()

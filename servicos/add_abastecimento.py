@@ -14,7 +14,7 @@ def registra_abastecimento(
         valor=0,
         tanque_completo=False,
         quilometragem_abastecimento=None,
-        moto_id=1
+        moto_id=0
     ):
 
     valido , erro = validacao_abastecimento(posto,litros,valor,tanque_completo,quilometragem_abastecimento,moto_id)

@@ -8,7 +8,7 @@ def registra_moto(
         ano=0,
         quilometragem=0,
         consumo=0,
-        motoboy=None
+        motoboy=0
     ):
 
 

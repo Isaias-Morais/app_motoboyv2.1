@@ -1,12 +1,12 @@
 from validacoes.valida_data import valida_data
 
 def validacao_abastecimento(
-        posto = "",
-        litros = 0,
-        valor = 0,
-        completo = False,
-        quilometragem_abastecimento = None,
-        moto_id = None
+        posto,
+        litros,
+        valor,
+        completo,
+        quilometragem_abastecimento,
+        moto_id
     ):
 
     if not isinstance(posto,(str)) or len(posto) == 0:
