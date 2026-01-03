@@ -7,8 +7,7 @@ def registra_moto(
         modelo='',
         ano=0,
         quilometragem=0,
-        consumo=0,
-        motoboy=0
+        consumo=0
     ):
 
 
@@ -23,6 +22,6 @@ def registra_moto(
             ano=ano,
             quilometragem=quilometragem,
             consumo=consumo,
-            motoboy_id=motoboy)
+            motoboy_id=1)
         salvar_moto(moto)
         return moto
