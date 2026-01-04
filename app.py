@@ -1,4 +1,4 @@
-from servicos.moto_ativa import *
+from BancoDeDados.dia_de_trabalho_repositorio import listar_dia_de_trabalho
+from servicos.add_dia_de_trabalho import *
 
-print(busca_moto_ativa())
-definir_moto_ativa(10)
+listar_dia_de_trabalho()

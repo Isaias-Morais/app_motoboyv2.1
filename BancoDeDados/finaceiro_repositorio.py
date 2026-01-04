@@ -10,7 +10,7 @@ def buscar_dia_de_trabalho(moto_id):
         FROM dias_de_trabalho d
         JOIN moto m ON m.id = d.moto_id
         WHERE m.id = ?
-            and d.data_trabalhada = date('now','localtime')
+            and date(d.data_trabalhada) = date('now')
     '''
     cursor.execute(sql,(moto_id,))
     resultado = cursor.fetchone()
@@ -83,7 +83,7 @@ def busca_abastecimento_consumo_medio(moto_id):
         JOIN moto m ON m.id = a.moto_id
         WHERE m.id = ?
             AND a.tanque_completo = 1
-        ORDER BY a.quilometragem DESC
+        ORDER BY a.quilometragem ASC
         LIMIT 10
     '''
 
@@ -111,5 +111,3 @@ def busca_consumo_moto(moto_id):
     conn.close()
 
     return consumo
-
-print(busca_consumo_moto(1))

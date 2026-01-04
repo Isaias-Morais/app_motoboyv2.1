@@ -47,7 +47,10 @@ def calcular_consumo_medio_real(historico):
     for i in historico:
         km_total += i[0]
         litros_total += i[1]
-
+    if km_total <= 0:
+        return False, 'quilometragem invalida'
+    if litros_total <= 0:
+        return False , 'litragem invalida'
     consumo_medio = km_total / litros_total
 
     return consumo_medio
