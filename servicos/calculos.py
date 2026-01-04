@@ -1,5 +1,5 @@
 def calcular_preco_medio_combustivel(valor=0,litros=0 ):
-    if valor <0 or litros < 0:
+    if valor <=0 or litros <= 0:
         return False, 'parametro invalido'
 
     preco_litro = valor/litros

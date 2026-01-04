@@ -7,10 +7,10 @@ def buscar_dia_de_trabalho(moto_id):
         SELECT
             d.ganho_bruto AS ganho,
             d.quilometragem_final - d.quilometragem_inicial AS km
-        FROM dias_de_trabalho d
+        FROM dia_de_trabalho d
         JOIN moto m ON m.id = d.moto_id
         WHERE m.id = ?
-            and date(d.data_trabalhada) = date('now')
+            and d.data_trabalhada = date('now')
     '''
     cursor.execute(sql,(moto_id,))
     resultado = cursor.fetchone()

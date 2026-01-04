@@ -93,7 +93,7 @@ def criar_tabela_dia_de_trabalho():
     curso = get_conexao()
     curso.execute(
         '''
-            CREATE TABLE IF NOT EXISTS dias_de_trabalho(
+            CREATE TABLE IF NOT EXISTS dia_de_trabalho(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             moto_id INTEGER NOT NULL,
             data_trabalhada DATA,
