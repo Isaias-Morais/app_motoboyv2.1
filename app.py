@@ -1,5 +1,15 @@
 from BancoDeDados.conexao import get_conexao
-from BancoDeDados.dia_de_trabalho_repositorio import listar_dia_de_trabalho
-from servicos.add_dia_de_trabalho import *
+from BancoDeDados.init_db import criar_tabelas
+from servicos.add_motoboy import registrar_motoboy
+from validacoes.motoboy_existe import motoboy_existe
 
-registra_dia_de_trabalho(None,None,None,2000,2500,5000,1)
+get_conexao()
+criar_tabelas()
+while True:
+    if not  motoboy_existe():
+        nome  = (input("Nome : "))
+        idade = (input('Idade : '))
+        email = (input('Email : '))
+        print(registrar_motoboy(nome,idade,email))
+        break
+

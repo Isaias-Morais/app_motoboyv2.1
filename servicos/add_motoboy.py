@@ -9,4 +9,4 @@ def registrar_motoboy(nome='',idade=0,email=''):
     else:
         motoboy = Motoboy(nome=nome,idade=idade,email=email)
         salvar_motoboy(motoboy)
-        return motoboy
+        return True,'Registrado com sucesso'

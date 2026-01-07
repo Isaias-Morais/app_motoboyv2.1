@@ -16,7 +16,7 @@ def criar_tabela_motoboy():
             nome TEXT NOT NULL,
             idade INTEGER NOT NULL,
             email TEXT NOT NULL,
-            moto_ativa_id INTEGER ,
+            moto_ativa_id INTEGER 
             )
         '''
         )
