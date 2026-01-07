@@ -1,4 +1,4 @@
-from servicos.moto_ativa import *
+from BancoDeDados.moto_repositorio import *
 from BancoDeDados.finaceiro_repositorio import *
 from servicos.calculos import *
 

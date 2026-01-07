@@ -54,3 +54,22 @@ def excluir_dias_trabalhados(moto_id):
 
     conn.commit()
     conn.close()
+
+
+def historico_dias(moto_id):
+    conn = get_conexao()
+    cursor = conn.cursor()
+    sql = '''
+    SELECT 
+        d.data_trabalhada,
+        d.quilometragem_final - d.quilometragem_inicial,
+        d.ganho_bruto
+    FROM dia_de_trabalho d
+        WHERE d.moto_id = ?
+    ORDER BY d.data_trabalhada ASC
+    '''
+    cursor.execute(sql,(moto_id,))
+    dados = cursor.fetchall()
+    conn.close()
+
+    return dados

@@ -59,3 +59,40 @@ def excluir_abastecimentos(moto_id):
     conn.close()
 
 
+def historico_abastecimentos(moto_id):
+    conn = get_conexao()
+    cursor = conn.cursor()
+    sql = '''
+          SELECT a.data_abastecimento,
+                 a.posto,
+                 a.litros,
+                 a.valor,
+                 a.tanque_completo,
+                 a.quilometragem
+          FROM abastecimento a
+          WHERE a.moto_id = ?
+          ORDER BY a.data_abastecimento ASC
+          '''
+    cursor.execute(sql, (moto_id,))
+    dados = cursor.fetchall()
+    conn.close()
+
+    return dados
+
+
+def atualizar_consumo(moto_id,consumo):
+    conn = get_conexao()
+    cursor = conn.cursor()
+
+    sql = '''
+          UPDATE moto
+          SET cosumo = ?
+          WHERE id = ? 
+          '''
+
+    cursor.execute(sql, (consumo, moto_id))
+    conn.commit()
+    conn.close()
+
+
+

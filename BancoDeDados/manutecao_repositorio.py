@@ -56,4 +56,23 @@ def excluir_manutencao(moto_id):
     conn.commit()
     conn.close()
 
-excluir_manutencao(1)
+
+def historico_manutencoes(moto_id):
+    conn = get_conexao()
+    cursor = conn.cursor()
+    sql = '''
+    SELECT
+        m.data_manutencao,
+        m.tipo,
+        m.descricao,
+        m.valor,
+        m.quilometragem
+    FROM manutencao m
+        WHERE m.moto_id = ?
+    ORDER BY m.data_manutencao ASC
+          '''
+    cursor.execute(sql,(moto_id,))
+    dados = cursor.fetchall()
+    conn.close()
+
+    return dados
