@@ -1,3 +1,5 @@
+import sys
+
 from BancoDeDados.abastecimento_repositorio import listar_abastecimento
 from BancoDeDados.dia_de_trabalho_repositorio import listar_dia_de_trabalho
 from BancoDeDados.init_db import *
@@ -28,8 +30,9 @@ while True:
         nome = (input("Nome : "))
         idade = leiaint('Idade : ')
         email = (input('Email : '))
-        print(registrar_motoboy(nome, idade, email))
-        if registrar_motoboy() == True:
+        resultado = registrar_motoboy(nome, idade, email)
+        print(resultado)
+        if resultado == True:
             break
 
 
@@ -156,7 +159,7 @@ while True:
                         listar_manutencao()
 
             case 5:
-                break
+                sys.exit()
 
             case _:
                 print('digite um opcao valida ')

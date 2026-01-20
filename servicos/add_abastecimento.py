@@ -59,4 +59,3 @@ def registra_abastecimento(
     return True
 
 
-print(busca_abastecimento_consumo_medio(2))
