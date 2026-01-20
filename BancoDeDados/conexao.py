@@ -1,8 +1,28 @@
-import sqlite3
-import os
+import psycopg
 
-BASE_DIR = os.path.dirname(os.path.abspath((__file__)))
-DB_PATH = os.path.join(BASE_DIR,'Motoboy-Finacias.db')
+CONN_FING = "host=localhost user=postgres password=postgre dbname=motoboy_finacias"
+
+def cria_banco():
+    conn = psycopg.connect(
+        host='localhost',
+        user="postgres",
+        password='postgre',
+        dbname="postgres"
+    )
+    conn.autocommit = True
+
+    with conn.cursor() as cur:
+        sql = "CREATE DATABASE motoboy_finacias"
+        cur.execute(sql)
+    conn.close()
 
 def get_conexao():
-    return sqlite3.connect(DB_PATH)
+    try:
+        conn = psycopg.connect(CONN_FING)
+        return conn
+    except Exception as e:
+        print('Erro : ' ,e)
+        return None
+
+
+get_conexao()

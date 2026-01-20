@@ -14,7 +14,8 @@ def salvar_moto(moto):
                 cosumo,
                 motoboy_id
             )
-            values (?,?,?,?,?,?)
+            VALUES (%s,%s,%s,%s,%s,%s)
+            RETURNING id
         ''',(moto._marca,
              moto._modelo,
              moto._ano,
@@ -23,7 +24,7 @@ def salvar_moto(moto):
              moto._motoboy
              )
     )
-    moto.id = curso.lastrowid
+    moto.id = curso.fetchone()[0]
 
     conn.commit()
     conn.close()
@@ -50,7 +51,7 @@ def excluir_moto(moto_id):
     sql = '''
           DELETE 
           FROM moto
-          WHERE id = ? 
+          WHERE id = %s 
           '''
 
     curso.execute(sql, (moto_id,))
@@ -82,7 +83,7 @@ def definir_moto_ativa(moto_id):
     cursor = conn.cursor()
     sql = '''
             UPDATE motoboy 
-            SET moto_ativa_id = ?
+            SET moto_ativa_id = %s
             WHERE id = 1
         '''
     cursor.execute(sql,(moto_id,))

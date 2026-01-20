@@ -11,6 +11,6 @@ def atualizar_consumo_svc(moto_id=0,consumo=0):
         return False, 'consumo invalido'
 
     atualizar_consumo(moto_id,consumo)
+    return True," consumo atualizado"
 
 
-print(atualizar_consumo_svc(1,2))

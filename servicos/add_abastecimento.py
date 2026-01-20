@@ -1,6 +1,6 @@
 from BancoDeDados.finaceiro_repositorio import busca_abastecimento_consumo_medio
 from modelos.abastecimento import Abastecimento
-from servicos.atualiza_consumo import atualizar_consumo
+from servicos.atualiza_consumo import atualizar_consumo, atualizar_consumo_svc
 from servicos.calculos import calcular_km_rodados, calcular_consumo_medio_real
 from validacoes.abasteciento_validacao import validacao_abastecimento
 from BancoDeDados.abastecimento_repositorio import salvar_abastecimeto
@@ -43,7 +43,7 @@ def registra_abastecimento(
 
     historico = busca_abastecimento_consumo_medio(moto_id)
 
-    if not historico or len(historico) < 2:
+    if not historico or len(historico) < 3:
         return
 
     km_litros = calcular_km_rodados(historico)
@@ -54,9 +54,9 @@ def registra_abastecimento(
 
     consumo_medio = calcular_consumo_medio_real(km_litros)
 
-    atualizar_consumo(consumo_medio)
+    atualizar_consumo_svc(moto_id,consumo_medio)
 
     return True
 
 
-
+print(busca_abastecimento_consumo_medio(2))

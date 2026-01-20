@@ -12,8 +12,10 @@ def salvar_manutecao(manutencao):
                 valor,
                 moto_id,
                 quilometragem
+              
             )   
-             VALUES(?,?,?,?,?,?)  
+            VALUES(%s,%s,%s,%s,%s,%s)  
+            RETURNING id
         ''',(
             manutencao._data,
             manutencao._tipo,
@@ -23,7 +25,7 @@ def salvar_manutecao(manutencao):
             manutencao._quilometragem
         )
         )
-    manutencao.id = curso.lastrowid
+    manutencao.id = curso.fetchone()[0]
     conn.commit()
     conn.close()
 
@@ -48,7 +50,7 @@ def excluir_manutencao(moto_id):
     sql = '''
           DELETE 
           FROM manutencao
-          WHERE moto_id = ? 
+          WHERE moto_id = %s 
           '''
 
     curso.execute(sql, (moto_id,))
@@ -68,7 +70,7 @@ def historico_manutencoes(moto_id):
         m.valor,
         m.quilometragem
     FROM manutencao m
-        WHERE m.moto_id = ?
+        WHERE m.moto_id = %s
     ORDER BY m.data_manutencao ASC
           '''
     cursor.execute(sql,(moto_id,))

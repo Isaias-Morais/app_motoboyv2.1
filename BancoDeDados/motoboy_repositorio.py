@@ -6,11 +6,13 @@ def salvar_motoboy(motoboy):
     curso.execute(
         """
             INSERT INTO motoboy(nome,idade,email)
-            VALUES (?,?,?)
+            VALUES (%s,%s,%s)
+            RETURNING id
         """,(motoboy._nome,motoboy._idade,motoboy._email)
     )
+    id_gerado = curso.fetchone()[0]
 
-    motoboy.id = curso.lastrowid
+    motoboy.id = id_gerado
 
     conn.commit()
     conn.close()

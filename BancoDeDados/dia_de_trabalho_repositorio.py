@@ -11,7 +11,8 @@ def salvar_dia_de_trabalho(dia_de_trabalho):
                 quilometragem_final,
                 ganho_bruto
             )        
-            VALUES(?,?,?,?,?)
+            VALUES(%s,%s,%s,%s,%s)
+            RETURNING id
         ''',
         (
             dia_de_trabalho._moto_id,
@@ -22,7 +23,7 @@ def salvar_dia_de_trabalho(dia_de_trabalho):
 
         )
     )
-    dia_de_trabalho.id = curso.lastrowid
+    dia_de_trabalho.id = curso.fetchone()[0]
     conn.commit()
     conn.close()
 
@@ -47,7 +48,7 @@ def excluir_dias_trabalhados(moto_id):
     sql = '''
           DELETE 
           FROM dia_de_trabalho
-          WHERE moto_id = ? 
+          WHERE moto_id = %s 
           '''
 
     curso.execute(sql, (moto_id,))
@@ -65,7 +66,7 @@ def historico_dias(moto_id):
         d.quilometragem_final - d.quilometragem_inicial,
         d.ganho_bruto
     FROM dia_de_trabalho d
-        WHERE d.moto_id = ?
+        WHERE d.moto_id = %s
     ORDER BY d.data_trabalhada ASC
     '''
     cursor.execute(sql,(moto_id,))
@@ -73,3 +74,4 @@ def historico_dias(moto_id):
     conn.close()
 
     return dados
+

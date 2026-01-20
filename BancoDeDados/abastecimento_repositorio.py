@@ -15,7 +15,8 @@ def salvar_abastecimeto(abastecimento):
                 moto_id,
                 quilometragem
             )
-            VALUES(?,?,?,?,?,?,?,?)
+            VALUES(%s,%s,%s,%s,%s,%s,%s,%s)
+            RETURNING id
         ''',(
             abastecimento._data,
             abastecimento._posto,
@@ -27,7 +28,7 @@ def salvar_abastecimeto(abastecimento):
             abastecimento._qilometragem
         )
             )
-    abastecimento.id = curso.lastrowid
+    abastecimento.id = curso.fetchone()[0]
     conn.commit()
     conn.close()
 
@@ -50,7 +51,7 @@ def excluir_abastecimentos(moto_id):
 
     sql = '''
     DELETE FROM abastecimento
-    WHERE moto_id = ?
+    WHERE moto_id = %s
     '''
 
     curso.execute(sql,(moto_id,))
@@ -70,7 +71,7 @@ def historico_abastecimentos(moto_id):
                  a.tanque_completo,
                  a.quilometragem
           FROM abastecimento a
-          WHERE a.moto_id = ?
+          WHERE a.moto_id = %s
           ORDER BY a.data_abastecimento ASC
           '''
     cursor.execute(sql, (moto_id,))
@@ -86,8 +87,8 @@ def atualizar_consumo(moto_id,consumo):
 
     sql = '''
           UPDATE moto
-          SET cosumo = ?
-          WHERE id = ? 
+          SET cosumo = %s
+          WHERE id = %s 
           '''
 
     cursor.execute(sql, (consumo, moto_id))

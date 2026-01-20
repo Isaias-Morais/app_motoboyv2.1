@@ -21,11 +21,10 @@ def calcular_custo_manutecao_km(valor=0,km_rodados=0):
     return custo_manutencao
 
 def calcular_custo_combustivel_km(valor=0,km_rodados=0):
-    if valor is None or km_rodados is None:
+    if valor == 0 or valor is None:
         return 0
-
-    if valor <0 or km_rodados < 0:
-        return 0
+    if km_rodados == 0 or km_rodados is None:
+        return 1
 
     custo_combustivel = valor/km_rodados
 
@@ -63,9 +62,9 @@ def calcular_consumo_medio_real(historico):
         km_total += i[0]
         litros_total += i[1]
     if km_total <= 0 or km_total is None:
-        return 0
+        return None
     if litros_total <= 0 or litros_total is None:
-        return 0
+        return None
     consumo_medio = km_total / litros_total
 
     return consumo_medio

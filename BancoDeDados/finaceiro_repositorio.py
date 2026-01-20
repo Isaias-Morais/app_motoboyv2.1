@@ -9,8 +9,8 @@ def buscar_dia_de_trabalho(moto_id):
             d.quilometragem_final - d.quilometragem_inicial AS km
         FROM dia_de_trabalho d
         JOIN moto m ON m.id = d.moto_id
-        WHERE m.id = ?
-            and d.data_trabalhada = date('now')
+        WHERE m.id = %s
+            and d.data_trabalhada = CURRENT_DATE
     '''
     cursor.execute(sql,(moto_id,))
     resultado = cursor.fetchone()
@@ -38,9 +38,9 @@ def busca_abastecimento(moto_id):
             MAX(a.quilometragem) - MIN(a.quilometragem) AS km
         FROM abastecimento a
         JOIN moto m ON m.id = a.moto_id
-        WHERE m.id = ?
-        AND a.data_abastecimento >= date('now','-30 days')
-        AND a.data_abastecimento <= date('now')
+        WHERE m.id = %s
+        AND a.data_abastecimento >= NOW() - INTERVAL '30 days'
+        AND a.data_abastecimento <= NOW()
         '''
     cursor.execute(sql,(moto_id,))
     valor,litros,km = cursor.fetchone()
@@ -60,9 +60,9 @@ def busca_manutencoes(moto_id):
             MAX(m.quilometragem) - MIN(m.quilometragem) AS km
         FROM manutencao m 
         JOIN moto mo ON mo.id = m.moto_id
-        WHERE mo.id = ?
-        AND m.data_manutencao >= date('now','-30 days')
-        AND m.data_manutencao <= date('now')
+        WHERE mo.id = %s
+        AND m.data_manutencao >= NOW() - INTERVAL '30 days'
+        AND m.data_manutencao <= NOW()
     '''
     curso.execute(sql,(moto_id,))
     valor,km = curso.fetchone()
@@ -81,8 +81,8 @@ def busca_abastecimento_consumo_medio(moto_id):
             a.litros AS litros
         FROM abastecimento a
         JOIN moto m ON m.id = a.moto_id
-        WHERE m.id = ?
-            AND a.tanque_completo = 1
+        WHERE m.id = %s
+            AND a.tanque_completo = True
         ORDER BY a.quilometragem ASC
         LIMIT 10
     '''
@@ -103,7 +103,7 @@ def busca_consumo_moto(moto_id):
             mo.cosumo AS consumo
         FROM moto mo
         JOIN moto m ON m.id = m.id
-        WHERE m.id =?
+        WHERE m.id =%s
     '''
 
     cursor.execute(sql,(moto_id,))
