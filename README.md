@@ -1,10 +1,14 @@
----
-
 # 🚀 App Motoboy V2
 
-Aplicação em **Python + SQLite** para ajudar motoboys a controlarem **ganhos reais**, **custos por km**, **manutenção da moto** e **lucro líquido diário/mensal**.
+Aplicação em **Python + PostgreSQL** para ajudar motoboys a controlarem **ganhos reais**, **custos por km**, **manutenção da moto** e **lucro líquido diário/mensal**.
 
-Projeto desenvolvido com foco em **aprendizado prático**, organização de código e uso real no dia a dia.
+Projeto desenvolvido com foco em **aprendizado prático**, **evolução de arquitetura** e uso real no dia a dia.
+
+---
+
+## 🔄 Atualização Importante
+
+> Esta versão do projeto marca a **migração do SQLite para PostgreSQL**, trazendo mais robustez, escalabilidade e proximidade com ambientes profissionais de produção.
 
 ---
 
@@ -20,17 +24,20 @@ Criar um app simples e funcional que permita ao motoboy:
 * Calcular lucro líquido do dia
 * Visualizar histórico de trabalho
 
-
-
 ---
 
 ## 🧱 Tecnologias Utilizadas
 
 * Python 3
-* SQLite
+* **PostgreSQL**
 * SQL
 * Programação Orientada a Objetos (POO)
-* Arquitetura em camadas (models, services, utils)
+* Arquitetura em camadas:
+
+  * `modelos`
+  * `repositorios`
+  * `servicos`
+  * `utilidades`
 
 ---
 
@@ -52,32 +59,20 @@ Criar um app simples e funcional que permita ao motoboy:
 
 ## 🧮 Lógica de Cálculo (Resumo)
 
-* **KM do dia** = quilometragem final - quilometragem inicial
-* **Custo de manutenção** = custo por km × km rodado
-* **Lucro líquido** = ganho bruto - (combustível + manutenção)
-
----
-
-## ▶️ Como Executar
-
-1. Clone o repositório
-2. Crie o banco SQLite usando o `schema.sql`
-3. Execute o arquivo principal:
-
-```
-python app/fluxo_app.py
-```
+* **KM do dia** = quilometragem final − quilometragem inicial
+* **Custo de manutenção** = custo médio por km × km rodado
+* **Lucro líquido** = ganho bruto − (combustível + manutenção)
 
 ---
 
 ## 🛣️ Próximos Passos
 
-* Interface melhor no terminal
-* Relatórios mensais
-* Exportação de dados
-* Migração futura para PostgreSQL
-* API com FastAPI
+* Melhorar interface no terminal
+* Relatórios mensais e comparativos
+* Exportação de dados (CSV / PDF)
+* API REST com FastAPI
 * Interface web ou mobile
+* Autenticação de usuários
 
 ---
 
@@ -85,14 +80,15 @@ python app/fluxo_app.py
 
 Este projeto foi criado para consolidar conhecimentos em:
 
-* SQL na prática
-* Organização de projeto
+* SQL aplicado a cenários reais
+* PostgreSQL na prática
+* Organização e escalabilidade de projeto
 * Separação de responsabilidades
 * Pensamento de produto real
-* Backend aplicado a problemas do mundo real
+* Backend Python aplicado ao dia a dia
 
 ---
 
 ## 👊 Autor
 
-Projeto desenvolvido por isaias morais, estudante de programação e motoboy, com foco em backend Python e aplicações reais.
+Projeto desenvolvido por **Isaias Morais**, estudante de programação e motoboy, com foco em **backend Python**, **bancos de dados relacionais** e aplicações reais.
