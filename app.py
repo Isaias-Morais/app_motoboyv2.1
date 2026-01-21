@@ -1,5 +1,4 @@
 import sys
-
 from BancoDeDados.abastecimento_repositorio import listar_abastecimento
 from BancoDeDados.dia_de_trabalho_repositorio import listar_dia_de_trabalho
 from BancoDeDados.init_db import *

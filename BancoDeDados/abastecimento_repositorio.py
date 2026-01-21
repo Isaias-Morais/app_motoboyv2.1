@@ -1,9 +1,9 @@
 from BancoDeDados.conexao import get_conexao
 
 def salvar_abastecimeto(abastecimento):
-    conn = get_conexao()
-    curso = conn.cursor()
-    curso.execute(
+    with get_conexao() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
         '''
             INSERT INTO abastecimento(
                 data_abastecimento,
@@ -28,72 +28,70 @@ def salvar_abastecimeto(abastecimento):
             abastecimento._qilometragem
         )
             )
-    abastecimento.id = curso.fetchone()[0]
-    conn.commit()
-    conn.close()
+            abastecimento.id = cursor.fetchone()[0]
+
 
 def listar_abastecimento():
-    conn = get_conexao()
-    curso = conn.cursor()
-    curso.execute(
+    with get_conexao() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
         """
             SELECT * FROM abastecimento
         """
     )
-    abastecimentos = curso.fetchall()
+            abastecimentos = cursor.fetchall()
 
-    for abastecimento in abastecimentos:
-        print(abastecimento)
+            for abastecimento in abastecimentos:
+                print(abastecimento)
 
 def excluir_abastecimentos(moto_id):
-    conn = get_conexao()
-    curso = conn.cursor()
+    with get_conexao() as conn:
+        with conn.cursor() as cursor:
+            sql = '''
+            DELETE FROM abastecimento
+            WHERE moto_id = %s
+            '''
 
-    sql = '''
-    DELETE FROM abastecimento
-    WHERE moto_id = %s
-    '''
+            cursor.execute(sql,(moto_id,))
 
-    curso.execute(sql,(moto_id,))
-
-    conn.commit()
-    conn.close()
+            conn.commit()
+            conn.close()
 
 
 def historico_abastecimentos(moto_id):
-    conn = get_conexao()
-    cursor = conn.cursor()
-    sql = '''
-          SELECT a.data_abastecimento,
-                 a.posto,
-                 a.litros,
-                 a.valor,
-                 a.tanque_completo,
-                 a.quilometragem
-          FROM abastecimento a
-          WHERE a.moto_id = %s
-          ORDER BY a.data_abastecimento ASC
-          '''
-    cursor.execute(sql, (moto_id,))
-    dados = cursor.fetchall()
-    conn.close()
+    with get_conexao() as conn:
+        with conn.cursor() as cursor:
+            sql = '''
+                  SELECT a.data_abastecimento,
+                         a.posto,
+                         a.litros,
+                         a.valor,
+                         a.tanque_completo,
+                         a.quilometragem
+                  FROM abastecimento a
+                  WHERE a.moto_id = %s
+                  ORDER BY a.data_abastecimento ASC
+                  '''
+            cursor.execute(sql, (moto_id,))
+            dados = cursor.fetchall()
+            conn.close()
 
-    return dados
+            return dados
 
 
 def atualizar_consumo(moto_id,consumo):
-    conn = get_conexao()
-    cursor = conn.cursor()
+    with get_conexao() as conn:
+        with conn.cursor() as cursor:
 
-    sql = '''
-          UPDATE moto
-          SET cosumo = %s
-          WHERE id = %s 
-          '''
+            sql = '''
+                  UPDATE moto
+                  SET cosumo = %s
+                  WHERE id = %s 
+                  '''
 
-    cursor.execute(sql, (consumo, moto_id))
-    conn.commit()
-    conn.close()
+            cursor.execute(sql, (consumo, moto_id))
+            conn.commit()
+            conn.close()
 
 
 
