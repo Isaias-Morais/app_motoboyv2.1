@@ -54,8 +54,7 @@ def excluir_abastecimentos(moto_id):
 
             cursor.execute(sql,(moto_id,))
 
-            conn.commit()
-            conn.close()
+
 
 
 def historico_abastecimentos(moto_id):
@@ -74,7 +73,7 @@ def historico_abastecimentos(moto_id):
                   '''
             cursor.execute(sql, (moto_id,))
             dados = cursor.fetchall()
-            conn.close()
+
 
             return dados
 
@@ -90,8 +89,7 @@ def atualizar_consumo(moto_id,consumo):
                   '''
 
             cursor.execute(sql, (consumo, moto_id))
-            conn.commit()
-            conn.close()
+
 
 
 
