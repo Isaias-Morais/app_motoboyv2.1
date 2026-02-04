@@ -1,6 +1,6 @@
 from modelos.moto import Moto
 from validacoes.moto_validacao import validacao_moto
-from BancoDeDados.moto_repositorio import salvar_moto
+from repository.moto_repositorio import salvar_moto
 
 def registra_moto(
         marca='',

@@ -1,5 +1,5 @@
-from BancoDeDados.moto_repositorio import *
-from BancoDeDados.finaceiro_repositorio import *
+from repository.moto_repositorio import *
+from repository.finaceiro_repositorio import *
 from servicos.calculos import *
 
 def resumo_dia():

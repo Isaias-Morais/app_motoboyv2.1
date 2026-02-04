@@ -1,4 +1,4 @@
-from BancoDeDados.abastecimento_repositorio import atualizar_consumo
+from repository.abastecimento_repositorio import atualizar_consumo
 from validacoes.moto_exitente import moto_existe
 from validacoes.abasteciento_validacao import validacao_consumo
 

@@ -1,7 +1,7 @@
-from BancoDeDados.moto_repositorio import *
-from BancoDeDados.dia_de_trabalho_repositorio import excluir_dias_trabalhados
-from BancoDeDados.manutecao_repositorio import excluir_manutencao
-from BancoDeDados.abastecimento_repositorio import excluir_abastecimentos
+from repository.moto_repositorio import *
+from repository.dia_de_trabalho_repositorio import excluir_dias_trabalhados
+from repository.manutecao_repositorio import excluir_manutencao
+from repository.abastecimento_repositorio import excluir_abastecimentos
 
 from validacoes.moto_exitente import moto_existe
 
