@@ -1,4 +1,4 @@
-from BancoDeDados.conexao import get_conexao
+from database.setup import get_conexao
 
 def buscar_dia_de_trabalho(moto_id):
     with get_conexao() as conn:

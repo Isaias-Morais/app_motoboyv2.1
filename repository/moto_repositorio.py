@@ -1,4 +1,4 @@
-from BancoDeDados.conexao import get_conexao
+from database.setup import get_conexao
 from validacoes.moto_exitente import moto_existe
 
 def salvar_moto(moto):
@@ -91,4 +91,6 @@ def redefinir_moto_ativa():
                 WHERE id = 1
             '''
             cursor.execute(sql)
+
+listar_moto()
 

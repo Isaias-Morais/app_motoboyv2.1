@@ -1,4 +1,4 @@
-from BancoDeDados.init_db import get_conexao
+from database.init_db import get_conexao
 
 def salvar_manutecao(manutencao):
     with get_conexao() as conn:

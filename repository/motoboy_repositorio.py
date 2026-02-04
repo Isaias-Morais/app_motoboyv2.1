@@ -1,4 +1,4 @@
-from BancoDeDados.conexao import get_conexao
+from database.setup import get_conexao
 
 def salvar_motoboy(motoboy):
     with get_conexao() as conn:

@@ -1,4 +1,4 @@
-from BancoDeDados.conexao import get_conexao
+from database.setup import get_conexao
 def salvar_dia_de_trabalho(dia_de_trabalho):
     with get_conexao() as conn:
         with conn.cursor() as cursor:

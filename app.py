@@ -1,8 +1,8 @@
 import sys
-from BancoDeDados.abastecimento_repositorio import listar_abastecimento
-from BancoDeDados.dia_de_trabalho_repositorio import listar_dia_de_trabalho
-from BancoDeDados.init_db import *
-from BancoDeDados.manutecao_repositorio import listar_manutencao
+from repository.abastecimento_repositorio import listar_abastecimento
+from repository.dia_de_trabalho_repositorio import listar_dia_de_trabalho
+from database.init_db import *
+from repository.manutecao_repositorio import listar_manutencao
 from servicos.add_abastecimento import *
 from servicos.add_manutecao import registra_manutencao
 from servicos.add_moto import *
@@ -12,7 +12,7 @@ from servicos.exluir_moto import excluir_moto_geral
 from servicos.resumo_dia_service import *
 from validacoes.motoboy_existe import *
 from interface.utilidades import *
-from BancoDeDados.conexao import cria_banco
+from database.setup import cria_banco
 
 if not get_conexao():
     cria_banco()

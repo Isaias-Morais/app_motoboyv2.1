@@ -1,6 +1,6 @@
 from modelos.manutencao import Manutencao
 from validacoes.manutencao_validacao import validacao_manutencao
-from BancoDeDados.manutecao_repositorio import salvar_manutecao
+from repository.manutecao_repositorio import salvar_manutecao
 from validacoes.valida_data import valida_data
 from datetime import date
 

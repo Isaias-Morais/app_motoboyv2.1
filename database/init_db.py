@@ -1,4 +1,4 @@
-from BancoDeDados.conexao import get_conexao
+from database.setup import get_conexao
 def criar_tabelas():
     criar_tabela_motoboy()
     criar_tabela_motos()
