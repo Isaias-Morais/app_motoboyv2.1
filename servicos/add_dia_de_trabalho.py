@@ -1,4 +1,4 @@
-from modelos.dia_de_trabalho import Dia_de_trabalho
+from models.dia_de_trabalho import Dia_de_trabalho
 from validacoes.dia_de_trabalho_validacao import validacao_dia_de_trabalho
 from repository.dia_de_trabalho_repositorio import salvar_dia_de_trabalho
 from validacoes.valida_data import valida_data

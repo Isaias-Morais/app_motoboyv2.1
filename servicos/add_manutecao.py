@@ -1,4 +1,4 @@
-from modelos.manutencao import Manutencao
+from models.manutencao import Manutencao
 from validacoes.manutencao_validacao import validacao_manutencao
 from repository.manutecao_repositorio import salvar_manutecao
 from validacoes.valida_data import valida_data

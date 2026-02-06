@@ -1,4 +1,4 @@
-from modelos.motoboy import Motoboy
+from models.motoboy import Motoboy
 from validacoes.motoboy_validacao import validacao_motoboy
 from repository.motoboy_repositorio import salvar_motoboy
 
