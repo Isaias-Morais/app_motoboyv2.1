@@ -1,6 +1,5 @@
 from sqlalchemy import ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column, foreign
-
+from sqlalchemy.orm import Mapped, mapped_column
 from database.base import Base
 
 class Motoboy(Base):
