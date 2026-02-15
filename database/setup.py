@@ -1,12 +1,12 @@
 import psycopg
 
-CONN_FING = "host=localhost user=postgres password=postgre dbname=motoboy_finacias"
+CONN_FING = "host=localhost user=postgres password=postgres dbname=motoboy_finacias"
 
 def cria_banco():
     conn = psycopg.connect(
         host='localhost',
         user="postgres",
-        password='postgre',
+        password='postgres',
         dbname="postgres"
     )
     conn.autocommit = True
@@ -24,3 +24,4 @@ def get_conexao():
         print('Erro : ' ,e)
         return None
 
+cria_banco()

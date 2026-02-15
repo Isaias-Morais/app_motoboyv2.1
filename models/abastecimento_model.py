@@ -1,8 +1,9 @@
 from sqlalchemy import Date, Boolean, Numeric, ForeignKey
 from database.base import Base
 from datetime import date
-from sqlalchemy.orm import Mapped , mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from decimal import Decimal
+from models.moto_model import Moto
 
 
 class Abastecimento(Base):
@@ -16,7 +17,7 @@ class Abastecimento(Base):
     tanque_completo: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
     quilometragem_abastecimento: Mapped[int] = mapped_column(nullable=False)
     moto_id: Mapped[int] = mapped_column(ForeignKey('motos.id'), nullable=False)
-
+    moto : Mapped['Moto'] = relationship(back_populates='abastecimentos')
 
     def __repr__(self):
         return f'data-{self.data},valor-{self.valor},litros-{self.liros}taque_cheio{self.tanque_completo},quilometro_do_abastecimento{self.tcompleto}'
