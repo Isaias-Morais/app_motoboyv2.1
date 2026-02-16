@@ -1,9 +1,8 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from database.base import Base
-from models.moto import Moto
 
 class Motoboy(Base):
-    __tablename__ = 'motoboy'
+    __tablename__ = 'motoboys'
 
     id : Mapped[int] = mapped_column(primary_key=True)
     nome : Mapped[str] = mapped_column(nullable=False)

@@ -84,7 +84,7 @@ def atualizar_consumo(moto_id,consumo):
 
             sql = '''
                   UPDATE moto
-                  SET cosumo = %s
+                  SET consumo = %s
                   WHERE id = %s 
                   '''
 

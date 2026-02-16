@@ -11,7 +11,7 @@ def salvar_moto(moto):
                         modelo,
                         ano,
                         quilometragem,
-                        cosumo,
+                        consumo,
                         motoboy_id
                     )
                     VALUES (%s,%s,%s,%s,%s,%s)
@@ -92,5 +92,4 @@ def redefinir_moto_ativa():
             '''
             cursor.execute(sql)
 
-listar_moto()
 

@@ -100,7 +100,7 @@ def busca_consumo_moto(moto_id):
         with conn.cursor() as cursor:
             sql = '''
                 SELECT
-                    mo.cosumo AS consumo
+                    mo.consumo AS consumo
                 FROM moto mo
                 JOIN moto m ON m.id = m.id
                 WHERE m.id =%s

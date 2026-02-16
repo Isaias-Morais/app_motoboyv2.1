@@ -24,4 +24,4 @@ def get_conexao():
         print('Erro : ' ,e)
         return None
 
-cria_banco()
+get_conexao()

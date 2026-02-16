@@ -33,7 +33,7 @@ def criar_tabela_motos():
                     modelo TEXT NOT NULL,
                     ano INTEGER NOT NULL,
                     quilometragem INTEGER NOT NULL,
-                    cosumo REAL NOT NULL,
+                    consumo REAL NOT NULL,
                     motoboy_id INTEGER NOT NULL,
                     FOREIGN KEY (motoboy_id) REFERENCES motoboy(id)
                     );
