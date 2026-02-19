@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship, Session
-from sqlalchemy import REAL, ForeignKey
+from sqlalchemy import  ForeignKey
 from database.base import Base
 
 
@@ -19,6 +19,7 @@ class Moto(Base):
     motoboy: Mapped['Motoboy'] = relationship(back_populates='motos')
     abastecimentos : Mapped[list['Abastecimento']] = relationship(back_populates='moto')
     manutencoes : Mapped[list['Manutencao']] = relationship(back_populates='moto')
+    dias_trabalhados : Mapped[list['Dia_de_trabalho']] = relationship(back_populates='moto')
 
     def __repr__(self):
         return f'{self.id},{self.marca},{self.modelo},{self.ano},{self.quilometragem},{self.consumo},{self.motoboy_id}'
