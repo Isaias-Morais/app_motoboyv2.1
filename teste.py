@@ -6,6 +6,7 @@ from models.moto_model import Moto
 from models.abastecimento_model import Abastecimento
 from models.manutencao_model import Manutencao
 from models.dia_de_trabalho_model import Dia_de_trabalho
+from repository.motoboy_repository import listar_motoboys
 
 
 
@@ -22,8 +23,7 @@ motoboy = Motoboy(
 
 db.add(motoboy)
 db.commit()
-db.refresh(motoboy)
 
-print(motoboy.id)
+motoboys = listar_motoboys(db)
+print(motoboys)
 
-db.close()
