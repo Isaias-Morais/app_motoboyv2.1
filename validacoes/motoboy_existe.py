@@ -1,17 +1,4 @@
-from database.setup import get_conexao
+from models.motoboy_model import Motoboy
 
-
-def motoboy_existe():
-    with get_conexao() as conn:
-        with conn.cursor() as cursor:
-            sql = '''
-            SELECT 1 
-            FROM motoboy
-            WHERE id = 1
-            LIMIT 1
-            '''
-
-            cursor.execute(sql)
-            resultado = cursor.fetchone()
-
-            return  resultado is not None
+def motoboy_existe_id(session,id_motoboy=1):
+    return session.get(Motoboy,id_motoboy)

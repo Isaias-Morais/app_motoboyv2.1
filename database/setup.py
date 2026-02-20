@@ -23,5 +23,3 @@ def get_conexao():
     except Exception as e:
         print('Erro : ' ,e)
         return None
-
-get_conexao()

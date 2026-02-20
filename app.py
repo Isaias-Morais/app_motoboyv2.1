@@ -12,19 +12,26 @@ from servicos.exluir_moto import excluir_moto_geral
 from servicos.resumo_dia_service import *
 from validacoes.motoboy_existe import *
 from interface.utilidades import *
-from database.setup import cria_banco
 
-if not get_conexao():
-    cria_banco()
-else:
-    pass
+from database.setup import cria_banco
+from database.base import Base
+from database.engine import engine
+from models.motoboy_model import Motoboy
+from models.moto_model import Moto
+from models.abastecimento_model import Abastecimento
+from models.manutencao_model import Manutencao
+from models.dia_de_trabalho_model import Dia_de_trabalho
+
+
+Base.metadata.create_all(bind=engine)
 criar_tabelas()
+
 cabecalho("APP_MOTOBOY",55)
 
 moto = busca_moto_ativa()
 
 while True:
-    if not motoboy_existe():
+    if not motoboy_existe_id(session):
         print('Adicione seus dados para continuarmos')
         nome = (input("Nome : "))
         idade = leiaint('Idade : ')

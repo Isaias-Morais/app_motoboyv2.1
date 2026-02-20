@@ -1,6 +1,9 @@
-from models.moto import Moto
+from models.moto_model import Moto
 from validacoes.moto_validacao import validacao_moto
-from repository.moto_repositorio import salvar_moto
+from repository.base_repository import salvar_objeto
+from database.session import SessionLocal
+
+session = SessionLocal()
 
 def registra_moto(
         marca='',
@@ -9,7 +12,6 @@ def registra_moto(
         quilometragem=0,
         consumo=0
     ):
-
 
     valido , erro = validacao_moto(marca,modelo,ano,quilometragem,consumo)
 
@@ -23,5 +25,7 @@ def registra_moto(
             quilometragem=quilometragem,
             consumo=consumo,
             motoboy_id=1)
-        salvar_moto(moto)
+
+        salvar_objeto(session,moto)
+
         return moto
