@@ -1,6 +1,6 @@
 from repository.moto_repositorio import *
 from repository.finaceiro_repositorio import *
-from servicos.calculos import *
+from service.calculos_services import *
 
 def resumo_dia():
     moto_id = busca_moto_ativa()

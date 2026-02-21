@@ -1,8 +1,11 @@
-from models.manutencao import Manutencao
+from models.manutencao_model import Manutencao
+from database.session import SessionLocal
+from repository.base_repository import salvar_objeto
 from validacoes.manutencao_validacao import validacao_manutencao
-from repository.manutecao_repositorio import salvar_manutecao
 from validacoes.valida_data import valida_data
 from datetime import date
+
+session = SessionLocal()
 
 def registra_manutencao(
         dia=None,
@@ -24,12 +27,12 @@ def registra_manutencao(
         data = date.today
 
     manutencao = Manutencao(
-        data=data,
+        data_manutencao=data,
         tipo=tipo,
         descricao=descricao,
         valor=valor,
-        quilometragem_manutecao=quilometragem_manutencao,
+        quilometragem_manutencao=quilometragem_manutencao,
         moto_id=moto_id
         )
-    salvar_manutecao(manutencao)
+    salvar_objeto(session,manutencao)
     return manutencao

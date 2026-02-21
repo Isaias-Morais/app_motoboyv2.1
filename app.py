@@ -3,13 +3,13 @@ from repository.abastecimento_repositorio import listar_abastecimento
 from repository.dia_de_trabalho_repositorio import listar_dia_de_trabalho
 from database.init_db import *
 from repository.manutecao_repositorio import listar_manutencao
-from servicos.add_abastecimento import *
-from servicos.add_manutecao import registra_manutencao
-from servicos.add_moto import *
-from servicos.add_dia_de_trabalho import *
-from servicos.add_motoboy import *
-from servicos.exluir_moto import excluir_moto_geral
-from servicos.resumo_dia_service import *
+from service.abastecimento_service import *
+from service.manutencao_service import registra_manutencao
+from service.moto_service import *
+from service.dia_de_trabalho_service import *
+from service.motoboy_service import *
+from service.exluir_moto import excluir_moto_geral
+from service.resumo_dia_service import *
 from validacoes.motoboy_existe import *
 from interface.utilidades import *
 

@@ -1,9 +1,11 @@
-from models.dia_de_trabalho import Dia_de_trabalho
+from models.dia_de_trabalho_model import Dia_de_trabalho
+from database.session import SessionLocal
+from repository.base_repository import salvar_objeto
 from validacoes.dia_de_trabalho_validacao import validacao_dia_de_trabalho
-from repository.dia_de_trabalho_repositorio import salvar_dia_de_trabalho
 from validacoes.valida_data import valida_data
 from datetime import date
 
+session = SessionLocal()
 
 def registra_dia_de_trabalho(
         dia=None,
@@ -24,11 +26,11 @@ def registra_dia_de_trabalho(
         data = date.today()
 
     dia_de_trabalho = Dia_de_trabalho(
-        data=data,
-        km_inicial=km_inicial,
-        km_final=km_final,
+        data_trabalhada=data,
+        quilometragem_inicial=km_inicial,
+        quilometragem_final=km_final,
         ganho_bruto= ganhon_bruto,
         moto_id=moto_id
     )
-    salvar_dia_de_trabalho(dia_de_trabalho)
+    salvar_objeto(session,dia_de_trabalho)
     return dia_de_trabalho

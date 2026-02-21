@@ -1,12 +1,14 @@
 from repository.finaceiro_repositorio import busca_abastecimento_consumo_medio
 from models.abastecimento import Abastecimento
-from servicos.atualiza_consumo import atualizar_consumo_svc
-from servicos.calculos import calcular_km_rodados, calcular_consumo_medio_real
+from database.session import SessionLocal
+from repository.base_repository import salvar_objeto
+from service.atualiza_consumo import atualizar_consumo_svc
+from service.calculos_services import calcular_km_rodados, calcular_consumo_medio_real
 from validacoes.abasteciento_validacao import validacao_abastecimento
-from repository.abastecimento_repositorio import salvar_abastecimeto
 from validacoes.valida_data import valida_data
 from datetime import date
 
+session = SessionLocal()
 
 def registra_abastecimento(
         dia=None,
@@ -37,7 +39,7 @@ def registra_abastecimento(
         quilometragem_abastecimento=quilometragem_abastecimento,
         moto_id=moto_id
         )
-    salvar_abastecimeto(abastecimento)
+    salvar_objeto(session,abastecimento)
     if not tanque_completo:
         return
 
@@ -56,5 +58,5 @@ def registra_abastecimento(
 
     atualizar_consumo_svc(moto_id,consumo_medio)
 
-    return True
+    return abastecimento
 
