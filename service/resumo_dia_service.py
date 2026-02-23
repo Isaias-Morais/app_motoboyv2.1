@@ -1,4 +1,4 @@
-from repository.moto_repository import *
+from database.session import SessionLocal
 from repository.finaceiro_repositorio import *
 from repository.motoboy_repository import busca_moto_ativa_motoboy
 from service.calculos_services import *

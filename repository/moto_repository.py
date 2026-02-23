@@ -1,8 +1,4 @@
 from models.moto_model import Moto
-from validacoes.moto_exitente import moto_existe
-from database.session import SessionLocal
-
-session = SessionLocal()
 
 def listar_moto(session):
     return session.query(Moto).all()
