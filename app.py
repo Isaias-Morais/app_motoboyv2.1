@@ -3,6 +3,7 @@ from repository.abastecimento_repositorio import listar_abastecimento
 from repository.dia_de_trabalho_repositorio import listar_dia_de_trabalho
 from database.init_db import *
 from repository.manutecao_repositorio import listar_manutencao
+from repository.motoboy_repository import listar_motoboys, definir_moto_ativa_motoboy, busca_moto_ativa_motoboy
 from service.abastecimento_service import *
 from service.manutencao_service import registra_manutencao
 from service.moto_service import *
@@ -22,13 +23,15 @@ from models.abastecimento_model import Abastecimento
 from models.manutencao_model import Manutencao
 from models.dia_de_trabalho_model import Dia_de_trabalho
 
+session = SessionLocal()
 
+print(listar_motoboys(session))
 Base.metadata.create_all(bind=engine)
 criar_tabelas()
 
 cabecalho("APP_MOTOBOY",55)
 
-moto = busca_moto_ativa()
+moto = busca_moto_ativa_motoboy(session)
 
 while True:
     if not motoboy_existe_id(session):
@@ -69,7 +72,7 @@ while True:
                         case 2:
                             listar_moto()
                             id = leiaint('ID : ')
-                            print(definir_moto_ativa(id))
+                            print(definir_moto_ativa_motoboy(session,id))
 
                         case 3:
                             listar_moto()
@@ -98,7 +101,7 @@ while True:
                 km_inicial = leiaint('Quilometragem inicial : ')
                 km_final = leiaint("Quilometragem final : ")
                 ganho_bruto = leiafloat("Faturamento bruto :  ")
-                listar_moto()
+                listar_moto(session)
                 moto_id = leiaint('ID : ')
 
                 print(registra_dia_de_trabalho(dia,mes,ano,km_inicial,km_final,ganho_bruto,moto_id))
@@ -123,7 +126,7 @@ while True:
                             valor = leiafloat('Valor R$ : ')
                             tanque_completo = sim_ou_nao('Tanque cheio : ')
                             quilometragem_abastecimento = leiaint('KM do abastecimento')
-                            listar_moto()
+                            listar_moto(session)
                             moto_id = leiaint('ID : ')
                             print(registra_abastecimento(dia,mes,ano,posto,litros,valor,tanque_completo,quilometragem_abastecimento,moto_id))
 

@@ -1,9 +1,12 @@
-from repository.moto_repositorio import *
+from repository.moto_repository import *
 from repository.finaceiro_repositorio import *
+from repository.motoboy_repository import busca_moto_ativa_motoboy
 from service.calculos_services import *
 
+session = SessionLocal()
+
 def resumo_dia():
-    moto_id = busca_moto_ativa()
+    moto_id = busca_moto_ativa_motoboy(session)
     dia_de_trabalho  = buscar_dia_de_trabalho(moto_id) or {}
     abastecimento_geral = busca_abastecimento(moto_id) or {}
     manutencoes = busca_manutencoes(moto_id) or {}

@@ -14,12 +14,12 @@ class Moto(Base):
     quilometragem : Mapped[int] = mapped_column(nullable=False)
     consumo : Mapped[float] = mapped_column(nullable=False)
 
-    motoboy_id : Mapped[int] = mapped_column(ForeignKey('motoboys.id'))
+    motoboy_id : Mapped[int] = mapped_column(ForeignKey('motoboys.id',ondelete="CASCADE"))
 
     motoboy: Mapped['Motoboy'] = relationship(back_populates='motos')
-    abastecimentos : Mapped[list['Abastecimento']] = relationship(back_populates='moto')
-    manutencoes : Mapped[list['Manutencao']] = relationship(back_populates='moto')
-    dias_trabalhados : Mapped[list['Dia_de_trabalho']] = relationship(back_populates='moto')
+    abastecimentos : Mapped[list['Abastecimento']] = relationship(back_populates='moto',cascade="all, delete-orphan")
+    manutencoes : Mapped[list['Manutencao']] = relationship(back_populates='moto',cascade="all, delete-orphan")
+    dias_trabalhados : Mapped[list['Dia_de_trabalho']] = relationship(back_populates='moto',cascade="all, delete-orphan")
 
     def __repr__(self):
         return f'{self.id},{self.marca},{self.modelo},{self.ano},{self.quilometragem},{self.consumo},{self.motoboy_id}'

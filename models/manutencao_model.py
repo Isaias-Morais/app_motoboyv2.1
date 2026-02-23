@@ -14,7 +14,7 @@ class Manutencao(Base):
     valor : Mapped[Decimal] = mapped_column(Numeric(10, 2),nullable=False)
     quilometragem_manutencao : Mapped[int] = mapped_column(nullable=False)
 
-    moto_id : Mapped[int] = mapped_column(Integer,ForeignKey('motos.id'))
+    moto_id : Mapped[int] = mapped_column(Integer,ForeignKey('motos.id',ondelete="CASCADE"))
 
     moto: Mapped['Moto'] = relationship(back_populates='manutencoes')
 

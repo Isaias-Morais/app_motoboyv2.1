@@ -10,7 +10,7 @@ class Motoboy(Base):
     email : Mapped[str] = mapped_column(nullable=False)
     moto_ativa : Mapped[int] = mapped_column(nullable=True)
 
-    motos: Mapped[list["Moto"]] = relationship(back_populates="motoboy")
+    motos: Mapped[list["Moto"]] = relationship(back_populates="motoboy",cascade="all, delete-orphan")
 
     def __repr__(self):
         return f'|ID-{self.id}|nome-{self.nome}|idade-{self.idade}|email-{self.email}|moto_ativa-{self.moto_ativa}'

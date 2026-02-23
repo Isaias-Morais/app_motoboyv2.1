@@ -16,7 +16,7 @@ class Abastecimento(Base):
     tanque_completo: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
     quilometragem_abastecimento: Mapped[int] = mapped_column(nullable=False)
 
-    moto_id: Mapped[int] = mapped_column(ForeignKey('motos.id'), nullable=False)
+    moto_id: Mapped[int] = mapped_column(ForeignKey('motos.id',ondelete="CASCADE"), nullable=False)
 
     moto : Mapped['Moto'] = relationship(back_populates='abastecimentos')
 

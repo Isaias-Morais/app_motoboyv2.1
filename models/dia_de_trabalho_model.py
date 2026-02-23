@@ -13,7 +13,7 @@ class Dia_de_trabalho(Base):
     quilometragem_final : Mapped[int] = mapped_column(nullable=False)
     ganho_bruto : Mapped[Decimal] = mapped_column(Numeric(10, 2),nullable=False)
 
-    moto_id : Mapped[int] = mapped_column(Integer,ForeignKey('motos.id'))
+    moto_id : Mapped[int] = mapped_column(Integer,ForeignKey('motos.id',ondelete="CASCADE"))
 
     moto : Mapped['Moto'] = relationship(back_populates="dias_trabalhados")
 
