@@ -1,8 +1,11 @@
 import sys
+from database.base import Base
+from database.create_tables import create_table
+from database.engine import engine
+from repository.moto_repository import listar_moto
 from repository.abastecimento_repositorio import listar_abastecimento
 from repository.dia_de_trabalho_repositorio import listar_dia_de_trabalho
-from database.init_db import *
-from repository.manutecao_repositorio import listar_manutencao
+from repository.manutencao_repository import listar_manutencao
 from repository.motoboy_repository import listar_motoboys, definir_moto_ativa_motoboy, busca_moto_ativa_motoboy
 from service.abastecimento_service import *
 from service.manutencao_service import registra_manutencao
@@ -14,20 +17,12 @@ from service.resumo_dia_service import *
 from validacoes.motoboy_existe import *
 from interface.utilidades import *
 
-from database.setup import cria_banco
-from database.base import Base
-from database.engine import engine
-from models.motoboy_model import Motoboy
-from models.moto_model import Moto
-from models.abastecimento_model import Abastecimento
-from models.manutencao_model import Manutencao
-from models.dia_de_trabalho_model import Dia_de_trabalho
+
 
 session = SessionLocal()
 
 print(listar_motoboys(session))
-Base.metadata.create_all(bind=engine)
-criar_tabelas()
+create_table()
 
 cabecalho("APP_MOTOBOY",55)
 
@@ -70,12 +65,12 @@ while True:
                                 print(registra_moto(marca,modelo,ano,quilometragem,consumo))
 
                         case 2:
-                            listar_moto()
+                            print(listar_moto(session))
                             id = leiaint('ID : ')
                             print(definir_moto_ativa_motoboy(session,id))
 
                         case 3:
-                            listar_moto()
+                            listar_moto(session)
                             id = leiaint('ID : ')
                             excluir_moto_geral(id)
 

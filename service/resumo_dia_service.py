@@ -7,8 +7,8 @@ session = SessionLocal()
 
 def resumo_dia():
     moto_id = busca_moto_ativa_motoboy(session)
-    dia_de_trabalho  = buscar_dia_de_trabalho(moto_id) or {}
-    abastecimento_geral = busca_abastecimento(moto_id) or {}
+    dia_de_trabalho  = buscar_dia_de_trabalho(session,moto_id) or {}
+    abastecimento_geral = busca_abastecimento(session,moto_id) or {}
     manutencoes = busca_manutencoes(moto_id) or {}
     consumo = busca_consumo_moto(moto_id) or 0
 

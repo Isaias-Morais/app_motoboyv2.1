@@ -1,54 +1,38 @@
+from datetime import date ,timedelta
+from sqlalchemy import func
+from models.abastecimento_model import Abastecimento
+from models.dia_de_trabalho_model import Dia_de_trabalho
+from service.manutencao_service import session
 from database.setup import get_conexao
 
-def buscar_dia_de_trabalho(moto_id):
-    with get_conexao() as conn:
-        with conn.cursor() as cursor:
-            sql = '''
-                SELECT
-                    d.ganho_bruto AS ganho,
-                    d.quilometragem_final - d.quilometragem_inicial AS km
-                FROM dia_de_trabalho d
-                WHERE d.moto_id = %s
-                    AND DATE(d.data_trabalhada) = CURRENT_DATE
-            '''
-            cursor.execute(sql,(moto_id,))
-            resultado = cursor.fetchone()
+
+def buscar_dia_de_trabalho(session,moto_id):
+    hoje =  date.today()
+
+    return (session.query(
+            Dia_de_trabalho.ganho_bruto.label('ganho'),
+            (Dia_de_trabalho.quilometragem_final - Dia_de_trabalho.quilometragem_inicial).label('km')
+        ).filter(
+            Dia_de_trabalho.moto_id == moto_id,
+            Dia_de_trabalho.data_trabalhada == hoje
+        ).first()
+    )
 
 
-            if resultado is None:
-                return {
-                    'ganho':0.0,
-                    'km_dia':0.0
-                }
-            ganho,km = resultado
+def busca_abastecimento(sesion, moto_id):
+    hoje = date.today()
+    inicio = hoje - timedelta(days=30)
 
-            return {
-                'ganho':ganho,
-                'km_dia':km
-            }
-
-def busca_abastecimento(moto_id):
-    with get_conexao() as conn:
-        with conn.cursor() as cursor:
-            sql = '''
-                SELECT
-                    SUM(a.valor) AS valor,
-                    SUM(a.litros) AS litros,
-                    MAX(a.quilometragem) - MIN(a.quilometragem) AS km
-                FROM abastecimento a
-                JOIN moto m ON m.id = a.moto_id
-                WHERE m.id = %s
-                AND a.data_abastecimento >= NOW() - INTERVAL '30 days'
-                AND a.data_abastecimento <= NOW()
-                '''
-            cursor.execute(sql,(moto_id,))
-            valor,litros,km = cursor.fetchone()
-
-            return {
-                'valor_abastecimento':valor,
-                'litros':litros,
-                'km_abastecimento': km
-            }
+    resumo = (session.query(
+        func.coalesce(func.sum(Abastecimento.valor),0).label('valor'),
+        func.coalesce(func.sum(Abastecimento.litros),0).label('litros'),
+        func.coalesce(func.max(Abastecimento.quilometragem_abastecimento) - func.min(Abastecimento.quilometragem_abastecimento),0).label('km')
+    ).filter(
+        Abastecimento.moto_id == moto_id,
+        Abastecimento.data_abastecimento.between(inicio,hoje)
+    ).first()
+)
+    return resumo._asdict() if resumo else {}
 
 def busca_manutencoes(moto_id):
     with get_conexao() as conn:

@@ -1,6 +1,6 @@
 from repository.moto_repository import *
 from repository.dia_de_trabalho_repositorio import excluir_dias_trabalhados
-from repository.manutecao_repositorio import excluir_manutencao
+from repository.manutencao_repository import excluir_manutencao
 from repository.abastecimento_repositorio import excluir_abastecimentos
 from repository.motoboy_repository import redefinir_moto_ativa_motoboy, busca_moto_ativa_motoboy
 
