@@ -1,8 +1,8 @@
 from models.manutencao_model import Manutencao
 from database.session import SessionLocal
 from repository.base_repository import salvar_objeto
-from validacoes.manutencao_validacao import validacao_manutencao
-from validacoes.valida_data import valida_data
+from validators.manutencao_validacao import validacao_manutencao
+from validators.valida_data import valida_data
 from datetime import date
 
 session = SessionLocal()

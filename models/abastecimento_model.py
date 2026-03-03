@@ -21,7 +21,7 @@ class Abastecimento(Base):
     moto : Mapped['Moto'] = relationship(back_populates='abastecimentos')
 
     def __repr__(self):
-        return f'data-{self.data_abastecimento},valor-{self.valor},litros-{self.liros}taque_cheio{self.tanque_completo},quilometro_do_abastecimento{self.tcompleto}'
+        return f'data-{self.data_abastecimento},valor-{self.valor},litros-{self.litros}taque_cheio{self.tanque_completo},quilometro_do_abastecimento{self.tanque_completo}'
 
     @property
     def preco_litro(self) -> Decimal:

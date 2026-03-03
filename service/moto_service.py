@@ -1,7 +1,7 @@
 from models.moto_model import Moto
 from database.session import SessionLocal
 from repository.base_repository import salvar_objeto
-from validacoes.moto_validacao import validacao_moto
+from validators.moto_validacao import validacao_moto
 
 session = SessionLocal()
 

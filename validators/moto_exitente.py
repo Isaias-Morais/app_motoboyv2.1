@@ -6,7 +6,7 @@ def moto_existe(moto_id=0):
         with conn.cursor() as cursor:
             sql = '''
                 SELECT 1 
-                FROM moto
+                FROM motos
                 WHERE id = %s
                 LIMIT 1
                 '''

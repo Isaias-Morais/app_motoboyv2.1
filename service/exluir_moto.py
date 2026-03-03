@@ -1,10 +1,9 @@
 from repository.moto_repository import *
 from repository.dia_de_trabalho_repositorio import excluir_dias_trabalhados
 from repository.manutencao_repository import excluir_manutencao
-from repository.abastecimento_repositorio import excluir_abastecimentos
+from repository.abastecimento_repository import excluir_abastecimentos
 from repository.motoboy_repository import redefinir_moto_ativa_motoboy, busca_moto_ativa_motoboy
-
-from validacoes.moto_exitente import moto_existe
+from validators.moto_validacao import moto_existe
 
 
 def excluir_moto_geral(moto_id):

@@ -3,7 +3,7 @@ from database.base import Base
 from database.create_tables import create_table
 from database.engine import engine
 from repository.moto_repository import listar_moto
-from repository.abastecimento_repositorio import listar_abastecimento
+from repository.abastecimento_repository import listar_abastecimento
 from repository.dia_de_trabalho_repositorio import listar_dia_de_trabalho
 from repository.manutencao_repository import listar_manutencao
 from repository.motoboy_repository import listar_motoboys, definir_moto_ativa_motoboy, busca_moto_ativa_motoboy
@@ -14,14 +14,13 @@ from service.dia_de_trabalho_service import *
 from service.motoboy_service import *
 from service.exluir_moto import excluir_moto_geral
 from service.resumo_dia_service import *
-from validacoes.motoboy_existe import *
+from validators.motoboy_existe import *
 from interface.utilidades import *
 
 
 
 session = SessionLocal()
 
-print(listar_motoboys(session))
 create_table()
 
 cabecalho("APP_MOTOBOY",55)
@@ -97,7 +96,7 @@ while True:
                 km_final = leiaint("Quilometragem final : ")
                 ganho_bruto = leiafloat("Faturamento bruto :  ")
                 listar_moto(session)
-                moto_id = leiaint('ID : ')
+                moto_id = leiaint('Moto ID : ')
 
                 print(registra_dia_de_trabalho(dia,mes,ano,km_inicial,km_final,ganho_bruto,moto_id))
 
@@ -140,7 +139,7 @@ while True:
                             descricao = input('Descricao : ')
                             valor = leiafloat('Valor : ')
                             quilometragem_manutencao = leiaint('KM da Manutenção : ')
-                            listar_moto()
+                            listar_moto(session)
                             moto_id = leiaint('ID : ')
                             print(registra_manutencao(dia, mes, ano, tipo, descricao, valor, quilometragem_manutencao, moto_id))
                         case 3:
@@ -156,11 +155,11 @@ while True:
 
                 match resp_historico:
                     case 1:
-                        listar_dia_de_trabalho()
+                        print(listar_dia_de_trabalho(session))
                     case 2:
-                        listar_abastecimento()
+                        print(listar_abastecimento(session))
                     case 3:
-                        listar_manutencao()
+                        print(listar_manutencao(session))
 
             case 5:
                 sys.exit()

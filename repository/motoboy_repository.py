@@ -8,10 +8,11 @@ def busca_moto_ativa_motoboy(session):
     return moto.id if moto else None
 
 def definir_moto_ativa_motoboy(session,moto_id):
-    motoboy = session.query(Motoboy).filter(Motoboy.id == 2).first()
+    motoboy = session.query(Motoboy).filter(Motoboy.id == 1).first()
     if motoboy:
         motoboy.moto_ativa = moto_id
         session.commit()
+        return True
     else:
         return False
 

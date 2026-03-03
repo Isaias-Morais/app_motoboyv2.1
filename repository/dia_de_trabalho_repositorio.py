@@ -1,29 +1,4 @@
 from database.setup import get_conexao
-def salvar_dia_de_trabalho(dia_de_trabalho):
-    with get_conexao() as conn:
-        with conn.cursor() as cursor:
-            cursor.execute(
-                '''
-                    INSERT INTO dia_de_trabalho(
-                        moto_id,
-                        data_trabalhada,
-                        quilometragem_inicial,
-                        quilometragem_final,
-                        ganho_bruto
-                    )        
-                    VALUES(%s,%s,%s,%s,%s)
-                    RETURNING id
-                ''',
-                (
-                    dia_de_trabalho._moto_id,
-                    dia_de_trabalho._data,
-                    dia_de_trabalho._km_inicial,
-                    dia_de_trabalho._km_final,
-                    dia_de_trabalho._ganho_bruto,
-
-                )
-            )
-            dia_de_trabalho.id = cursor.fetchone()[0]
 
 def listar_dia_de_trabalho():
     with get_conexao() as conn:

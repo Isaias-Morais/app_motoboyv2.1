@@ -1,8 +1,8 @@
 from models.dia_de_trabalho_model import Dia_de_trabalho
 from database.session import SessionLocal
 from repository.base_repository import salvar_objeto
-from validacoes.dia_de_trabalho_validacao import validacao_dia_de_trabalho
-from validacoes.valida_data import valida_data
+from validators.dia_de_trabalho_validacao import validacao_dia_de_trabalho
+from validators.valida_data import valida_data
 from datetime import date
 
 session = SessionLocal()

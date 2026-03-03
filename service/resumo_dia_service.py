@@ -1,7 +1,7 @@
 from database.session import SessionLocal
-from repository.finaceiro_repositorio import *
+from repository.finaceiro_repository import *
 from repository.motoboy_repository import busca_moto_ativa_motoboy
-from service.calculos_services import *
+from service.calculos_service import *
 
 session = SessionLocal()
 
@@ -9,12 +9,12 @@ def resumo_dia():
     moto_id = busca_moto_ativa_motoboy(session)
     dia_de_trabalho  = buscar_dia_de_trabalho(session,moto_id) or {}
     abastecimento_geral = busca_abastecimento(session,moto_id) or {}
-    manutencoes = busca_manutencoes(moto_id) or {}
-    consumo = busca_consumo_moto(moto_id) or 0
+    manutencoes = busca_manutencoes(session,moto_id) or {}
+    consumo = busca_consumo_moto(session,moto_id) or 0
 
 
-    valor_do_dia = dia_de_trabalho.get('ganho',0)
-    km_dia = dia_de_trabalho.get('km_dia',0)
+    valor_do_dia = dia_de_trabalho.ganho if dia_de_trabalho else 0
+    km_dia = dia_de_trabalho.km if dia_de_trabalho else 0
 
     valor_manutencao = manutencoes.get('valor_manutencao',0 )
     km_manutencao = manutencoes.get('km_manutencao',0)

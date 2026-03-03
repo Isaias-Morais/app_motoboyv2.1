@@ -1,3 +1,7 @@
+from database.session import SessionLocal
+from models.moto_model import Moto
+
+
 def validacao_moto(marca,modelo,ano,quilometragem,consumo):
     if not isinstance(marca,(str)) or len(marca) ==0 or marca == None:
         return False, 'MARCA INVALIDA'
@@ -11,3 +15,13 @@ def validacao_moto(marca,modelo,ano,quilometragem,consumo):
         return False, 'CONSUMO INVALIDO'
     else:
         return True,  'SUCESSO'
+
+
+def moto_existe(session,moto_id=0):
+    moto = session.query(
+        Moto
+    ).filter(
+        Moto.id == moto_id
+    ).first()
+
+    return moto is not None

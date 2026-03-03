@@ -1,4 +1,4 @@
-from validacoes.valida_data import valida_data
+from validators.valida_data import valida_data
 
 def validacao_abastecimento(
         posto,

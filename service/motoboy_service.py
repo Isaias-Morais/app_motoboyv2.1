@@ -1,5 +1,5 @@
 from models.motoboy_model import Motoboy
-from validacoes.motoboy_validacao import validacao_motoboy
+from validators.motoboy_validacao import validacao_motoboy
 from repository.base_repository import salvar_objeto
 from database.session import SessionLocal
 
