@@ -1,46 +1,38 @@
-from database.setup import get_conexao
+from models.dia_de_trabalho_model import Dia_de_trabalho
+from sqlalchemy import func
 
-def listar_dia_de_trabalho():
-    with get_conexao() as conn:
-        with conn.cursor() as cursor:
-            cursor.execute(
-                """
-                    SELECT * FROM dia_de_trabalho
-                """
-            )
-            dias = cursor.fetchall()
+def listar_dia_de_trabalho(session):
+    dias_trabalhados_geral = session.query(
+        Dia_de_trabalho
+    ).all
 
-            for dia in dias:
-                print(dia)
+    if dias_trabalhados_geral:
+        return dias_trabalhados_geral
+    else:
+        return False
 
 
-def excluir_dias_trabalhados(moto_id):
-    with get_conexao() as conn:
-        with conn.cursor() as cursor:
+def excluir_dias_trabalhados(session,moto_id):
+    dia_trabalhado = session.query(
+        Dia_de_trabalho
+    ).filter(
+        Dia_de_trabalho.moto_id == moto_id
+    ).first()
+    if dia_trabalhado:
+        session.delete(dia_trabalhado)
+        session.commit()
+        return True
+    else:
+        return False
 
-            sql = '''
-                  DELETE 
-                  FROM dia_de_trabalho
-                  WHERE moto_id = %s 
-                  '''
+def historico_dias(session,moto_id):
+    dias = session.query(
+        Dia_de_trabalho.data_trabalhada,
+            (Dia_de_trabalho.quilometragem_final - Dia_de_trabalho.quilometragem_final),
+            Dia_de_trabalho.ganho_bruto
+        ).filter(
+            Dia_de_trabalho.moto_id == moto_id
+        ).all()
 
-            cursor.execute(sql, (moto_id,))
-
-
-def historico_dias(moto_id):
-    with get_conexao() as conn:
-        with conn.cursor() as cursor:
-            sql = '''
-            SELECT 
-                d.data_trabalhada,
-                d.quilometragem_final - d.quilometragem_inicial,
-                d.ganho_bruto
-            FROM dia_de_trabalho d
-                WHERE d.moto_id = %s
-            ORDER BY d.data_trabalhada ASC
-            '''
-            cursor.execute(sql,(moto_id,))
-            dados = cursor.fetchall()
-
-    return dados
+    return dias
 

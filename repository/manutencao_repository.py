@@ -1,4 +1,6 @@
 from datetime import date
+
+from app import moto_id
 from models.manutencao_model import Manutencao
 
 
@@ -9,9 +11,9 @@ def listar_manutencao(session):
 def excluir_manutencao(session,dia,mes,ano,moto_id):
     data = date(ano,mes,dia)
     manutencao = session.query(Manutencao).filter(
-        Manutencao.moto_id,
+        Manutencao.moto_id == moto_id,
         Manutencao.data_manutencao == data
-    ).first()
+    ).all()
     session.delete(manutencao)
     session.commit()
 

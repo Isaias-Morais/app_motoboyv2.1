@@ -12,7 +12,7 @@ def excluir_abastecimentos(session,moto_id):
         Abastecimento
     ).filter(
         Abastecimento.moto_id == moto_id
-    ).first
+    ).all()
     if abastecimento:
         session.delete(abastecimento)
         session.commit()
