@@ -16,10 +16,10 @@ def resumo_dia():
     valor_do_dia = dia_de_trabalho.ganho if dia_de_trabalho else 0
     km_dia = dia_de_trabalho.km if dia_de_trabalho else 0
 
-    valor_manutencao = manutencoes.get('valor_manutencao',0 )
-    km_manutencao = manutencoes.get('km_manutencao',0)
+    valor_manutencao = manutencoes.get('valor',0 )
+    km_manutencao = manutencoes.get('km',0)
 
-    valor_abastecimento = abastecimento_geral.get('valor_abastecimento',0)
+    valor_abastecimento = abastecimento_geral.get('valor',0)
     km_abastecimeto = abastecimento_geral.get('km_abastecimento',0)
     litros_abastecimento = abastecimento_geral.get('litros',0)
 
@@ -41,3 +41,4 @@ def resumo_dia():
         'lucro':liquido
     }
     return resumo_dia
+

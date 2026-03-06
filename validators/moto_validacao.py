@@ -1,4 +1,3 @@
-from database.session import SessionLocal
 from models.moto_model import Moto
 
 

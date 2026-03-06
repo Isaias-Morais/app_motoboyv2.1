@@ -12,7 +12,7 @@ from service.manutencao_service import registra_manutencao
 from service.moto_service import *
 from service.dia_de_trabalho_service import *
 from service.motoboy_service import *
-from service.exluir_moto import excluir_moto_geral
+from service.moto_service import excluir_moto_geral
 from service.resumo_dia_service import *
 from validators.motoboy_existe import *
 from interface.utilidades import *
@@ -45,7 +45,10 @@ while True:
         resumo = resumo_dia()
         print(f'moto ativa - {moto}')
         for chave, valor in resumo.items():
-            print(f'{chave:<26} : {str(valor):>26}')
+            if isinstance(valor, float):
+                print(f"{chave:25}: {valor:.2f}")
+            else:
+                print(f"{chave:25}: {valor}")
 
         resposta_menu = menu("MENU", ['MOTO', 'DIA_TRABALHADO', 'ABASTECIMENTO/MANUTENÇAO', 'HISTORICO', 'SAIR'], 55)
 

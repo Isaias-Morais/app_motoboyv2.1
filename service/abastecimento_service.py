@@ -2,7 +2,7 @@ from repository.finaceiro_repository import busca_abastecimento_consumo_medio
 from database.session import SessionLocal
 from models.abastecimento_model import Abastecimento
 from repository.base_repository import salvar_objeto
-from service.atualiza_consumo import atualizar_consumo_svc
+from service.moto_service import atualizar_consumo_moto
 from service.calculos_service import calcular_km_rodados, calcular_consumo_medio_real
 from validators.abasteciento_validacao import validacao_abastecimento
 from validators.valida_data import valida_data
@@ -56,7 +56,7 @@ def registra_abastecimento(
 
     consumo_medio = calcular_consumo_medio_real(km_litros)
 
-    atualizar_consumo_svc(moto_id,consumo_medio)
+    atualizar_consumo_moto(session=session,moto_id=moto_id,consumo=consumo_medio)
 
     return abastecimento
 

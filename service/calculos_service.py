@@ -5,6 +5,8 @@ def calcular_preco_medio_combustivel(valor=0,litros=0 ):
     if valor <=0 or litros <= 0:
         return 0
 
+    valor = float(valor)
+
     preco_litro = valor/litros
 
     return preco_litro

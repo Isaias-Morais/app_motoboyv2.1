@@ -9,7 +9,7 @@ from models.moto_model import Moto
 def buscar_dia_de_trabalho(session,moto_id):
     hoje =  date.today()
 
-    return (session.query(
+    resumo = (session.query(
             Dia_de_trabalho.ganho_bruto.label('ganho'),
             (Dia_de_trabalho.quilometragem_final - Dia_de_trabalho.quilometragem_inicial).label('km')
         ).filter(
@@ -17,6 +17,7 @@ def buscar_dia_de_trabalho(session,moto_id):
             Dia_de_trabalho.data_trabalhada == hoje
         ).first()
     )
+    return resumo
 
 
 def busca_abastecimento(session, moto_id):
@@ -42,7 +43,7 @@ def busca_manutencoes(session, moto_id):
 
     resumo = (session.query(
         func.coalesce(func.sum(Manutencao.valor), 0).label('valor'),
-        func.coalesce(func.max(Manutencao.quilometragem_manutencao) - func.min(Manutencao.quilometragem_manutencao),0).label('km')
+        func.coalesce(func.max(Manutencao.quilometragem_manutencao),0).label('km')
     ).filter(
         Manutencao.moto_id == moto_id,
         Manutencao.data_manutencao.between(inicio, hoje)
@@ -71,4 +72,5 @@ def busca_consumo_moto(session,moto_id):
         Moto.id == moto_id
     ).first()
               )
-    return consumo
+
+    return consumo[0]

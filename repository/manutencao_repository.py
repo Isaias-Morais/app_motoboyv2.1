@@ -1,6 +1,4 @@
 from datetime import date
-
-from app import moto_id
 from models.manutencao_model import Manutencao
 
 
