@@ -38,7 +38,11 @@ def registra_dia_de_trabalho(
 
     km_atual = quilometragem_atual(session,moto_id)
 
-    if validar_quilometragem_nova(km_atual,km_final):
+    valido, erro = validar_quilometragem_nova(km_atual,km_final)
+    if valido:
         atualizar_quilometragem(session,moto_id,km_final)
+    else:
+        return erro
+
 
     return dia_de_trabalho

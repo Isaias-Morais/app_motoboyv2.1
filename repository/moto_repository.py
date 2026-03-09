@@ -1,4 +1,3 @@
-from app import session
 from models.moto_model import Moto
 
 def listar_moto(session):

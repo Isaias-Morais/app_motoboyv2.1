@@ -67,8 +67,11 @@ def registra_abastecimento(
 
     km_atual = quilometragem_atual(session, moto_id)
 
-    if validar_quilometragem_nova(km_atual, quilometragem_abastecimento):
+    valido,erro = validar_quilometragem_nova(km_atual, quilometragem_abastecimento)
+    if valido:
         atualizar_quilometragem(session, moto_id, quilometragem_abastecimento)
+    else:
+        return erro
 
 
     return abastecimento

@@ -40,7 +40,10 @@ def registra_manutencao(
 
     km_atual = quilometragem_atual(session, moto_id)
 
-    if validar_quilometragem_nova(km_atual, quilometragem_manutencao):
+    valido,erro = validar_quilometragem_nova(km_atual, quilometragem_manutencao)
+    if valido:
         atualizar_quilometragem(session, moto_id, quilometragem_manutencao)
+    else:
+        return erro
 
     return manutencao
