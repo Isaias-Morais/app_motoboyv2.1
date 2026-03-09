@@ -1,7 +1,9 @@
 from models.manutencao_model import Manutencao
 from database.session import SessionLocal
 from repository.base_repository import salvar_objeto
+from repository.moto_repository import quilometragem_atual, atualizar_quilometragem
 from validators.manutencao_validacao import validacao_manutencao
+from validators.moto_validacao import validar_quilometragem_nova
 from validators.valida_data import valida_data
 from datetime import date
 
@@ -35,4 +37,10 @@ def registra_manutencao(
         moto_id=moto_id
         )
     salvar_objeto(session,manutencao)
+
+    km_atual = quilometragem_atual(session, moto_id)
+
+    if validar_quilometragem_nova(km_atual, quilometragem_manutencao):
+        atualizar_quilometragem(session, moto_id, quilometragem_manutencao)
+
     return manutencao

@@ -24,3 +24,12 @@ def moto_existe(session,moto_id=0):
     ).first()
 
     return moto is not None
+
+
+def validar_quilometragem_nova(km_atual,km_novo):
+    if not isinstance(km_atual,(int)) or km_atual <0:
+        return False , 'QUILOMETRAGEM ATUAL INVALIDA'
+    if not isinstance(km_novo,(int)) or km_atual <= km_novo:
+        return False , 'QUILOMETRAGEM NOVA INVALIDA'
+    else:
+        return True

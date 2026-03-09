@@ -2,7 +2,7 @@ from models.moto_model import Moto
 from database.session import SessionLocal
 from repository.base_repository import salvar_objeto
 from validators.moto_validacao import validacao_moto
-from validators.abasteciento_validacao import validacao_consumo
+from validators.abastecimento_validators import validacao_consumo
 from repository.moto_repository import atualizar_consumo,excluir_moto
 from validators.moto_validacao import moto_existe
 from repository.motoboy_repository import redefinir_moto_ativa_motoboy, busca_moto_ativa_motoboy

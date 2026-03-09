@@ -22,6 +22,7 @@ def validacao_abastecimento(
     if not isinstance(moto_id,(int)) or moto_id <= 0 or moto_id == None:
         return False, f'Digite um id valido'
 
+
     return True , None
 
 
@@ -31,3 +32,6 @@ def validacao_consumo(consumo):
         return False
 
     return True
+
+def validacao_abastecimento_igual():
+    pass

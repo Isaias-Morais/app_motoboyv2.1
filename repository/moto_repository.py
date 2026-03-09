@@ -1,3 +1,4 @@
+from app import session
 from models.moto_model import Moto
 
 def listar_moto(session):
@@ -22,6 +23,31 @@ def excluir_moto(session,moto_id):
     moto = session.query(Moto).filter(Moto.id == moto_id).first()
     if moto:
         session.delete(moto)
+        session.commit()
+        return True
+    else:
+        return False
+
+
+def quilometragem_atual(session,moto_id):
+
+    quilometragem_atual = session.query(
+        Moto.quilometragem
+    ).filter(
+        Moto.id == moto_id
+    ).first()
+
+    return quilometragem_atual
+
+
+def atualizar_quilometragem(session,moto_id,quilometragem_nova):
+    moto = session.query(
+        Moto
+    ).filter(
+        Moto.id == moto_id
+    ).first()
+    if moto:
+        moto.quilometragem = quilometragem_nova
         session.commit()
         return True
     else:

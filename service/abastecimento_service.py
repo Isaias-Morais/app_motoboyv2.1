@@ -4,7 +4,7 @@ from models.abastecimento_model import Abastecimento
 from repository.base_repository import salvar_objeto
 from service.moto_service import atualizar_consumo_moto
 from service.calculos_service import calcular_km_rodados, calcular_consumo_medio_real
-from validators.abasteciento_validacao import validacao_abastecimento
+from validators.abastecimento_validators import validacao_abastecimento
 from validators.valida_data import valida_data
 from datetime import date
 

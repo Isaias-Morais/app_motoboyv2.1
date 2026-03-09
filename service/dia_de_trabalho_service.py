@@ -1,7 +1,9 @@
 from models.dia_de_trabalho_model import Dia_de_trabalho
 from database.session import SessionLocal
 from repository.base_repository import salvar_objeto
+from repository.moto_repository import atualizar_quilometragem, quilometragem_atual
 from validators.dia_de_trabalho_validacao import validacao_dia_de_trabalho
+from validators.moto_validacao import validar_quilometragem_nova
 from validators.valida_data import valida_data
 from datetime import date
 
@@ -33,4 +35,10 @@ def registra_dia_de_trabalho(
         moto_id=moto_id
     )
     salvar_objeto(session,dia_de_trabalho)
+
+    km_atual = quilometragem_atual(session,moto_id)
+
+    if validar_quilometragem_nova(km_atual,km_final):
+        atualizar_quilometragem(session,moto_id,km_final)
+
     return dia_de_trabalho

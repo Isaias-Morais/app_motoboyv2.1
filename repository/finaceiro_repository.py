@@ -56,11 +56,12 @@ def busca_abastecimento_consumo_medio(session,moto_id):
 
     resumo = (session.query(
         Abastecimento.quilometragem_abastecimento.label('km'),
-        Abastecimento.litros.label('litros'
-            )).filter(
-            Abastecimento.moto_id == moto_id,
-            Abastecimento.tanque_completo == True
-        ).order_by(Abastecimento.quilometragem_abastecimento.asc()).limit(10).all()
+        Abastecimento.litros.label('litros')
+    ).filter(
+        Abastecimento.moto_id == moto_id,
+        Abastecimento.tanque_completo == True
+    ).order_by(
+        Abastecimento.quilometragem_abastecimento.asc()).limit(11).all()
               )
 
     return resumo
