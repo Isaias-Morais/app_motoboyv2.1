@@ -33,5 +33,4 @@ def validacao_consumo(consumo):
 
     return True
 
-def validacao_abastecimento_igual():
-    pass
+def validacao_abastecimento_igual(ultimo_absatecimento,abastecimento_atual):

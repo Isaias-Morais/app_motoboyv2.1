@@ -6,11 +6,9 @@ def listar_manutencao(session):
     return session.query(Manutencao).all()
 
 
-def excluir_manutencao(session,dia,mes,ano,moto_id):
-    data = date(ano,mes,dia)
+def excluir_manutencao(session,moto_id):
     manutencao = session.query(Manutencao).filter(
         Manutencao.moto_id == moto_id,
-        Manutencao.data_manutencao == data
     ).all()
     session.delete(manutencao)
     session.commit()

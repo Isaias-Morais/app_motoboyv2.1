@@ -24,3 +24,7 @@ def redefinir_moto_ativa_motoboy(session):
     else:
         return False
 
+
+def motoboy_existe_id(session,id_motoboy=1):
+    return session.get(Motoboy,id_motoboy)
+

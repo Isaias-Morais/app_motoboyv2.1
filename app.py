@@ -1,12 +1,11 @@
 import sys
-from database.base import Base
+
 from database.create_tables import create_table
-from database.engine import engine
 from repository.moto_repository import listar_moto
 from repository.abastecimento_repository import listar_abastecimento
 from repository.dia_de_trabalho_repositorio import listar_dia_de_trabalho
 from repository.manutencao_repository import listar_manutencao
-from repository.motoboy_repository import listar_motoboys, definir_moto_ativa_motoboy, busca_moto_ativa_motoboy
+from repository.motoboy_repository import definir_moto_ativa_motoboy,motoboy_existe_id, busca_moto_ativa_motoboy
 from service.abastecimento_service import *
 from service.manutencao_service import registra_manutencao
 from service.moto_service import *
@@ -14,7 +13,6 @@ from service.dia_de_trabalho_service import *
 from service.motoboy_service import *
 from service.moto_service import excluir_moto_geral
 from service.resumo_dia_service import *
-from validators.motoboy_existe import *
 from interface.utilidades import *
 
 

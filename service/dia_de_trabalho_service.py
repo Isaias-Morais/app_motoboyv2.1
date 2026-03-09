@@ -2,7 +2,7 @@ from models.dia_de_trabalho_model import Dia_de_trabalho
 from database.session import SessionLocal
 from repository.base_repository import salvar_objeto
 from repository.moto_repository import atualizar_quilometragem, quilometragem_atual
-from validators.dia_de_trabalho_validacao import validacao_dia_de_trabalho
+from validators.dia_de_trabalho_validators import validacao_dia_de_trabalho
 from validators.moto_validacao import validar_quilometragem_nova
 from validators.valida_data import valida_data
 from datetime import date

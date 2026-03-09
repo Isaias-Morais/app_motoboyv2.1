@@ -54,5 +54,12 @@ def atualizar_quilometragem(session,moto_id,quilometragem_nova):
         return False
 
 
+def moto_existe(session,moto_id=0):
+    moto = session.query(
+        Moto
+    ).filter(
+        Moto.id == moto_id
+    ).first()
 
+    return moto is not None
 
