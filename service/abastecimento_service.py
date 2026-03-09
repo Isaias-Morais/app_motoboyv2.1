@@ -2,9 +2,11 @@ from repository.finaceiro_repository import busca_abastecimento_consumo_medio
 from database.session import SessionLocal
 from models.abastecimento_model import Abastecimento
 from repository.base_repository import salvar_objeto
+from repository.moto_repository import quilometragem_atual, atualizar_quilometragem
 from service.moto_service import atualizar_consumo_moto
 from service.calculos_service import calcular_km_rodados, calcular_consumo_medio_real
 from validators.abastecimento_validators import validacao_abastecimento
+from validators.moto_validacao import validar_quilometragem_nova
 from validators.valida_data import valida_data
 from datetime import date
 
@@ -57,6 +59,12 @@ def registra_abastecimento(
     consumo_medio = calcular_consumo_medio_real(km_litros)
 
     atualizar_consumo_moto(session=session,moto_id=moto_id,consumo=consumo_medio)
+
+    km_atual = quilometragem_atual(session, moto_id)
+
+    if validar_quilometragem_nova(km_atual, quilometragem_abastecimento):
+        atualizar_quilometragem(session, moto_id, quilometragem_abastecimento)
+
 
     return abastecimento
 

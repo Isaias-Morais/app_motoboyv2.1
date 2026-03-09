@@ -30,3 +30,6 @@ def historico_abastecimentos(session,moto_id):
         Abastecimento.data_abastecimento
     ).all()
     return abastecimentos
+
+def abastecimento_existe():
+    pass
