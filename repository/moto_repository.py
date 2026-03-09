@@ -61,5 +61,5 @@ def moto_existe(session,moto_id=0):
         Moto.id == moto_id
     ).first()
 
-    return moto is not None
+    return moto
 

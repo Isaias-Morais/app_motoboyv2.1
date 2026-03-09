@@ -1,3 +1,4 @@
+from repository.abastecimento_repository import abastecimento_existe
 from repository.finaceiro_repository import busca_abastecimento_consumo_medio
 from database.session import SessionLocal
 from models.abastecimento_model import Abastecimento
@@ -41,19 +42,23 @@ def registra_abastecimento(
         quilometragem_abastecimento=quilometragem_abastecimento,
         moto_id=moto_id
         )
-    salvar_objeto(session,abastecimento)
+    if not abastecimento_existe(session,moto_id,quilometragem_abastecimento):
+        salvar_objeto(session,abastecimento)
+    else:
+        return 'abastecimento ja existnte'
+
     if not tanque_completo:
-        return
+        return None
 
     historico = busca_abastecimento_consumo_medio(session,moto_id)
 
     if not historico or len(historico) < 3:
-        return
+        return None
 
     km_litros = calcular_km_rodados(historico)
 
     if not km_litros:
-        return
+        return None
 
 
     consumo_medio = calcular_consumo_medio_real(km_litros)

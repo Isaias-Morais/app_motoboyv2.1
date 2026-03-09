@@ -31,5 +31,13 @@ def historico_abastecimentos(session,moto_id):
     ).all()
     return abastecimentos
 
-def abastecimento_existe():
-    pass
+def abastecimento_existe(session,moto_id,quilometragem):
+    abastecimento = session.query(
+        Abastecimento
+    ).filter(
+        Abastecimento.moto_id == moto_id,
+        Abastecimento.quilometragem_abastecimento == quilometragem
+    ).first
+
+    return abastecimento
+

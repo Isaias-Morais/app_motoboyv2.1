@@ -26,5 +26,11 @@ def redefinir_moto_ativa_motoboy(session):
 
 
 def motoboy_existe_id(session,id_motoboy=1):
-    return session.get(Motoboy,id_motoboy)
+    motoboy = session.query(
+        Motoboy
+    ).filter(
+        Motoboy.id == id_motoboy
+    ).first()
+
+    return motoboy
 
