@@ -32,4 +32,4 @@ def validar_quilometragem_nova(km_atual,km_novo):
     if not isinstance(km_novo,(int)) or km_novo <= km_atual:
         return False , 'QUILOMETRAGEM NOVA INVALIDA'
     else:
-        return True
+        return True, None

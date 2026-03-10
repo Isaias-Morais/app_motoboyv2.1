@@ -24,7 +24,6 @@ def registra_abastecimento(
         quilometragem_abastecimento=None,
         moto_id=None
     ):
-
     valido , erro = validacao_abastecimento(posto,litros,valor,tanque_completo,quilometragem_abastecimento,moto_id)
     if not valido:
         return erro
@@ -32,6 +31,8 @@ def registra_abastecimento(
     valido_data , data = valida_data(dia,mes,ano)
     if not valido_data:
         data = date.today()
+
+
 
     abastecimento = Abastecimento(
         data_abastecimento=data,
@@ -42,10 +43,11 @@ def registra_abastecimento(
         quilometragem_abastecimento=quilometragem_abastecimento,
         moto_id=moto_id
         )
+
     if not abastecimento_existe(session,moto_id,quilometragem_abastecimento):
         salvar_objeto(session,abastecimento)
     else:
-        return 'abastecimento ja existnte'
+        return 'abastecimento ja existente'
 
     if not tanque_completo:
         return None
@@ -67,12 +69,11 @@ def registra_abastecimento(
 
     km_atual = quilometragem_atual(session, moto_id)
 
-    valido,erro = validar_quilometragem_nova(km_atual, quilometragem_abastecimento)
+    valido, erro = validar_quilometragem_nova(km_atual, quilometragem_abastecimento)
     if valido:
         atualizar_quilometragem(session, moto_id, quilometragem_abastecimento)
     else:
-        return erro
-
+        return False
 
     return abastecimento
 

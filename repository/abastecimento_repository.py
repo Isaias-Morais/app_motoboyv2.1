@@ -37,7 +37,9 @@ def abastecimento_existe(session,moto_id,quilometragem):
     ).filter(
         Abastecimento.moto_id == moto_id,
         Abastecimento.quilometragem_abastecimento == quilometragem
-    ).first
+    ).first()
 
-    return abastecimento
+    print("QUERY RESULT:", abastecimento)
+
+    return abastecimento is not None
 

@@ -36,7 +36,8 @@ def quilometragem_atual(session,moto_id):
         Moto.id == moto_id
     ).first()
 
-    return quilometragem_atual
+    if quilometragem_atual:
+        return quilometragem_atual[0]
 
 
 def atualizar_quilometragem(session,moto_id,quilometragem_nova):

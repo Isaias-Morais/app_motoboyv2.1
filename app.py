@@ -154,11 +154,17 @@ while True:
 
                 match resp_historico:
                     case 1:
-                        print(listar_dia_de_trabalho(session))
+                        lista = (listar_dia_de_trabalho(session))
+                        for i in lista:
+                            print(i)
                     case 2:
-                        print(listar_abastecimento(session))
+                        lista = (listar_abastecimento(session))
+                        for i in lista:
+                            print(i)
                     case 3:
-                        print(listar_manutencao(session))
+                        lista = (listar_manutencao(session))
+                        for i in lista:
+                            print(i)
 
             case 5:
                 sys.exit()
