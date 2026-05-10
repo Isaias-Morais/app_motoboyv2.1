@@ -1,7 +1,22 @@
+from sqlalchemy.orm import Session
+
 from models.moto_model import Moto
 
-def listar_moto(session):
-    return session.query(Moto).all()
+def listar_moto(session:Session,id:int):
+    return session.query(Moto).filter(Moto.motoboy_id == id).all()
+
+
+def busca_moto(session:Session,id_moto:int,id_motoboy:int):
+    moto:Moto = session.query(Moto).filter(Moto.id == id_moto).first()
+
+    if not moto:
+        return None
+
+    if not moto.motoboy_id == id_motoboy:
+        return None
+
+    return moto
+
 
 
 def atualizar_consumo(session, moto_id, consumo):

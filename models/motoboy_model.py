@@ -7,7 +7,8 @@ class Motoboy(Base):
     id : Mapped[int] = mapped_column(primary_key=True)
     nome : Mapped[str] = mapped_column(nullable=False)
     idade : Mapped[int] = mapped_column(nullable=False)
-    email : Mapped[str] = mapped_column(nullable=False)
+    email : Mapped[str] = mapped_column(nullable=False,unique=True)
+    senha : Mapped[str] = mapped_column(nullable=False)
     moto_ativa : Mapped[int] = mapped_column(nullable=True)
 
     motos: Mapped[list["Moto"]] = relationship(back_populates="motoboy",cascade="all, delete-orphan")

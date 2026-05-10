@@ -1,4 +1,14 @@
+from fastapi import HTTPException
+from sqlalchemy.orm import Session
 from models.motoboy_model import Motoboy
+
+def busca_motoboy_id(session:Session,motoboy_id:int):
+    motoboy =  session.query(Motoboy).filter(Motoboy.id == motoboy_id).all()
+
+    if not motoboy:
+        return None
+
+    return motoboy
 
 def listar_motoboys(session):
     return session.query(Motoboy).all()
@@ -9,20 +19,32 @@ def busca_moto_ativa_motoboy(session):
 
 def definir_moto_ativa_motoboy(session,moto_id):
     motoboy = session.query(Motoboy).filter(Motoboy.id == 1).first()
-    if motoboy:
+
+    if not motoboy:
+        return None
+
+
         motoboy.moto_ativa = moto_id
         session.commit()
         return True
-    else:
-        return False
 
-def redefinir_moto_ativa_motoboy(session):
-    motoboy = session.query(Motoboy).filter(Motoboy.id == 1).first()
-    if motoboy:
+def redefinir_moto_ativa_motoboy(session:Session,motoboy:Motoboy):
+
+    try:
         motoboy.moto_ativa = None
         session.commit()
-    else:
-        return False
+    except Exception as e:
+        return e
+
+
+
+def busca_motoboy(session:Session):
+    motoboy = session.query(Motoboy).filter(Motoboy.id == 1).first()
+
+    if not motoboy:
+        raise HTTPException(status_code=404,detail='motoboy não existe')
+
+    return motoboy
 
 
 def motoboy_existe_id(session,id_motoboy=1):
@@ -33,4 +55,3 @@ def motoboy_existe_id(session,id_motoboy=1):
     ).first()
 
     return motoboy
-

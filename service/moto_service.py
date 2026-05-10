@@ -1,42 +1,57 @@
+from fastapi import HTTPException
 from models.moto_model import Moto
-from database.session import SessionLocal
+from sqlalchemy.orm import Session
 from repository.base_repository import salvar_objeto
-from validators.moto_validacao import validacao_moto
+from schermas.moto_scherma import MotoCreate
 from validators.abastecimento_validators import validacao_consumo
-from repository.moto_repository import atualizar_consumo,excluir_moto,moto_existe
-from repository.motoboy_repository import redefinir_moto_ativa_motoboy, busca_moto_ativa_motoboy
+from repository.moto_repository import *
+from repository.motoboy_repository import redefinir_moto_ativa_motoboy, busca_moto_ativa_motoboy,busca_motoboy_id
 from repository.dia_de_trabalho_repositorio import excluir_dias_trabalhados
 from repository.manutencao_repository import excluir_manutencao
 from repository.abastecimento_repository import excluir_abastecimentos
 
 
-session = SessionLocal()
 
-def registra_moto(
-        marca=None,
-        modelo=None,
-        ano=None,
-        quilometragem=None,
-        consumo=None
-    ):
+def registra_moto(moto:MotoCreate,session:Session,motoboy_id:int):
 
-    valido , erro = validacao_moto(marca,modelo,ano,quilometragem,consumo)
+    if not moto:
+        raise HTTPException(status_code=404,detail='moto não existe ')
 
-    if not valido:
-        return erro
-    else:
-        moto = Moto(
-            marca=marca,
-            modelo=modelo,
-            ano=ano,
-            quilometragem=quilometragem,
-            consumo=consumo,
-            motoboy_id=1)
+    moto = Moto(
+        marca=moto.marca,
+        modelo=moto.modelo,
+        ano=moto.ano,
+        quilometragem=moto.quilometragem,
+        consumo=moto.consumo,
+        motoboy_id=motoboy_id
+    )
 
-        print(moto.__dict__)
-        salvar_objeto(session,moto)
+    salvar_objeto(session,moto)
 
-        return moto
+    return moto
+
+
+def busca_motos_motoboy_service(session:Session,motoboy_id:int):
+
+    if not busca_motoboy_id(session=session,motoboy_id=motoboy_id):
+        raise HTTPException(status_code=404,detail='motoboy invalido')
+
+    return listar_moto(session=session,id=motoboy_id)
+
+
+
+def busca_moto_id_service(session:Session,motoboy_id:int,moto_id:int):
+
+    if not busca_motoboy_id(session=session,motoboy_id=motoboy_id):
+        raise HTTPException(status_code=404,detail='motoboy invalido')
+
+    moto = busca_moto(session=session,id_motoboy=motoboy_id,id_moto=moto_id)
+
+    if not moto:
+        raise HTTPException(status_code=404,detail='nenhuma moto com esse id vinculado ao motoboy')
+
+    return moto
+
 
 
 def atualizar_consumo_moto(session,moto_id=0,consumo=0):

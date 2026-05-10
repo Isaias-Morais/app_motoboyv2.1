@@ -1,0 +1,27 @@
+from fastapi import APIRouter, Depends
+from service.motoboy_service import *
+from sqlalchemy.orm import Session
+from database.db import get_db
+from fastapi.security import OAuth2PasswordRequestForm
+from service.motoboy_service import *
+from security.depends import get_current_user, get_current_user_id
+
+router = APIRouter(prefix="/Motoboy")
+
+@router.post('/create',response_model=MotoboyCreate)
+async def cria_motoboy(motoboy:MotoboyCreate,session:Session=Depends(get_db)):
+    return registrar_motoboy(session=session,motoboy=motoboy)
+
+
+@router.post('/auth')
+async def loginUser(data: OAuth2PasswordRequestForm = Depends(),db:Session=Depends(get_db)):
+    resultado =  login_user(data,session=db)
+    return resultado
+
+@router.get('/me')
+def meu_user(user = Depends(get_current_user)):
+    return user
+
+# @router.patch('/moto/ativa')
+# def definir_moto_ativa(user = Depends(get_current_user), db:Session=Depends(get_db)):
+#     pass
