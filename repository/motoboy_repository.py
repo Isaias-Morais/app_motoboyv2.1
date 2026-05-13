@@ -1,6 +1,9 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from models.motoboy_model import Motoboy
+from models.moto_model import Moto
+
+
 
 def busca_motoboy_id(session:Session,motoboy_id:int):
     motoboy =  session.query(Motoboy).filter(Motoboy.id == motoboy_id).all()
@@ -17,16 +20,18 @@ def busca_moto_ativa_motoboy(session):
     moto = session.query(Motoboy).filter(Motoboy.moto_ativa != None).first()
     return moto.id if moto else None
 
-def definir_moto_ativa_motoboy(session,moto_id):
-    motoboy = session.query(Motoboy).filter(Motoboy.id == 1).first()
+def definir_moto_ativa_motoboy(session:Session,motoboy_id:int,moto:Moto):
+    motoboy = session.query(Motoboy).filter(Motoboy.id == motoboy_id).first()
 
     if not motoboy:
         return None
 
+    motoboy.moto_ativa = moto.id
 
-        motoboy.moto_ativa = moto_id
-        session.commit()
-        return True
+    session.commit()
+    session.refresh(motoboy)
+
+    return motoboy
 
 def redefinir_moto_ativa_motoboy(session:Session,motoboy:Motoboy):
 

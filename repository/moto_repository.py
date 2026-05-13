@@ -7,13 +7,14 @@ def listar_moto(session:Session,id:int):
 
 
 def busca_moto(session:Session,id_moto:int,id_motoboy:int):
-    moto:Moto = session.query(Moto).filter(Moto.id == id_moto).first()
-
-    if not moto:
-        return None
-
-    if not moto.motoboy_id == id_motoboy:
-        return None
+    moto = (
+        session.query(Moto)
+        .filter(
+            Moto.id == id_moto,
+            Moto.motoboy_id == id_motoboy
+        )
+        .first()
+    )
 
     return moto
 

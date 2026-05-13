@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 from schermas.motoboy_scherma import MotoboyCreate
 from security.hash import gerar_hash
 from repository.motoboy_repository import definir_moto_ativa_motoboy
+from service.moto_service import busca_moto_id_service
 
 
 def registrar_motoboy(session:Session,motoboy:MotoboyCreate):
@@ -44,8 +45,12 @@ def login_user(user: OAuth2PasswordRequestForm,session:Session):
             "token_type": "bearer"
         }
 
-def definir_moto_ativa_service(user):
-    pass
+def definir_moto_ativa_service(session:Session,motoboy_id:int,moto_id:int):
+
+    moto = busca_moto_id_service(session=session,motoboy_id=motoboy_id,moto_id=moto_id)
+
+    return definir_moto_ativa_motoboy(session=session,motoboy_id=motoboy_id,moto=moto)
+
 
 
 

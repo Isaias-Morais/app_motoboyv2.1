@@ -22,6 +22,7 @@ async def loginUser(data: OAuth2PasswordRequestForm = Depends(),db:Session=Depen
 def meu_user(user = Depends(get_current_user)):
     return user
 
-# @router.patch('/moto/ativa')
-# def definir_moto_ativa(user = Depends(get_current_user), db:Session=Depends(get_db)):
-#     pass
+@router.patch('/moto/ativa')
+def definir_moto_ativa(moto_id:int,motoboy_id:int = Depends(get_current_user_id), db:Session=Depends(get_db)):
+    return definir_moto_ativa_service(session=db,motoboy_id=motoboy_id,moto_id=moto_id)
+
