@@ -1,7 +1,6 @@
 from fastapi import HTTPException, status,Depends
 from fastapi.security.oauth2 import OAuth2PasswordBearer
 from jose import jwt,JWTError
-
 from schermas.motoboy_scherma import MotoboyResponse
 from security.jwt import SECRET_KEY,ALGORITHM
 from sqlalchemy.orm import Session

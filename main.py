@@ -3,6 +3,7 @@ from database.base import Base
 from database.engine import engine
 from routers.motoboy_router import router as router_motoboy
 from routers.moto_router import router as router_moto
+from routers.abastecimento_router import router as router_abastecimento
 from models.motoboy_model import Motoboy
 from models.moto_model import Moto
 from models.manutencao_model import Manutencao
@@ -21,5 +22,6 @@ def startup():
 
 app.include_router(router_motoboy)
 app.include_router(router_moto)
+app.include_router(router_abastecimento)
 
 

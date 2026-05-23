@@ -1,3 +1,5 @@
+from unittest.mock import mock_open
+
 from fastapi import HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from models.motoboy_model import Motoboy
@@ -8,7 +10,7 @@ from security.jwt import criar_token
 from sqlalchemy.orm import Session
 from schermas.motoboy_scherma import MotoboyCreate
 from security.hash import gerar_hash
-from repository.motoboy_repository import definir_moto_ativa_motoboy
+from repository.motoboy_repository import definir_moto_ativa_motoboy, busca_motoboy_id
 from service.moto_service import busca_moto_id_service
 
 
@@ -52,6 +54,17 @@ def definir_moto_ativa_service(session:Session,motoboy_id:int,moto_id:int):
     return definir_moto_ativa_motoboy(session=session,motoboy_id=motoboy_id,moto=moto)
 
 
+
+def busca_moto_ativa_service(session:Session,motoboy_id:int):
+
+    motoboy:Motoboy = busca_motoboy_id(session=session,motoboy_id=motoboy_id)
+
+    if not motoboy:
+        raise HTTPException(status_code=404,detail='não existe motoboy')
+
+    moto = busca_moto_id_service(session=session,motoboy_id=motoboy_id,moto_id=motoboy.moto_ativa)
+
+    return moto
 
 
 

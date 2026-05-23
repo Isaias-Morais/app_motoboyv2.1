@@ -4,21 +4,18 @@ from models.motoboy_model import Motoboy
 from models.moto_model import Moto
 
 
-
 def busca_motoboy_id(session:Session,motoboy_id:int):
-    motoboy =  session.query(Motoboy).filter(Motoboy.id == motoboy_id).all()
+    motoboy =  session.query(Motoboy).filter(Motoboy.id == motoboy_id).first()
 
     if not motoboy:
         return None
 
     return motoboy
 
+
 def listar_motoboys(session):
     return session.query(Motoboy).all()
 
-def busca_moto_ativa_motoboy(session):
-    moto = session.query(Motoboy).filter(Motoboy.moto_ativa != None).first()
-    return moto.id if moto else None
 
 def definir_moto_ativa_motoboy(session:Session,motoboy_id:int,moto:Moto):
     motoboy = session.query(Motoboy).filter(Motoboy.id == motoboy_id).first()
@@ -33,6 +30,7 @@ def definir_moto_ativa_motoboy(session:Session,motoboy_id:int,moto:Moto):
 
     return motoboy
 
+
 def redefinir_moto_ativa_motoboy(session:Session,motoboy:Motoboy):
 
     try:
@@ -40,16 +38,6 @@ def redefinir_moto_ativa_motoboy(session:Session,motoboy:Motoboy):
         session.commit()
     except Exception as e:
         return e
-
-
-
-def busca_motoboy(session:Session):
-    motoboy = session.query(Motoboy).filter(Motoboy.id == 1).first()
-
-    if not motoboy:
-        raise HTTPException(status_code=404,detail='motoboy não existe')
-
-    return motoboy
 
 
 def motoboy_existe_id(session,id_motoboy=1):

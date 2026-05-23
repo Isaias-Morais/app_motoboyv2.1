@@ -7,4 +7,4 @@ def valida_data(dia=None,mes=None,ano=None):
     try:
         return True,  date(ano, mes, dia)
     except ValueError:
-        return False, 'Data inexitente'
+        raise ValueError
