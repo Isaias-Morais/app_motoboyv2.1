@@ -1,4 +1,6 @@
+from sqlalchemy.orm import Session
 from models.abastecimento_model import Abastecimento
+from datetime import date
 
 
 
@@ -21,7 +23,8 @@ def excluir_abastecimentos(session,moto_id):
         return False
 
 
-def historico_abastecimentos(session,moto_id):
+def historico_abastecimentos(session:Session,moto_id:int):
+
     abastecimentos = session.query(
         Abastecimento
     ).filter(
@@ -29,17 +32,32 @@ def historico_abastecimentos(session,moto_id):
     ).order_by(
         Abastecimento.data_abastecimento
     ).all()
+
+    if not abastecimentos:
+        return None
+
     return abastecimentos
 
 def abastecimento_existe(session,moto_id,quilometragem):
-    abastecimento = session.query(
+    abastecimento:Abastecimento = session.query(
         Abastecimento
     ).filter(
         Abastecimento.moto_id == moto_id,
         Abastecimento.quilometragem_abastecimento == quilometragem
     ).first()
 
-    print("QUERY RESULT:", abastecimento)
-
     return abastecimento is not None
 
+def abstecimento_por_data(session:Session,moto_id:int,data:date):
+
+    abastecimento:Abastecimento = session.query(
+        Abastecimento
+    ).filter(
+        Abastecimento.moto_id == moto_id,
+        Abastecimento.data_abastecimento == data
+    ).all()
+
+    if not abastecimento:
+        return None
+
+    return abastecimento

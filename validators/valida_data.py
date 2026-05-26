@@ -2,9 +2,9 @@ from datetime import date
 
 def valida_data(dia=None,mes=None,ano=None):
     if dia is None and mes is None and ano is None:
-        return True,date.today()
+        return None
 
     try:
-        return True,  date(ano, mes, dia)
+        date(ano, mes, dia)
     except ValueError:
         raise ValueError

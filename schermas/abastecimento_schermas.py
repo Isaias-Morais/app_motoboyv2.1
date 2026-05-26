@@ -6,9 +6,7 @@ from sqlalchemy import false
 
 
 class AbatecimentoBase(BaseModel):
-    dia:None
-    mes:None
-    ano:None
+    data:date
     posto:str
     litros:float
     valor:float
@@ -17,7 +15,7 @@ class AbatecimentoBase(BaseModel):
 
 
 class AbastecimentoResponse(BaseModel):
-    data_abastecimento:date
+    data_abastecimento:date=None
     posto: str
     litros: float
     valor: float

@@ -45,10 +45,13 @@ def busca_moto_id_service(session:Session,motoboy_id:int,moto_id:int):
     if not busca_motoboy_id(session=session,motoboy_id=motoboy_id):
         raise HTTPException(status_code=404,detail='motoboy invalido')
 
-    moto = busca_moto(session=session,id_motoboy=motoboy_id,id_moto=moto_id)
+    moto:Moto = busca_moto(session=session,id_motoboy=motoboy_id,id_moto=moto_id)
 
     if not moto:
         raise HTTPException(status_code=404,detail='nenhuma moto com esse id vinculado ao motoboy')
+
+    if moto.motoboy_id != motoboy_id:
+        raise HTTPException(status_code=404,detail='moto nao vinculada ao motoboy')
 
     return moto
 
