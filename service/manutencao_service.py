@@ -1,49 +1,35 @@
+from fastapi import HTTPException
+
 from models.manutencao_model import Manutencao
-from database.session import SessionLocal
+from sqlalchemy.orm import Session
 from repository.base_repository import salvar_objeto
 from repository.moto_repository import quilometragem_atual, atualizar_quilometragem
-from validators.manutencao_validacao import validacao_manutencao
+from service.motoboy_service import busca_moto_ativa_service
+from models.moto_model import Moto
 from validators.moto_validacao import validar_quilometragem_nova
-from validators.valida_data import valida_data
 from datetime import date
+from schermas.manutencao_schermas import ManutencaoCreate
 
-session = SessionLocal()
+def registra_manutencao_service(manutencao:ManutencaoCreate,session:Session,motoboy_id:int):
+    data = manutencao.data_manutencao
+    if not data:
+        data = date.today()
 
-def registra_manutencao(
-        dia=None,
-        mes=None,
-        ano=None,
-        tipo=None,
-        descricao=None,
-        valor=None,
-        quilometragem_manutencao=None,
-        moto_id=None
-    ):
-
-    valido , erro = validacao_manutencao(tipo,descricao,valor,quilometragem_manutencao,moto_id)
-    if not valido:
-        return erro
-
-    valido_data , data = valida_data(dia,mes,ano)
-    if not valido_data:
-        data = date.today
+    moto:Moto = busca_moto_ativa_service(session=session, motoboy_id=motoboy_id)
 
     manutencao = Manutencao(
         data_manutencao=data,
-        tipo=tipo,
-        descricao=descricao,
-        valor=valor,
-        quilometragem_manutencao=quilometragem_manutencao,
-        moto_id=moto_id
+        tipo=manutencao.tipo,
+        descricao=manutencao.descricao,
+        valor=manutencao.valor,
+        quilometragem_manutencao=manutencao.quilometragem_manutencao,
+        moto_id=moto.id
         )
+
+    if not manutencao:
+        raise HTTPException(status_code=400,detail='dados invalidos')
     salvar_objeto(session,manutencao)
 
-    km_atual = quilometragem_atual(session, moto_id)
-
-    valido,erro = validar_quilometragem_nova(km_atual, quilometragem_manutencao)
-    if valido:
-        atualizar_quilometragem(session, moto_id, quilometragem_manutencao)
-    else:
-        return erro
-
     return manutencao
+
+    #cria funcao para atualizar os kms com base na quilometragem atual
