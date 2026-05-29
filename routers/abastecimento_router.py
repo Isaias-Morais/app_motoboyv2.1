@@ -8,6 +8,6 @@ from security.depends import get_current_user_id
 
 router = APIRouter(prefix='/abastecimento')
 
-@router.post('/cria',response_model=AbastecimentoCreate)
+@router.post('/cria',response_model=AbastecimentoResponse)
 def adicionar_abastecimento(abastecimento:AbastecimentoCreate,db:Session = Depends(get_db),motoboy_id:int = Depends(get_current_user_id)):
     return registra_abastecimento(abastecimento=abastecimento,session=db,motoboy_id=motoboy_id)

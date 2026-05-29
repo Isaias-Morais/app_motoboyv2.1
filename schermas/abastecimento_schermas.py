@@ -6,9 +6,9 @@ from sqlalchemy import false
 
 
 class AbatecimentoBase(BaseModel):
-    dia:int
-    mes:int
-    ano:int
+    dia:None
+    mes:None
+    ano:None
     posto:str
     litros:float
     valor:float
@@ -16,7 +16,13 @@ class AbatecimentoBase(BaseModel):
     quilometragem_abastecimento:int
 
 
-class AbastecimentoResponse(AbatecimentoBase):
+class AbastecimentoResponse(BaseModel):
+    data_abastecimento:date
+    posto: str
+    litros: float
+    valor: float
+    tanque_completo: bool = False
+    quilometragem_abastecimento: int
     id:int
 
 
