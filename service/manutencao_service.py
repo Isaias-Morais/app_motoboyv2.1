@@ -1,8 +1,8 @@
 from fastapi import HTTPException
-
 from models.manutencao_model import Manutencao
 from sqlalchemy.orm import Session
 from repository.base_repository import salvar_objeto
+from repository.manutencao_repository import listar_manutencao
 from repository.moto_repository import quilometragem_atual, atualizar_quilometragem
 from service.motoboy_service import busca_moto_ativa_service
 from models.moto_model import Moto
@@ -31,5 +31,21 @@ def registra_manutencao_service(manutencao:ManutencaoCreate,session:Session,moto
     salvar_objeto(session,manutencao)
 
     return manutencao
+
+
+def busca_manutencoes_moto_service(session:Session,motoboy_id:int):
+
+    moto:Moto = busca_moto_ativa_service(session=session,motoboy_id=motoboy_id)
+
+    if not moto:
+        raise HTTPException(status_code=400,detail='campo moto invalido')
+
+    lista = listar_manutencao(session=session,moto_id=moto.id)
+
+    if not lista:
+        raise HTTPException(status_code=400,detail='lista vazia')
+
+    return lista
+
 
     #cria funcao para atualizar os kms com base na quilometragem atual

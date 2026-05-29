@@ -6,7 +6,7 @@ class ManutencaoBase(BaseModel):
     tipo: str
     descricao: str = None
 
-class ManutenacaoResponse(ManutencaoBase):
+class ManutencaoResponse(ManutencaoBase):
     id: int
     moto_id: int
     valor: float
