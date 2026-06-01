@@ -4,8 +4,7 @@ from fastapi import Depends
 from database.db import get_db
 from schermas.manutencao_schermas import *
 from security.depends import get_current_user_id
-from service.manutencao_service import registra_manutencao_service, busca_manutencoes_moto_service
-
+from service.manutencao_service import *
 router = APIRouter(prefix="/manutencao")
 
 @router.post("/criar", response_model=ManutencaoCreate)
@@ -16,3 +15,7 @@ def criar_manutencao(manutencao:ManutencaoCreate,db:Session=Depends(get_db),moto
 @router.get("/listar", response_model=list[ManutencaoResponse])
 def listar_manutencoes_moto(db:Session=Depends(get_db),motoboy_id:int=Depends(get_current_user_id)):
     return busca_manutencoes_moto_service(session=db,motoboy_id=motoboy_id)
+
+@router.get('/buscar', response_model=list[ManutencaoResponse])
+def buscar_manutencao_data(data:date,db:Session=Depends(get_db),motoboy_id:int=Depends(get_current_user_id)):
+    return busca_manutencoes_moto_data_service(session=db,motoboy_id=motoboy_id,data=data)

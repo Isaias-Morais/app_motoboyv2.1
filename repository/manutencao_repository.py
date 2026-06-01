@@ -14,6 +14,14 @@ def listar_manutencao(session:Session,moto_id:int):
     return manutencoes
 
 
+def listar_manutencao_data(session:Session,moto_id:int,data:date):
+    manutencoes =  session.query(Manutencao).filter(Manutencao.moto_id == moto_id, Manutencao.data_manutencao == data).all()
+
+    if not manutencoes:
+        return None
+
+    return manutencoes
+
 def excluir_manutencao(session,moto_id):
     manutencao = session.query(Manutencao).filter(
         Manutencao.moto_id == moto_id,
