@@ -11,12 +11,11 @@ from service.motoboy_service import busca_moto_ativa_service
 from service.moto_service import atualizar_consumo_moto
 from service.calculos_service import calcular_km_rodados, calcular_consumo_medio_real
 from validators.moto_validacao import validar_quilometragem_nova
-from validators.valida_data import valida_data
 from datetime import date
 from schermas.abastecimento_schermas import AbastecimentoCreate
 
 
-def registra_abastecimento(abastecimento:AbastecimentoCreate,session:Session,motoboy_id:int):
+def registra_abastecimento_service(abastecimento:AbastecimentoCreate,session:Session,motoboy_id:int):
     data = abastecimento.data
     if not data:
         data = date.today()

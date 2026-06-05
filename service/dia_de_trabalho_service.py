@@ -1,48 +1,33 @@
+from sqlalchemy.orm import Session
 from models.dia_de_trabalho_model import Dia_de_trabalho
-from database.session import SessionLocal
 from repository.base_repository import salvar_objeto
-from repository.moto_repository import atualizar_quilometragem, quilometragem_atual
+from schermas.dia_de_trabalho_schermas import DiaDeTrabalhoCreate
+from service.moto_service import busca_moto_id_service
 from validators.dia_de_trabalho_validators import validacao_dia_de_trabalho
-from validators.moto_validacao import validar_quilometragem_nova
-from validators.valida_data import valida_data
+from models.moto_model import Moto
+from service.motoboy_service import  busca_moto_ativa_service
 from datetime import date
 
-session = SessionLocal()
+def registra_dia_de_trabalho_service(
+        session:Session,
+        dia:DiaDeTrabalhoCreate,
+        motoboy_id:int
+):
+    moto: Moto = busca_moto_ativa_service(session=session, motoboy_id=motoboy_id)
 
-def registra_dia_de_trabalho(
-        dia=None,
-        mes=None,
-        ano=None,
-        km_inicial=None,
-        km_final=None,
-        ganhon_bruto=None,
-        moto_id=None
-    ):
-
-    valido , erro = validacao_dia_de_trabalho(km_inicial,km_final,ganhon_bruto,moto_id)
-    if not valido:
-        return erro
-
-    valido_data, data = valida_data(dia, mes, ano)
-    if not valido_data:
-        data = date.today()
+    data_trabalhada = dia.data_trabalhada
+    if not data_trabalhada:
+        data_trabalhada = date.today()
 
     dia_de_trabalho = Dia_de_trabalho(
-        data_trabalhada=data,
-        quilometragem_inicial=km_inicial,
-        quilometragem_final=km_final,
-        ganho_bruto= ganhon_bruto,
-        moto_id=moto_id
+        data_trabalhada=data_trabalhada,
+        quilometragem_inicial=dia.quilometragem_inicial,
+        quilometragem_final=dia.quilometragem_final,
+        ganho_bruto=dia.ganho_bruto,
+        moto_id=moto.id
     )
     salvar_objeto(session,dia_de_trabalho)
 
-    km_atual = quilometragem_atual(session,moto_id)
-
-    valido, erro = validar_quilometragem_nova(km_atual,km_final)
-    if valido:
-        atualizar_quilometragem(session,moto_id,km_final)
-    else:
-        return erro
-
+    #adiciona atualiza km verificando o km antigo e o atual
 
     return dia_de_trabalho
