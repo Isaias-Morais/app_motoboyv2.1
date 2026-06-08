@@ -1,15 +1,35 @@
 from models.dia_de_trabalho_model import Dia_de_trabalho
+from sqlalchemy.orm import Session
+from datetime import date
 from sqlalchemy import func
 
-def listar_dia_de_trabalho(session):
-    dias_trabalhados_geral = session.query(
+def listar_dia_de_trabalho(session:Session,moto_id:int):
+    historico_dia_de_trabalho = session.query(
         Dia_de_trabalho
-    ).all
+    ).filter(
+        Dia_de_trabalho.moto_id == moto_id
+    ).all()
 
-    if dias_trabalhados_geral:
-        return dias_trabalhados_geral
-    else:
-        return False
+    if not historico_dia_de_trabalho:
+        return None
+
+    return historico_dia_de_trabalho
+
+
+
+def buscar_dia_de_trabalho(session:Session,moto_id:int,data:date):
+    dia_de_trabalho = session.query(
+        Dia_de_trabalho
+    ).filter(
+        Dia_de_trabalho.moto_id == moto_id,
+        Dia_de_trabalho.data_trabalhada == data
+    ).first()
+
+    if not dia_de_trabalho:
+        return None
+
+    return dia_de_trabalho
+
 
 
 def excluir_dias_trabalhados(session,moto_id):
