@@ -1,4 +1,3 @@
-from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from models.motoboy_model import Motoboy
 from models.moto_model import Moto

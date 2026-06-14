@@ -8,7 +8,7 @@ class Dia_de_trabalho(Base):
     __tablename__ = 'dia_de_trabalho'
 
     id : Mapped[int] = mapped_column(primary_key=True)
-    data_trabalhada : Mapped[date] = mapped_column(Date,nullable=False)
+    data_trabalhada : Mapped[date] = mapped_column(Date,nullable=False,unique=True)
     quilometragem_inicial : Mapped[int] = mapped_column(nullable=False)
     quilometragem_final : Mapped[int] = mapped_column(nullable=False)
     ganho_bruto : Mapped[Decimal] = mapped_column(Numeric(10, 2),nullable=False)

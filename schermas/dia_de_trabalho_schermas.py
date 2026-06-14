@@ -14,3 +14,7 @@ class DiaDeTrabalhoResponse(DiaDeTrabalhoBase):
     id:int
     data_trabalhada: date
     moto_id: int
+
+class DiaDeTrabalhoUpdate(DiaDeTrabalhoBase):
+    data_trabalhada:date
+    moto_id: int

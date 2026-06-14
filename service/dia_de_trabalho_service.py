@@ -1,8 +1,8 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from models.dia_de_trabalho_model import Dia_de_trabalho
-from repository.base_repository import salvar_objeto
-from schermas.dia_de_trabalho_schermas import DiaDeTrabalhoCreate
+from repository.base_repository import salvar_objeto, atualizar_objeto
+from schermas.dia_de_trabalho_schermas import DiaDeTrabalhoCreate, DiaDeTrabalhoUpdate
 from models.moto_model import Moto
 from service.motoboy_service import  busca_moto_ativa_service
 from datetime import date
@@ -19,7 +19,7 @@ def registra_dia_de_trabalho_service(
     if not data_trabalhada:
         data_trabalhada = date.today()
 
-    dia_verific = buscar_dia_de_trabalho(session=session,moto_id=moto.id,data=data_trabalhada)
+    dia_verific = buscar_dia_de_trabalho_data(session=session,moto_id=moto.id,data=data_trabalhada)
 
     dia_de_trabalho = Dia_de_trabalho(
         data_trabalhada=data_trabalhada,
@@ -50,14 +50,34 @@ def listar_dia_de_trabalho_service(session:Session,motoboy_id:int):
     return historico
 
 
+
 def dia_de_trabalho_service(data:date,session:Session,motoboy_id:int):
 
     moto:Moto = busca_moto_ativa_service(session=session, motoboy_id=motoboy_id)
 
-    dia_de_trabalho = buscar_dia_de_trabalho(session=session,data=data,moto_id=moto.id)
+    dia_de_trabalho = buscar_dia_de_trabalho_data(session=session,data=data,moto_id=moto.id)
 
     if not dia_de_trabalho:
         raise HTTPException(status_code=404,detail='nenhum dia encontrado')
 
     return dia_de_trabalho
+
+
+
+def atualizar_dia_de_trabalho_service(
+        session:Session,
+        dia_id:int,
+        motoboy_id:int,
+        atualizacao:DiaDeTrabalhoUpdate
+    ):
+
+
+    moto:Moto = busca_moto_ativa_service(session=session, motoboy_id=motoboy_id)
+
+    dia:Dia_de_trabalho = buscar_dia_de_trabalho_id(session=session,id=dia_id,moto_id=moto.id)
+
+    if not dia:
+        raise HTTPException(status_code=404,detail='nenhum dia encontrado')
+
+    return atualizar_objeto(session=session,objeto=dia,dados=atualizacao)
 

@@ -3,7 +3,7 @@ from unittest.mock import mock_open
 from fastapi import HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from models.motoboy_model import Motoboy
-from repository.base_repository import salvar_objeto
+from repository.base_repository import *
 from repository.moto_repository import listar_moto
 from security.hash import *
 from security.jwt import criar_token

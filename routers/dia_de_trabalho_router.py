@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from schermas.dia_de_trabalho_schermas import DiaDeTrabalhoCreate, DiaDeTrabalhoResponse
+from schermas.dia_de_trabalho_schermas import DiaDeTrabalhoCreate, DiaDeTrabalhoResponse, DiaDeTrabalhoUpdate
 from database.db import get_db
 from service.dia_de_trabalho_service import *
 from security.depends import get_current_user_id
@@ -34,3 +34,20 @@ def buscar_dia_de_trabalho_data(
     ):
 
     return dia_de_trabalho_service(session=db, motoboy_id=motoboy_id, data=data)
+
+
+@router.patch('/atualizar',response_model=DiaDeTrabalhoUpdate)
+def atualizar_dia_de_trabalho(
+        id:int,
+        dia_de_trabalhado_update:DiaDeTrabalhoUpdate,
+        db:Session = Depends(get_db),
+        motoboy_id:int = Depends(get_current_user_id),
+
+    ):
+
+     return atualizar_dia_de_trabalho_service(
+        dia_id=id,
+        session=db,
+        motoboy_id=motoboy_id,
+        atualizacao=dia_de_trabalhado_update
+    )

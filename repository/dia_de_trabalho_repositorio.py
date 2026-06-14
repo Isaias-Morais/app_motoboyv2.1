@@ -17,7 +17,7 @@ def listar_dia_de_trabalho(session:Session,moto_id:int):
 
 
 
-def buscar_dia_de_trabalho(session:Session,moto_id:int,data:date):
+def buscar_dia_de_trabalho_data(session:Session,moto_id:int,data:date):
     dia_de_trabalho = session.query(
         Dia_de_trabalho
     ).filter(
@@ -55,4 +55,18 @@ def historico_dias(session,moto_id):
         ).all()
 
     return dias
+
+
+def buscar_dia_de_trabalho_id(session:Session,moto_id:int,id:int):
+    dia_de_trabalho = session.query(
+        Dia_de_trabalho
+    ).filter(
+        Dia_de_trabalho.moto_id == moto_id,
+        Dia_de_trabalho.id == id
+    ).first()
+
+    if not dia_de_trabalho:
+        return None
+
+    return dia_de_trabalho
 
