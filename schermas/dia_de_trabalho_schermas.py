@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from datetime import date
 
 class DiaDeTrabalhoBase(BaseModel):
@@ -15,6 +15,8 @@ class DiaDeTrabalhoResponse(DiaDeTrabalhoBase):
     data_trabalhada: date
     moto_id: int
 
-class DiaDeTrabalhoUpdate(DiaDeTrabalhoBase):
-    data_trabalhada:date
-    moto_id: int
+class DiaDeTrabalhoUpdate(BaseModel):
+    quilometragem_inicial: int | None = None
+    quilometragem_final: int | None = None
+    ganho_bruto: float | None = None
+
