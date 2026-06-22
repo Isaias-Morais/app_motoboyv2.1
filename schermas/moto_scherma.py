@@ -13,3 +13,8 @@ class MotoResponse(MotoBase):
     id: int
     quilometragem: int
     consumo: float = 0
+
+class MotoUpdate(BaseModel):
+    marca : str
+    modelo : str
+    ano : int

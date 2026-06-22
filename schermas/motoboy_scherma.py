@@ -22,4 +22,13 @@ class MotoboyMoto(BaseModel):
     motos:list
 
 
+class MotoboyUpdate(BaseModel):
+    nome:str
+    email:EmailStr
+    idade:int
 
+
+class MotoboyPassUpdate(BaseModel):
+    email:EmailStr
+    senha_nova:str
+    senha_atual:str

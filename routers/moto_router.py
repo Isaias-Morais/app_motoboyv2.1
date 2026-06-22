@@ -21,4 +21,8 @@ async def buscar_motos_motoboy(motoboy_id:int = Depends(get_current_user_id), db
 async def buscar_moto_id(moto_id:int ,motoboy_id:int = Depends(get_current_user_id), db:Session=Depends(get_db)):
    return busca_moto_id_service(motoboy_id=motoboy_id,session=db,moto_id=moto_id)
 
+@router.patch('/update',response_model=MotoResponse)
+def atualizar_moto(moto:MotoUpdate,moto_id:int,motoboy_id:int = Depends(get_current_user_id), db:Session=Depends(get_db)):
+   return atualizar_moto_service(session=db,motoboy_id=motoboy_id,moto_id=moto_id,moto_update=moto)
+
 
