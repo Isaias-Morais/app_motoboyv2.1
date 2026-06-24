@@ -4,7 +4,7 @@ from fastapi import HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from models.motoboy_model import Motoboy
 from repository.base_repository import *
-from repository.moto_repository import listar_moto
+from repository.moto_repository import busca_moto,listar_moto
 from security.hash import *
 from security.jwt import criar_token
 from sqlalchemy.orm import Session
@@ -30,6 +30,7 @@ def registrar_motoboy(session:Session,motoboy:MotoboyCreate):
     )
 
     return salvar_objeto(session, motoboy_db)
+
 
 
 def login_user(user: OAuth2PasswordRequestForm,session:Session):
@@ -59,6 +60,7 @@ def definir_moto_ativa_service(session:Session,motoboy_id:int,moto_id:int):
     return definir_moto_ativa_motoboy(session=session,motoboy_id=motoboy_id,moto=moto)
 
 
+
 def buscar_motoboy_service(session:Session,motoboy_id:int):
 
     motoboy = busca_motoboy_id(session=session,motoboy_id=motoboy_id)
@@ -69,15 +71,17 @@ def buscar_motoboy_service(session:Session,motoboy_id:int):
     return motoboy
 
 
+
 def busca_moto_ativa_service(session:Session,motoboy_id:int):
 
     motoboy:Motoboy = buscar_motoboy_service(session=session,motoboy_id=motoboy_id)
 
-    moto = busca_moto_id_service(session=session,motoboy_id=motoboy_id,moto_id=motoboy.moto_ativa)
+    moto = busca_moto(session=session,id_motoboy=motoboy_id,id_moto=motoboy.moto_ativa)
 
     if not moto:
         raise HTTPException(status_code=404,detail='moto nao vinculada id ')
     return moto
+
 
 
 def atualizar_dados_motoboy(session:Session,motoboy_id:int,motoboy_update:MotoboyUpdate):
@@ -85,6 +89,7 @@ def atualizar_dados_motoboy(session:Session,motoboy_id:int,motoboy_update:Motobo
     motoboy: Motoboy = buscar_motoboy_service(session=session, motoboy_id=motoboy_id)
 
     return atualizar_objeto(session=session,objeto=motoboy,dados=motoboy_update)
+
 
 
 def atualizar_senha_motoboy_service(session:Session,motoboy_id:int,motoboy_update:MotoboyPassUpdate):

@@ -13,6 +13,7 @@ from service.calculos_service import calcular_km_rodados, calcular_consumo_medio
 from validators.moto_validacao import validar_quilometragem_nova
 from datetime import date
 from schermas.abastecimento_schermas import AbastecimentoCreate
+from repository.moto_repository import busca_moto
 
 
 def registra_abastecimento_service(abastecimento:AbastecimentoCreate,session:Session,motoboy_id:int):
@@ -20,7 +21,9 @@ def registra_abastecimento_service(abastecimento:AbastecimentoCreate,session:Ses
     if not data:
         data = date.today()
 
-    moto:Moto = busca_moto_ativa_service(session=session,motoboy_id=motoboy_id)
+    moto:Moto = busca_moto(session=session,motoboy_id=motoboy_id)
+    if not moto:
+        raise HTTPException(status_code=404, detail='nenhuma moto encontrada ')
 
     novo_abastecimento = Abastecimento(
             data_abastecimento=data,
