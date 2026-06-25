@@ -16,3 +16,9 @@ class ManutencaoCreate(ManutencaoBase):
     valor: float
     quilometragem_manutencao: int
 
+
+class ManutencaoUpdate(BaseModel):
+    valor: float
+    tipo: str
+    descricao: str = None
+

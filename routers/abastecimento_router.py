@@ -20,3 +20,12 @@ async def listar_abstecimentos(db:Session = Depends(get_db),motoboy_id:int = Dep
 @router.get('/id',response_model=list[AbastecimentoResponse])
 async def abastecimento_por_data(data:date,db:Session = Depends(get_db),motoboy_id:int = Depends(get_current_user_id)):
     return abastecimento_por_data_service(session=db,motoboy_id=motoboy_id,data=data)
+
+
+@router.patch('/atualizar',response_model=AbastecimentoResponse)
+def atualizar_abastecimento(
+        id:int,
+        abastecimento:AbastecimentoUpdate,
+        db:Session = Depends(get_db),
+        motoboy_id:int = Depends(get_current_user_id)):
+    return atualizar_abastecimento_service(session=db,motoboy_id=motoboy_id,abastecimento_update=abastecimento,abastecimento_id=id)

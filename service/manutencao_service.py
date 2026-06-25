@@ -1,14 +1,15 @@
 from fastapi import HTTPException
 from models.manutencao_model import Manutencao
 from sqlalchemy.orm import Session
-from repository.base_repository import salvar_objeto
-from repository.manutencao_repository import listar_manutencao, listar_manutencao_data
+from repository.base_repository import salvar_objeto, atualizar_objeto
+from repository.manutencao_repository import listar_manutencao, listar_manutencao_data, buscar_manutencao
 from repository.moto_repository import quilometragem_atual, atualizar_quilometragem
-from service.motoboy_service import busca_moto_ativa_service
+from service.motoboy_service import busca_moto_ativa_service, buscar_motoboy_service
 from models.moto_model import Moto
 from validators.moto_validacao import validar_quilometragem_nova
 from datetime import date
-from schermas.manutencao_schermas import ManutencaoCreate
+from schermas.manutencao_schermas import ManutencaoCreate, ManutencaoUpdate
+
 
 def registra_manutencao_service(manutencao:ManutencaoCreate,session:Session,motoboy_id:int):
     data = manutencao.data_manutencao
@@ -62,3 +63,18 @@ def busca_manutencoes_moto_data_service(session: Session, motoboy_id: int, data:
 
     return lista
     #cria funcao para atualizar os kms com base na quilometragem atual
+
+
+def atualizar_manutencao_service(id_manutencao:int,manutencao_update:ManutencaoUpdate,session:Session,motoboy_id:int):
+
+    buscar_motoboy_service(session=session,motoboy_id=motoboy_id)
+
+    moto = busca_moto_ativa_service(session=session,motoboy_id=motoboy_id)
+
+    manutencao:Manutencao = buscar_manutencao(session=session,moto_id=moto.id,id=id_manutencao)
+
+    if not manutencao:
+        raise HTTPException(status_code=404,detail='nenhum registro encontrado ')
+
+    return atualizar_objeto(session=session,objeto=manutencao,dados=manutencao_update)
+

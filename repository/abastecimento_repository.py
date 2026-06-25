@@ -3,6 +3,18 @@ from models.abastecimento_model import Abastecimento
 from datetime import date
 
 
+def buscar_abastecimento_id(session,moto_id,abastecimento_id:int):
+    abastecimento = (
+        session.query(
+            Abastecimento
+    ).filter(
+            Abastecimento.id == abastecimento_id,
+            Abastecimento.moto_id == moto_id
+    ).first()
+    )
+
+    return abastecimento
+
 
 def listar_abastecimento(session):
     abastecimentos = session.query(Abastecimento).all()
@@ -38,6 +50,7 @@ def historico_abastecimentos(session:Session,moto_id:int):
 
     return abastecimentos
 
+
 def abastecimento_existe(session,moto_id,quilometragem):
     abastecimento:Abastecimento = session.query(
         Abastecimento
@@ -47,6 +60,7 @@ def abastecimento_existe(session,moto_id,quilometragem):
     ).first()
 
     return abastecimento is not None
+
 
 def abstecimento_por_data(session:Session,moto_id:int,data:date):
 
@@ -61,3 +75,4 @@ def abstecimento_por_data(session:Session,moto_id:int,data:date):
         return None
 
     return abastecimento
+

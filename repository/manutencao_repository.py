@@ -4,6 +4,20 @@ from sqlalchemy.orm import Session
 
 from models.manutencao_model import Manutencao
 
+def buscar_manutencao(session:Session,moto_id:int,id:int):
+    manutencao = (
+        session.query(Manutencao)
+    .filter(
+            Manutencao.id == id,
+            Manutencao.moto_id == moto_id
+        )
+    .first()
+    )
+
+    return manutencao
+
+
+
 
 def listar_manutencao(session:Session,moto_id:int):
     manutencoes =  session.query(Manutencao).filter(Manutencao.moto_id == moto_id).all()

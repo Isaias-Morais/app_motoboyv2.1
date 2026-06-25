@@ -26,3 +26,10 @@ class AbastecimentoResponse(BaseModel):
 
 class AbastecimentoCreate(AbatecimentoBase):
     moto_id:None
+
+
+class AbastecimentoUpdate(BaseModel):
+    posto: str
+    litros: float
+    valor: float
+    tanque_completo: bool = False
