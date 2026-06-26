@@ -1,10 +1,10 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from models.dia_de_trabalho_model import Dia_de_trabalho
-from repository.base_repository import salvar_objeto, atualizar_objeto
-from schermas.dia_de_trabalho_schermas import DiaDeTrabalhoCreate, DiaDeTrabalhoUpdate
+from repository.base_repository import salvar_objeto, atualizar_objeto, deletar_objeto
+from schermas.dia_de_trabalho_schermas import DiaDeTrabalhoCreate, DiaDeTrabalhoUpdate, DiaDeTrabalhoDelete
 from models.moto_model import Moto
-from service.motoboy_service import  busca_moto_ativa_service
+from service.motoboy_service import busca_moto_ativa_service, buscar_motoboy_service
 from datetime import date
 from repository.dia_de_trabalho_repositorio import *
 
@@ -81,3 +81,14 @@ def atualizar_dia_de_trabalho_service(
 
     return atualizar_objeto(session=session,objeto=dia,dados=atualizacao)
 
+
+
+def deletar_dia_de_trabalho_service(session:Session,dia:DiaDeTrabalhoDelete,motoboy_id:int):
+
+    buscar_motoboy_service(session=session, motoboy_id=motoboy_id)
+
+    dia:Dia_de_trabalho = dia_de_trabalho_service(session=session, motoboy_id=motoboy_id,data=dia.data_dia)
+    if not dia:
+        raise HTTPException(status_code=404,detail='nenhum dia encontrado')
+
+    return deletar_objeto(session=session,objeto=dia)

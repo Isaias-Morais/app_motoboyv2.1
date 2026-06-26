@@ -20,5 +20,11 @@ def atualizar_objeto(session:Session,objeto, dados):
         session.commit()
         session.refresh(objeto)
 
+    return objeto
+
+
+def deletar_objeto(session:Session, objeto):
+    session.delete(objeto)
+    session.commit()
 
     return objeto

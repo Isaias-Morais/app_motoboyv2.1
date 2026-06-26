@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from schermas.dia_de_trabalho_schermas import DiaDeTrabalhoCreate, DiaDeTrabalhoResponse, DiaDeTrabalhoUpdate
+from schermas.dia_de_trabalho_schermas import DiaDeTrabalhoCreate, DiaDeTrabalhoResponse, DiaDeTrabalhoUpdate, \
+    DiaDeTrabalhoDelete
 from database.db import get_db
 from service.dia_de_trabalho_service import *
 from security.depends import get_current_user_id
@@ -51,3 +52,8 @@ def atualizar_dia_de_trabalho(
         motoboy_id=motoboy_id,
         atualizacao=dia_de_trabalhado_update
     )
+
+
+@router.delete('/deletar',response_model=DiaDeTrabalhoResponse)
+def deletar_dia_de_trabalho(dia:DiaDeTrabalhoDelete,db:Session = Depends(get_db), motoboy_id:int = Depends(get_current_user_id)):
+    return deletar_dia_de_trabalho_service(session=db,dia=dia,motoboy_id=motoboy_id)

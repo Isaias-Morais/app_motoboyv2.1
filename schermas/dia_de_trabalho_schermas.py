@@ -20,3 +20,6 @@ class DiaDeTrabalhoUpdate(BaseModel):
     quilometragem_final: int | None = None
     ganho_bruto: float | None = None
 
+class DiaDeTrabalhoDelete(BaseModel):
+    data_dia:date
+
