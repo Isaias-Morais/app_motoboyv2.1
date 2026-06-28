@@ -21,20 +21,6 @@ def listar_abastecimento(session):
     return abastecimentos
 
 
-def excluir_abastecimentos(session,moto_id):
-    abastecimento = session.query(
-        Abastecimento
-    ).filter(
-        Abastecimento.moto_id == moto_id
-    ).all()
-    if abastecimento:
-        session.delete(abastecimento)
-        session.commit()
-        return True
-    else:
-        return False
-
-
 def historico_abastecimentos(session:Session,moto_id:int):
 
     abastecimentos = session.query(

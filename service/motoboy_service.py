@@ -52,9 +52,9 @@ def login_user(user: OAuth2PasswordRequestForm,session:Session):
 
 def definir_moto_ativa_service(session:Session,motoboy_id:int,moto_id:int):
 
-    moto = busca_moto_ativa_service(session=session,motoboy_id=motoboy_id)
+    moto = busca_moto(session=session,id_motoboy=motoboy_id,id_moto=moto_id)
 
-    if not moto(session=session, motoboy_id=motoboy_id):
+    if not moto:
         raise HTTPException(status_code=404, detail='motoboy invalido')
 
     return definir_moto_ativa_motoboy(session=session,motoboy_id=motoboy_id,moto=moto)

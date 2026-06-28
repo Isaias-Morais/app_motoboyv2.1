@@ -22,3 +22,7 @@ class ManutencaoUpdate(BaseModel):
     tipo: str
     descricao: str = None
 
+
+class ManutencaoDelete(BaseModel):
+    id: int
+

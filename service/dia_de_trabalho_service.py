@@ -38,7 +38,9 @@ def registra_dia_de_trabalho_service(
 
 
 
-def listar_dia_de_trabalho_service(session:Session,motoboy_id:int):
+def listar_dia_de_trabalho_service(
+        session:Session,
+        motoboy_id:int):
 
     moto:Moto= busca_moto_ativa_service(session=session, motoboy_id=motoboy_id)
 
@@ -51,7 +53,10 @@ def listar_dia_de_trabalho_service(session:Session,motoboy_id:int):
 
 
 
-def dia_de_trabalho_service(data:date,session:Session,motoboy_id:int):
+def dia_de_trabalho_service(
+        data:date,
+        session:Session,
+        motoboy_id:int):
 
     moto:Moto = busca_moto_ativa_service(session=session, motoboy_id=motoboy_id)
 
@@ -83,12 +88,15 @@ def atualizar_dia_de_trabalho_service(
 
 
 
-def deletar_dia_de_trabalho_service(session:Session,dia:DiaDeTrabalhoDelete,motoboy_id:int):
+def deletar_dia_de_trabalho_service(
+        session:Session,
+        dia:date,
+        motoboy_id:int):
 
     buscar_motoboy_service(session=session, motoboy_id=motoboy_id)
 
-    dia:Dia_de_trabalho = dia_de_trabalho_service(session=session, motoboy_id=motoboy_id,data=dia.data_dia)
+    dia:Dia_de_trabalho = dia_de_trabalho_service(session=session, motoboy_id=motoboy_id,data=dia)
     if not dia:
-        raise HTTPException(status_code=404,detail='nenhum dia encontrado')
+        raise HTTPException(status_code=404,detail='nenhum registro encontrado')
 
     return deletar_objeto(session=session,objeto=dia)

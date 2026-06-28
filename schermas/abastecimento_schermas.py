@@ -33,3 +33,7 @@ class AbastecimentoUpdate(BaseModel):
     litros: float
     valor: float
     tanque_completo: bool = False
+
+
+class AbastecimentoDelete(BaseModel):
+    id: int

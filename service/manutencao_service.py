@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from models.manutencao_model import Manutencao
 from sqlalchemy.orm import Session
-from repository.base_repository import salvar_objeto, atualizar_objeto
+from repository.base_repository import salvar_objeto, atualizar_objeto, deletar_objeto
 from repository.manutencao_repository import listar_manutencao, listar_manutencao_data, buscar_manutencao
 from repository.moto_repository import quilometragem_atual, atualizar_quilometragem
 from service.motoboy_service import busca_moto_ativa_service, buscar_motoboy_service
@@ -77,4 +77,18 @@ def atualizar_manutencao_service(id_manutencao:int,manutencao_update:ManutencaoU
         raise HTTPException(status_code=404,detail='nenhum registro encontrado ')
 
     return atualizar_objeto(session=session,objeto=manutencao,dados=manutencao_update)
+
+
+def deletar_manutencao_service(manutencao_id:int ,session:Session,motoboy_id:int):
+
+    buscar_motoboy_service(session=session,motoboy_id=motoboy_id)
+
+    moto : Moto = busca_moto_ativa_service(session=session,motoboy_id=motoboy_id)
+
+    manutencao = buscar_manutencao(session=session,moto_id=moto.id,id=manutencao_id)
+
+    if not manutencao:
+        raise HTTPException(status_code=404,detail='nenhum registro encontrado ')
+
+    return deletar_objeto(session=session,objeto=manutencao)
 

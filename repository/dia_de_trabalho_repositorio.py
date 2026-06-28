@@ -31,20 +31,6 @@ def buscar_dia_de_trabalho_data(session:Session,moto_id:int,data:date):
     return dia_de_trabalho
 
 
-
-def excluir_dias_trabalhados(session,moto_id):
-    dia_trabalhado = session.query(
-        Dia_de_trabalho
-    ).filter(
-        Dia_de_trabalho.moto_id == moto_id
-    ).first()
-    if dia_trabalhado:
-        session.delete(dia_trabalhado)
-        session.commit()
-        return True
-    else:
-        return False
-
 def historico_dias(session,moto_id):
     dias = session.query(
         Dia_de_trabalho.data_trabalhada,

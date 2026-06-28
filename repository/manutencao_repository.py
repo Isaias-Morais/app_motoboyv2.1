@@ -17,8 +17,6 @@ def buscar_manutencao(session:Session,moto_id:int,id:int):
     return manutencao
 
 
-
-
 def listar_manutencao(session:Session,moto_id:int):
     manutencoes =  session.query(Manutencao).filter(Manutencao.moto_id == moto_id).all()
 
@@ -36,12 +34,6 @@ def listar_manutencao_data(session:Session,moto_id:int,data:date):
 
     return manutencoes
 
-def excluir_manutencao(session,moto_id):
-    manutencao = session.query(Manutencao).filter(
-        Manutencao.moto_id == moto_id,
-    ).all()
-    session.delete(manutencao)
-    session.commit()
 
 def historico_manutencoes(session,moto_id):
     session.query(Manutencao).filter(
