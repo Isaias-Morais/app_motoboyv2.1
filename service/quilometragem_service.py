@@ -1,0 +1,9 @@
+from datetime import date
+
+from sqlalchemy.orm import Session
+
+from repository.manutencao_repository import buscar_quilometragem_manutencao_anterior,buscar_quilometragem_manutencao_posterior
+from repository.abastecimento_repository import buscar_quilometragem_abastecimento_anterior,buscar_quilometragem_abastecimento_posterior
+from repository.dia_de_trabalho_repositorio import buscar_quilometragem_dia_de_trabalho_anterior,buscar_quilometragem_dia_de_trabalho_posterior
+
+def validacao_quilometregem(moto_id:int,data:date,km_nova:int,session:Session)

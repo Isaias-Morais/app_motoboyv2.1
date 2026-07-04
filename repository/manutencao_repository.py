@@ -35,7 +35,34 @@ def listar_manutencao_data(session:Session,moto_id:int,data:date):
     return manutencoes
 
 
-def historico_manutencoes(session,moto_id):
-    session.query(Manutencao).filter(
-        Manutencao.id == moto_id
-    )
+def buscar_quilometragem_manutencao_posterior(session:Session,moto_id:int,data:date):
+
+    registro:Manutencao = session.query(
+        Manutencao
+    ).filter(
+        Manutencao.moto_id == moto_id,
+        Manutencao.data_manutencao > data
+    ).order_by(
+        Manutencao.data_manutencao.asc()
+    ).first()
+
+    if not registro:
+        return None
+
+    return registro
+
+
+def buscar_quilometragem_manutencao_anterior(session: Session, moto_id: int, data: date):
+    registro: Manutencao = session.query(
+        Manutencao
+    ).filter(
+        Manutencao.moto_id == moto_id,
+        Manutencao.data_manutencao < data
+    ).order_by(
+        Manutencao.data_manutencao.desc()
+    ).first()
+
+    if not registro:
+        return None
+
+    return registro

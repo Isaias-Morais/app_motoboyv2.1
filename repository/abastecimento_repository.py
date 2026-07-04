@@ -49,7 +49,6 @@ def abastecimento_existe(session,moto_id,quilometragem):
 
 
 def abstecimento_por_data(session:Session,moto_id:int,data:date):
-
     abastecimento:Abastecimento = session.query(
         Abastecimento
     ).filter(
@@ -61,4 +60,37 @@ def abstecimento_por_data(session:Session,moto_id:int,data:date):
         return None
 
     return abastecimento
+
+
+def buscar_quilometragem_abastecimento_posterior(session:Session,moto_id:int,data:date):
+
+    registro:Abastecimento = session.query(
+        Abastecimento
+    ).filter(
+        Abastecimento.moto_id == moto_id,
+        Abastecimento.data_abastecimento > data
+    ).order_by(
+        Abastecimento.data_abastecimento.asc()
+    ).first()
+
+    if not registro:
+        return None
+
+    return registro
+
+
+def buscar_quilometragem_abastecimento_anterior(session: Session, moto_id: int, data: date):
+    registro: Abastecimento = session.query(
+        Abastecimento
+    ).filter(
+        Abastecimento.moto_id == moto_id,
+        Abastecimento.data_abastecimento < data
+    ).order_by(
+        Abastecimento.data_abastecimento.desc()
+    ).first()
+
+    if not registro:
+        return None
+
+    return registro
 

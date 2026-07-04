@@ -1,5 +1,4 @@
 from typing import Dict
-
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from service.abastecimento_service import *

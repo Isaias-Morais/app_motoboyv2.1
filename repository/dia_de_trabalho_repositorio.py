@@ -56,3 +56,36 @@ def buscar_dia_de_trabalho_id(session:Session,moto_id:int,id:int):
 
     return dia_de_trabalho
 
+
+def buscar_quilometragem_dia_de_trabalho_posterior(session:Session,moto_id:int,data:date):
+
+    registro:Dia_de_trabalho = session.query(
+        Dia_de_trabalho
+    ).filter(
+        Dia_de_trabalho.moto_id == moto_id,
+        Dia_de_trabalho.data_trabalhada > data
+    ).order_by(
+        Dia_de_trabalho.data_trabalhada.asc()
+    ).first()
+
+    if not registro:
+        return None
+
+    return registro
+
+
+def buscar_quilometragem_dia_de_trabalho_anterior(session: Session, moto_id: int, data: date):
+    registro: Dia_de_trabalho = session.query(
+        Dia_de_trabalho
+    ).filter(
+        Dia_de_trabalho.moto_id == moto_id,
+        Dia_de_trabalho.data_trabalhada < data
+    ).order_by(
+        Dia_de_trabalho.data_trabalhada.desc()
+    ).first()
+
+    if not registro:
+        return None
+
+    return registro
+
