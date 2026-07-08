@@ -52,7 +52,7 @@ def buscar_quilometragem_manutencao_posterior(session:Session,moto_id:int,data:d
     return registro
 
 
-def buscar_quilometragem_manutencao_anterior(session: Session, moto_id: int, data: date):
+def buscar_quilometragem_manutencao_anterior(session:Session, moto_id: int, data: date):
     registro: Manutencao = session.query(
         Manutencao
     ).filter(
