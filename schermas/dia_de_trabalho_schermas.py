@@ -8,7 +8,7 @@ class DiaDeTrabalhoBase(BaseModel):
 
 class DiaDeTrabalhoCreate(DiaDeTrabalhoBase):
     data_trabalhada:date
-    moto_id:int
+
 
 class DiaDeTrabalhoResponse(DiaDeTrabalhoBase):
     id:int

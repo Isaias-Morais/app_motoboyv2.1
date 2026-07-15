@@ -79,7 +79,7 @@ def busca_moto_ativa_service(session:Session,motoboy_id:int):
     moto = busca_moto(session=session,id_motoboy=motoboy_id,id_moto=motoboy.moto_ativa)
 
     if not moto:
-        raise HTTPException(status_code=404,detail='moto nao vinculada id ')
+        raise HTTPException(status_code=404,detail='moto não encontrada')
     return moto
 
 

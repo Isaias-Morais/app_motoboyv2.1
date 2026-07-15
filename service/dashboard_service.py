@@ -1,0 +1,76 @@
+from datetime import date
+from sqlalchemy.orm import Session
+from models.motoboy_model import Motoboy
+from models.abastecimento_model import Abastecimento
+from models.dia_de_trabalho_model import Dia_de_trabalho
+from models.manutencao_model import Manutencao
+from models.moto_model import Moto
+from service.manutencao_service import busca_manutencoes_moto_service
+from repository.abastecimento_repository import historico_abastecimentos_recentes
+from service.dia_de_trabalho_service import buscar_dia_de_trabalho_data
+from service.motoboy_service import buscar_motoboy_service, busca_moto_ativa_service
+
+
+def calcular_media_valor_manutencao(manutencoes:list,moto:Moto):
+    valor_total_manutencao:float = 0
+
+    for manutencao in manutencoes:
+        valor_total_manutencao += manutencao.valor
+
+    valor_manutencao_km = valor_total_manutencao / moto.quilometragem
+
+    return valor_manutencao_km
+
+
+def calcula_media_valor_abastecimento(abastecimentos:list,moto:Moto):
+
+
+    quilometragem_maxima: Abastecimento = max(
+        abastecimentos,
+        key=lambda abastecimento: abastecimento.quilometragem_abastecimentos
+    )
+
+    quilometragem_minima: Abastecimento = min(
+        abastecimentos,
+        key=lambda abastecimento: abastecimento.quilometragem_abastecimentos
+    )
+
+    quilometragem_pecorrida = quilometragem_maxima.quilometragem_abastecimento - quilometragem_minima.quilometragem_abastecimento
+
+    valor_total_abastecimento:float = 0
+
+    for abastecimento in abastecimentos:
+        quilometragem_pecorrida += abastecimento.valor
+
+    valor_por_km_abastecimento = valor_total_abastecimento / quilometragem_pecorrida
+
+    return valor_por_km_abastecimento
+
+
+def dashboard_dia_service(session:Session,motoboy_id:int,data:date):
+
+    motoboy:Motoboy = buscar_motoboy_service(session=session,motoboy_id=motoboy_id)
+
+    moto:Moto = busca_moto_ativa_service(session=session,motoboy_id=motoboy_id)
+
+    dia_de_trabalho:Dia_de_trabalho = buscar_dia_de_trabalho_data(session=session, moto_id=moto.id, data=data)
+
+    manutencoes:list = busca_manutencoes_moto_service(session=session,motoboy_id=motoboy_id,data=data)
+
+    abastecimentos:list = historico_abastecimentos_recentes(session=session,moto_id=moto.id,data=data,quantidade=10)
+
+    valor_manutencao_km = calcular_media_valor_manutencao(manutencoes,moto)
+
+    valor_abastecimento_km = calcula_media_valor_abastecimento(abastecimentos=abastecimentos,moto=moto)
+
+
+
+
+
+
+
+
+
+
+
+

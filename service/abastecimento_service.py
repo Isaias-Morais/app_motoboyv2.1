@@ -10,6 +10,7 @@ from sqlalchemy.orm import Session
 from service.motoboy_service import busca_moto_ativa_service, buscar_motoboy_service
 from service.moto_service import atualizar_consumo_moto
 from service.calculos_service import calcular_km_rodados, calcular_consumo_medio_real
+from service.quilometragem_service import atualizar_quilometragem_service
 from validators.moto_validacao import validar_quilometragem_nova
 from datetime import date
 from schermas.abastecimento_schermas import AbastecimentoCreate, AbastecimentoUpdate, AbastecimentoDelete
@@ -35,11 +36,12 @@ def registra_abastecimento_service(abastecimento:AbastecimentoCreate,session:Ses
             moto_id=moto.id
         )
 
-
-    if not abastecimento_existe(session,moto.id,abastecimento.quilometragem_abastecimento):
-        return salvar_objeto(session,novo_abastecimento)
+    if not abastecimento_existe(session, moto.id, abastecimento.quilometragem_abastecimento):
+        novo_abastecimento = salvar_objeto(session, novo_abastecimento)
+        atualizar_quilometragem_service(moto=moto, data=data, km_nova=abastecimento.quilometragem_abastecimento,session=session)
+        return novo_abastecimento
     else:
-        raise HTTPException(status_code=409 , detail='abastecimento ja existente')
+        raise HTTPException(status_code=409, detail='abastecimento ja existente')
 
 
 def listar_abastecimentos_service(session:Session,motoboy_id:int):

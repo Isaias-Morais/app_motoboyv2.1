@@ -18,3 +18,6 @@ class MotoUpdate(BaseModel):
     marca : str
     modelo : str
     ano : int
+
+class MotoKmUpdate (BaseModel):
+    quilometragem:int

@@ -36,6 +36,23 @@ def historico_abastecimentos(session:Session,moto_id:int):
 
     return abastecimentos
 
+def historico_abastecimentos_recentes(session:Session,moto_id:int,quantidade:int):
+
+    abastecimentos = session.query(
+        Abastecimento
+    ).filter(
+        Abastecimento.moto_id == moto_id
+    ).order_by(
+        Abastecimento.data_abastecimento.desc()
+    ).limit(
+        quantidade
+    ).all()
+
+    if not abastecimentos:
+        return None
+
+    return abastecimentos
+
 
 def abastecimento_existe(session,moto_id,quilometragem):
     abastecimento:Abastecimento = session.query(

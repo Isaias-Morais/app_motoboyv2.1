@@ -7,6 +7,8 @@ from models.moto_model import Moto
 from service.motoboy_service import busca_moto_ativa_service, buscar_motoboy_service
 from datetime import date
 from repository.dia_de_trabalho_repositorio import *
+from service.quilometragem_service import atualizar_quilometragem_service
+
 
 def registra_dia_de_trabalho_service(
         session:Session,
@@ -33,8 +35,10 @@ def registra_dia_de_trabalho_service(
 
     #adiciona atualiza km verificando o km antigo e o atual
 
-    salvar_objeto(session,dia_de_trabalho)
-    return dia_de_trabalho
+    novo_dia_trabalhado = salvar_objeto(session,dia_de_trabalho)
+    atualizar_quilometragem_service(moto=moto, data=data_trabalhada, km_nova=Dia_de_trabalho.quilometragem_final,session=session)
+
+    return novo_dia_trabalhado
 
 
 

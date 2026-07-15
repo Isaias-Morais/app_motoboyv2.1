@@ -25,8 +25,7 @@ class AbastecimentoResponse(BaseModel):
 
 
 class AbastecimentoCreate(AbatecimentoBase):
-    moto_id:None
-
+    pass
 
 class AbastecimentoUpdate(BaseModel):
     posto: str
