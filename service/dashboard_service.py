@@ -5,6 +5,7 @@ from models.abastecimento_model import Abastecimento
 from models.dia_de_trabalho_model import Dia_de_trabalho
 from models.manutencao_model import Manutencao
 from models.moto_model import Moto
+from schermas.dashboard_schemas import DashboardGastoMedio
 from service.manutencao_service import busca_manutencoes_moto_service
 from repository.abastecimento_repository import historico_abastecimentos_recentes
 from service.dia_de_trabalho_service import buscar_dia_de_trabalho_data
@@ -53,7 +54,7 @@ def dashboard_dia_service(session:Session,motoboy_id:int,data:date):
 
     moto:Moto = busca_moto_ativa_service(session=session,motoboy_id=motoboy_id)
 
-    dia_de_trabalho:Dia_de_trabalho = buscar_dia_de_trabalho_data(session=session, moto_id=moto.id, data=data)
+    dia:Dia_de_trabalho = buscar_dia_de_trabalho_data(session=session, moto_id=moto.id, data=data)
 
     manutencoes:list = busca_manutencoes_moto_service(session=session,motoboy_id=motoboy_id,data=data)
 
@@ -63,11 +64,23 @@ def dashboard_dia_service(session:Session,motoboy_id:int,data:date):
 
     valor_abastecimento_km = calcula_media_valor_abastecimento(abastecimentos=abastecimentos,moto=moto)
 
+    km_pecorrido = (dia.quilometragem_final - dia.quilometragem_final)
 
+    valor_abastecimento_media_dia = km_pecorrido * valor_abastecimento_km
 
+    valor_manutencao_media_dia = km_pecorrido * valor_manutencao_km
 
+    lucro_liquido = dia.ganho_bruto - (valor_manutencao_media_dia + valor_abastecimento_media_dia)
 
-
+    dashboard = DashboardGastoMedio(
+        lucro_bruto=dia.ganho_bruto,
+        gasto_manutencao_km=valor_abastecimento_km,
+        gasto_combustivel_km=valor_abastecimento_km,
+        km_rodados=km_pecorrido,
+        gasto_media_abastecimento=valor_abastecimento_media_dia,
+        gasto_medio_manutencao=valor_manutencao_media_dia,
+        lucro_liquido=lucro_liquido
+    )
 
 
 
