@@ -36,12 +36,13 @@ def historico_abastecimentos(session:Session,moto_id:int):
 
     return abastecimentos
 
-def historico_abastecimentos_recentes(session:Session,moto_id:int,quantidade:int):
+def historico_abastecimentos_recentes(session:Session,moto_id:int,quantidade:int,data:date):
 
     abastecimentos = session.query(
         Abastecimento
     ).filter(
-        Abastecimento.moto_id == moto_id
+        Abastecimento.moto_id == moto_id,
+        Abastecimento.data_abastecimento <= data
     ).order_by(
         Abastecimento.data_abastecimento.desc()
     ).limit(

@@ -1,4 +1,6 @@
 from datetime import date
+from fastapi import HTTPException
+
 from sqlalchemy.orm import Session
 from models.motoboy_model import Motoboy
 from models.abastecimento_model import Abastecimento
@@ -28,12 +30,12 @@ def calcula_media_valor_abastecimento(abastecimentos:list,moto:Moto):
 
     quilometragem_maxima: Abastecimento = max(
         abastecimentos,
-        key=lambda abastecimento: abastecimento.quilometragem_abastecimentos
+        key=lambda abastecimento: abastecimento.quilometragem_abastecimento
     )
 
     quilometragem_minima: Abastecimento = min(
         abastecimentos,
-        key=lambda abastecimento: abastecimento.quilometragem_abastecimentos
+        key=lambda abastecimento: abastecimento.quilometragem_abastecimento
     )
 
     quilometragem_pecorrida = quilometragem_maxima.quilometragem_abastecimento - quilometragem_minima.quilometragem_abastecimento
@@ -56,7 +58,10 @@ def dashboard_dia_service(session:Session,motoboy_id:int,data:date):
 
     dia:Dia_de_trabalho = buscar_dia_de_trabalho_data(session=session, moto_id=moto.id, data=data)
 
-    manutencoes:list = busca_manutencoes_moto_service(session=session,motoboy_id=motoboy_id,data=data)
+    if not dia:
+        raise HTTPException(status_code=(404),detail='dia de trabalho não registrado')
+
+    manutencoes:list = busca_manutencoes_moto_service(session=session,motoboy_id=motoboy_id)
 
     abastecimentos:list = historico_abastecimentos_recentes(session=session,moto_id=moto.id,data=data,quantidade=10)
 
@@ -64,7 +69,7 @@ def dashboard_dia_service(session:Session,motoboy_id:int,data:date):
 
     valor_abastecimento_km = calcula_media_valor_abastecimento(abastecimentos=abastecimentos,moto=moto)
 
-    km_pecorrido = (dia.quilometragem_final - dia.quilometragem_final)
+    km_pecorrido = (dia.quilometragem_final - dia.quilometragem_inicial)
 
     valor_abastecimento_media_dia = km_pecorrido * valor_abastecimento_km
 
@@ -81,6 +86,8 @@ def dashboard_dia_service(session:Session,motoboy_id:int,data:date):
         gasto_medio_manutencao=valor_manutencao_media_dia,
         lucro_liquido=lucro_liquido
     )
+
+    return dashboard
 
 
 

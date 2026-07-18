@@ -6,6 +6,7 @@ from routers.moto_router import router as router_moto
 from routers.abastecimento_router import router as router_abastecimento
 from routers.manuntecao_router import router as router_manuntecao
 from routers.dia_de_trabalho_router import router as router_dia_de_trabalho
+from routers.dashboard_router import router as router_dashboard
 from models.motoboy_model import Motoboy
 from models.moto_model import Moto
 from models.manutencao_model import Manutencao
@@ -27,5 +28,6 @@ app.include_router(router_moto)
 app.include_router(router_abastecimento)
 app.include_router(router_manuntecao)
 app.include_router(router_dia_de_trabalho)
+app.include_router(router_dashboard)
 
 

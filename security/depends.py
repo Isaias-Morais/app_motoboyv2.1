@@ -1,3 +1,5 @@
+from datetime import date
+
 from fastapi import HTTPException, status,Depends
 from fastapi.security.oauth2 import OAuth2PasswordBearer
 from jose import jwt,JWTError
@@ -30,3 +32,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
 
 def get_current_user_id(user:Motoboy = Depends(get_current_user)):
     return user.id
+
+def get_data():
+    hoje : date = date.today()
+    return hoje
