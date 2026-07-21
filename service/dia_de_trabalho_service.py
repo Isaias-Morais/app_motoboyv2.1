@@ -4,6 +4,7 @@ from models.dia_de_trabalho_model import Dia_de_trabalho
 from repository.base_repository import salvar_objeto, atualizar_objeto, deletar_objeto
 from schermas.dia_de_trabalho_schermas import DiaDeTrabalhoCreate, DiaDeTrabalhoUpdate, DiaDeTrabalhoDelete
 from models.moto_model import Moto
+from service.quilometragem_service import validacao_quilometregem
 from service.motoboy_service import busca_moto_ativa_service, buscar_motoboy_service
 from datetime import date
 from repository.dia_de_trabalho_repositorio import *
@@ -36,7 +37,10 @@ def registra_dia_de_trabalho_service(
     if dia_verific:
         raise HTTPException(status_code=409,detail='dia ja foi registrado')
 
-    #adiciona atualiza km verificando o km antigo e o atual
+    validacao_quilometregem(moto_id=moto.id, data=data_trabalhada, km_nova=dia.quilometragem_final, session=session)
+
+    if dia.quilometragem_final <= moto.quilometragem:
+        return
 
     novo_dia_trabalhado = salvar_objeto(session,dia_de_trabalho)
     atualizar_quilometragem_service(moto=moto, data=data_trabalhada, km_nova=dia.quilometragem_final,session=session)

@@ -106,11 +106,6 @@ def validacao_quilometregem(moto_id:int,data:date,km_nova:int,session:Session):
 
 def atualizar_quilometragem_service(moto:Moto,data:date,km_nova:int,session:Session):
 
-    validacao_quilometregem(moto_id=moto.id,data=data,km_nova=km_nova,session=session)
-
-    if km_nova <= moto.quilometragem:
-        return
-
     quilometragem = MotoKmUpdate(
         quilometragem = km_nova
     )
