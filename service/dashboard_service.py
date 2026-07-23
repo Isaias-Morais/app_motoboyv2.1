@@ -1,4 +1,6 @@
 from datetime import date
+from turtledemo import round_dance
+
 from fastapi import HTTPException
 
 from sqlalchemy.orm import Session
@@ -18,6 +20,7 @@ def calcular_media_valor_manutencao(manutencoes:list,moto:Moto):
     valor_total_manutencao:float = 0
 
     for manutencao in manutencoes:
+       
         valor_total_manutencao += manutencao.valor
 
     valor_manutencao_km = valor_total_manutencao / moto.quilometragem
@@ -43,7 +46,7 @@ def calcula_media_valor_abastecimento(abastecimentos:list,moto:Moto):
     valor_total_abastecimento:float = 0
 
     for abastecimento in abastecimentos:
-        quilometragem_pecorrida += abastecimento.valor
+        valor_total_abastecimento += abastecimento.valor
 
     valor_por_km_abastecimento = valor_total_abastecimento / quilometragem_pecorrida
 
@@ -78,15 +81,14 @@ def dashboard_dia_service(session:Session,motoboy_id:int,data:date):
     lucro_liquido = dia.ganho_bruto - (valor_manutencao_media_dia + valor_abastecimento_media_dia)
 
     dashboard = DashboardGastoMedio(
-        lucro_bruto=dia.ganho_bruto,
-        gasto_manutencao_km=valor_abastecimento_km,
-        gasto_combustivel_km=valor_abastecimento_km,
-        km_rodados=km_pecorrido,
-        gasto_media_abastecimento=valor_abastecimento_media_dia,
-        gasto_medio_manutencao=valor_manutencao_media_dia,
-        lucro_liquido=lucro_liquido
+        lucro_bruto=round(dia.ganho_bruto,2),
+        gasto_manutencao_km=round(valor_manutencao_km,2),
+        gasto_combustivel_km=round(valor_abastecimento_km,2),
+        km_rodados=round(km_pecorrido,2),
+        gasto_media_abastecimento=round(valor_abastecimento_media_dia,2),
+        gasto_medio_manutencao=round(valor_manutencao_media_dia,2),
+        lucro_liquido=round(lucro_liquido,2)
     )
-
     return dashboard
 
 

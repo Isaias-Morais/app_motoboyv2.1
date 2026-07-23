@@ -36,6 +36,14 @@ def registrar_motoboy(session:Session,motoboy:MotoboyCreate):
 def login_user(user: OAuth2PasswordRequestForm,session:Session):
     usuario : Motoboy=session.query(Motoboy).filter(Motoboy.email==user.username).first()
 
+
+    print("Usuario:", usuario)
+
+    if usuario:
+        print("Hash:", usuario.senha)
+        print("Verify:", verificar_senha(user.password, usuario.senha))
+
+
     if not usuario:
         raise HTTPException(status_code=404,detail='credenciais invalidas')
 

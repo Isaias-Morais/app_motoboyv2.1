@@ -41,16 +41,13 @@ def registra_abastecimento_service(abastecimento:AbastecimentoCreate,session:Ses
 
         validacao_quilometregem(moto_id=moto.id, data=data, km_nova=abastecimento.quilometragem_abastecimento, session=session)
 
-        if abastecimento.quilometragem_abastecimento <= moto.quilometragem:
-            return
-
-        validacao_quilometregem(moto_id=moto.id, data=data, km_nova=abastecimento.quilometragem_abastecimento, session=session)
-
-        if abastecimento.quilometragem_abastecimento <= moto.quilometragem:
-            return
+        if abastecimento.quilometragem_abastecimento <= moto.quilometragem and data == date.today():
+            raise HTTPException(status_code=400,detail='quilometragem não pode ser menor q a atual')
 
         novo_abastecimento = salvar_objeto(session, novo_abastecimento)
-        atualizar_quilometragem_service(moto=moto, data=data, km_nova=abastecimento.quilometragem_abastecimento,session=session)
+
+        if abastecimento.quilometragem_abastecimento > moto.quilometragem:
+            atualizar_quilometragem_service(moto=moto, data=data, km_nova=abastecimento.quilometragem_abastecimento,session=session)
 
         return novo_abastecimento
     else:
