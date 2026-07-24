@@ -8,7 +8,6 @@ from service.motoboy_service import busca_moto_ativa_service, buscar_motoboy_ser
 from models.moto_model import Moto
 from service.quilometragem_service import validacao_quilometregem
 from service.quilometragem_service import atualizar_quilometragem_service
-from validators.moto_validacao import validar_quilometragem_nova
 from datetime import date
 from schermas.manutencao_schermas import ManutencaoCreate, ManutencaoUpdate
 

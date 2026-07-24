@@ -19,31 +19,6 @@ def busca_moto(session:Session,id_moto:int,id_motoboy:int):
     return moto
 
 
-
-def atualizar_consumo(session, moto_id, consumo):
-    moto = session.query(
-        Moto
-    ).filter(
-        Moto.id == moto_id
-    ).first()
-    if moto:
-        moto.consumo = consumo
-        session.commit()
-        return True
-    else:
-        return False
-
-def excluir_moto(session,moto_id):
-
-    moto = session.query(Moto).filter(Moto.id == moto_id).first()
-    if moto:
-        session.delete(moto)
-        session.commit()
-        return True
-    else:
-        return False
-
-
 def quilometragem_atual(session,moto_id):
 
     quilometragem_atual = session.query(
@@ -68,14 +43,3 @@ def atualizar_quilometragem(session,moto_id,quilometragem_nova):
         return True
     else:
         return False
-
-
-def moto_existe(session,moto_id=0):
-    moto = session.query(
-        Moto
-    ).filter(
-        Moto.id == moto_id
-    ).first()
-
-    return moto
-

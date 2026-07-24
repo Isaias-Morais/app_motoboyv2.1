@@ -4,9 +4,8 @@ from sqlalchemy.orm import Session
 from repository.base_repository import salvar_objeto, atualizar_objeto, deletar_objeto
 from schermas.moto_scherma import MotoCreate, MotoUpdate
 from service.motoboy_service import buscar_motoboy_service
-from validators.abastecimento_validators import validacao_consumo
 from repository.moto_repository import *
-from repository.motoboy_repository import redefinir_moto_ativa_motoboy,busca_motoboy_id
+from repository.motoboy_repository import busca_motoboy_id
 
 
 
@@ -74,18 +73,5 @@ def deletar_moto_service(session:Session,moto_id:int,motoboy_id:int):
         raise HTTPException(status_code=404,detail='moto nao encontrada')
 
     return deletar_objeto(session=session,objeto=moto)
-
-
-
-def atualizar_consumo_moto(session,moto_id=0,consumo=0):
-
-    if not moto_existe(session,moto_id):
-        return False, 'moto não existe'
-
-    if not validacao_consumo(consumo):
-        return False, 'consumo invalido'
-
-    atualizar_consumo(session,moto_id,consumo)
-    return True,"consumo atualizado"
 
 

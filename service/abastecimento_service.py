@@ -1,18 +1,14 @@
 from fastapi import HTTPException
-from models.moto_model import Moto
 from repository.abastecimento_repository import *
-from repository.finaceiro_repository import busca_abastecimento_consumo_medio
 from database.session import SessionLocal
 from models.abastecimento_model import Abastecimento
+from models.moto_model import Moto
 from repository.base_repository import salvar_objeto, atualizar_objeto, deletar_objeto
 from repository.moto_repository import quilometragem_atual, atualizar_quilometragem
 from sqlalchemy.orm import Session
 from service.quilometragem_service import validacao_quilometregem
 from service.motoboy_service import busca_moto_ativa_service, buscar_motoboy_service
-from service.moto_service import atualizar_consumo_moto
-from service.calculos_service import calcular_km_rodados, calcular_consumo_medio_real
 from service.quilometragem_service import atualizar_quilometragem_service
-from validators.moto_validacao import validar_quilometragem_nova
 from datetime import date
 from schermas.abastecimento_schermas import AbastecimentoCreate, AbastecimentoUpdate, AbastecimentoDelete
 from repository.moto_repository import busca_moto
@@ -113,34 +109,3 @@ def deletar_abastecimento_service(session:Session,motoboy_id:int,abastecimento_i
         raise HTTPException(status_code=404, detail='nenhum registro encontrado ')
 
     return deletar_objeto(session=session,objeto=abastecimento)
-
-
-
-
-# def cosumo_ou_historico_abastecimento(session:Session,moto_id:int):
-#
-#     historico = busca_abastecimento_consumo_medio(session,moto.id)
-#
-#     if not historico or len(historico) < 3:
-#         return None
-#
-#     km_litros = calcular_km_rodados(historico)
-#
-#     if not km_litros:
-#         return None
-#
-#
-#     consumo_medio = calcular_consumo_medio_real(km_litros)
-#
-#     atualizar_consumo_moto(session=session,moto_id=moto.id,consumo=consumo_medio)
-#
-#     km_atual = quilometragem_atual(session, moto.id)
-#
-#     valido, erro = validar_quilometragem_nova(km_atual, abastecimento.quilometragem_abastecimento)
-#     if valido:
-#         atualizar_quilometragem(session, moto.id, abastecimento.quilometragem_abastecimento)
-#     else:
-#         return False
-#
-#     return abastecimento
-#

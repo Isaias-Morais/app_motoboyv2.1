@@ -31,17 +31,6 @@ def buscar_dia_de_trabalho_data(session:Session,moto_id:int,data:date):
     return dia_de_trabalho
 
 
-def historico_dias(session,moto_id):
-    dias = session.query(
-        Dia_de_trabalho.data_trabalhada,
-            (Dia_de_trabalho.quilometragem_final - Dia_de_trabalho.quilometragem_final),
-            Dia_de_trabalho.ganho_bruto
-        ).filter(
-            Dia_de_trabalho.moto_id == moto_id
-        ).all()
-
-    return dias
-
 
 def buscar_dia_de_trabalho_id(session:Session,moto_id:int,id:int):
     dia_de_trabalho = session.query(

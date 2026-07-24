@@ -1,7 +1,5 @@
 from sqlalchemy.orm import Session
 
-from service.resumo_dia_service import session
-
 
 def salvar_objeto(session:Session, obj):
 

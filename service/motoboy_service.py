@@ -43,7 +43,6 @@ def login_user(user: OAuth2PasswordRequestForm,session:Session):
         print("Hash:", usuario.senha)
         print("Verify:", verificar_senha(user.password, usuario.senha))
 
-
     if not usuario:
         raise HTTPException(status_code=404,detail='credenciais invalidas')
 
