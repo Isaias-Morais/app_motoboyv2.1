@@ -1,8 +1,6 @@
 from datetime import date
 from turtledemo import round_dance
-
 from fastapi import HTTPException
-
 from sqlalchemy.orm import Session
 from models.motoboy_model import Motoboy
 from models.abastecimento_model import Abastecimento
