@@ -17,7 +17,11 @@ app = FastAPI()
 
 @app.get("/")
 def home():
-    return {"status": "ok"}
+    return {
+        "status": "online",
+        "api": "App Motoboy V2",
+        "version": "1.0.0"
+             }
 
 @app.on_event('startup')
 def startup():
