@@ -1,0 +1,44 @@
+from fastapi import APIRouter, Depends
+from backend.app.schermas.moto_scherma import MotoResponse
+from backend.app.database.db import get_db
+from backend.app.schermas.motoboy_scherma import MotoboyMotoUpdate
+from backend.app.service.motoboy_service import *
+from backend.app.security.depends import get_current_user, get_current_user_id
+
+router = APIRouter(prefix="/Motoboy",tags=["Motoboy"])
+
+@router.post('/create',response_model=MotoboyCreate)
+def cria_motoboy(motoboy:MotoboyCreate,session:Session=Depends(get_db)):
+    return registrar_motoboy(session=session,motoboy=motoboy)
+
+
+@router.post('/auth')
+def loginUser(data: OAuth2PasswordRequestForm = Depends(),db:Session=Depends(get_db)):
+    resultado =  login_user(data,session=db)
+    return resultado
+
+
+@router.get('/me')
+def meu_user(user = Depends(get_current_user)):
+    return user
+
+
+@router.patch('/ativa/moto',response_model=MotoboyMotoUpdate)
+async def definir_moto_ativa(moto_id:int,motoboy_id:int = Depends(get_current_user_id), db:Session=Depends(get_db)):
+    return definir_moto_ativa_service(session=db,motoboy_id=motoboy_id,moto_id=moto_id)
+
+
+@router.get('/busca/moto',response_model=MotoResponse)
+async def busca_moto_ativa(db:Session = Depends(get_db),motoboy_id:int = Depends(get_current_user_id)):
+    return busca_moto_ativa_service(session=db,motoboy_id=motoboy_id)
+
+
+@router.patch('/atualizar')
+def atualizar_motoboy(motoboy : MotoboyUpdate, db:Session = Depends(get_db),motoboy_id:int = Depends(get_current_user_id)):
+    return atualizar_dados_motoboy(session=db,motoboy_id=motoboy_id,motoboy_update=motoboy)
+
+
+@router.patch('/atualizar_senha')
+def atualizar_senha_motoboy(motoboy : MotoboyPassUpdate, db:Session = Depends(get_db),motoboy_id:int = Depends(get_current_user_id)):
+
+    return atualizar_senha_motoboy_service(session=db,motoboy_id=motoboy_id,motoboy_update=motoboy)

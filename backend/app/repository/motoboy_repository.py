@@ -1,0 +1,39 @@
+from sqlalchemy.orm import Session
+from backend.app.models.motoboy_model import Motoboy
+from backend.app.models.moto_model import Moto
+
+
+def busca_motoboy_id(session:Session,motoboy_id:int):
+    motoboy =  session.query(Motoboy).filter(Motoboy.id == motoboy_id).first()
+
+    if not motoboy:
+        return None
+
+    return motoboy
+
+
+def listar_motoboys(session):
+    return session.query(Motoboy).all()
+
+
+def definir_moto_ativa_motoboy(session:Session,motoboy_id:int,moto:Moto):
+    motoboy = session.query(Motoboy).filter(Motoboy.id == motoboy_id).first()
+
+    if not motoboy:
+        return None
+
+    motoboy.moto_ativa = moto.id
+
+    session.commit()
+    session.refresh(motoboy)
+
+    return motoboy
+
+
+def consultar_motoboy_email(session:Session,email:str):
+    motoboy = session.query(Motoboy).filter(Motoboy.email == email).all()
+
+    if not motoboy:
+        return None
+
+    return motoboy
