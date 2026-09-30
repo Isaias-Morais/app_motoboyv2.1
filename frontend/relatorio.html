@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Relatório - APP MOTOBOY</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<aside class="sidebar">
+
+    <div class="logo">
+        <img src="img/logo-icon.png" alt="Logo">
+    </div>
+
+    <nav class="menu">
+
+        <a href="index.html" class="inicio">
+            INÍCIO
+        </a>
+
+        <a href="registrar.html" class="registrar">
+            REGISTRAR
+        </a>
+
+        <a href="gastos.html" class="gastos">
+            GASTOS
+        </a>
+
+        <a href="relatorio.html" class="relatorio">
+            RELATÓRIO
+        </a>
+
+        <a href="minha-moto.html" class="minha-moto">
+            MINHA MOTO
+        </a>
+
+    </nav>
+
+    <div class="perfil">
+
+        <img src="img/perfil.jpg" alt="Foto de perfil">
+
+        <div>
+            <strong>Perfil</strong>
+            <small>Plano</small>
+        </div>
+
+    </div>
+
+</aside>
+
+
+<main>
+
+    <header>
+
+        <div>
+            <small>ANÁLISE</small>
+            <h1>Relatório</h1>
+        </div>
+
+        <div class="alerta-oleo">
+            🛢️
+            <span>Troca de óleo em breve</span>
+        </div>
+
+    </header>
+
+
+    <section class="tela-relatorio">
+
+        <div class="filtro-relatorio">
+
+            <h2>Período</h2>
+
+            <div class="filtros">
+
+                <div class="campo">
+
+                    <label for="data-inicio">
+                        Data inicial
+                    </label>
+
+                    <input
+                            type="date"
+                            id="data-inicio"
+                            name="data-inicio"
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="data-fim">
+                        Data final
+                    </label>
+
+                    <input
+                            type="date"
+                            id="data-fim"
+                            name="data-fim"
+                    >
+
+                </div>
+
+                <button type="button">
+                    GERAR RELATÓRIO
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="resumo-relatorio">
+
+            <div class="card-relatorio">
+
+                <small>GANHOS</small>
+
+                <strong>
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+
+            <div class="card-relatorio">
+
+                <small>GASTOS</small>
+
+                <strong>
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+
+            <div class="card-relatorio">
+
+                <small>LUCRO LÍQUIDO</small>
+
+                <strong>
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+
+            <div class="card-relatorio">
+
+                <small>KM RODADOS</small>
+
+                <strong>
+                    0 km
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="relatorio-detalhes">
+
+            <h2>Resumo do período</h2>
+
+            <div class="linha-relatorio">
+
+                <span>Total de dias trabalhados</span>
+
+                <strong>
+                    0 dias
+                </strong>
+
+            </div>
+
+
+            <div class="linha-relatorio">
+
+                <span>Média de ganhos por dia</span>
+
+                <strong>
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+
+            <div class="linha-relatorio">
+
+                <span>Média de gastos por dia</span>
+
+                <strong>
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+
+            <div class="linha-relatorio">
+
+                <span>Lucro médio por dia</span>
+
+                <strong>
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+
+            <div class="linha-relatorio">
+
+                <span>Custo por km</span>
+
+                <strong>
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>
