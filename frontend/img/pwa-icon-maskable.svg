@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">APP MOTOBOY</title>
+  <rect width="512" height="512" fill="#111111"/>
+  <circle cx="256" cy="256" r="156" fill="#facc15"/>
+  <path fill="#111111" d="M174 326h34V230l48 52 48-52v96h34V166h-37l-45 49-45-49h-37z"/>
+</svg>
