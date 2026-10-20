@@ -44,6 +44,7 @@
     }
 
     window.MotoboyApi = {
+        baseUrl: API_BASE_URL,
         requisicao,
         mensagemErro,
         moeda: (valor) => new Intl.NumberFormat("pt-BR", {
