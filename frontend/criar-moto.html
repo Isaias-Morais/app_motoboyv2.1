@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0b0b0b"><meta name="mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="img/pwa-icon.svg"><title>Cadastrar moto | APP MOTOBOY</title><link rel="stylesheet" href="css/style.css"></head>
+<body><aside class="sidebar"><a class="logo" href="index.html" aria-label="APP MOTOBOY - início"><img src="img/logo-icon.png" alt="APP MOTOBOY"></a><nav class="menu" aria-label="Navegação principal"><a href="index.html">INÍCIO</a><a href="registrar.html">REGISTRAR</a><a href="gastos.html">GASTOS</a><a href="relatorio.html">RELATÓRIO</a><a href="minha-moto.html" aria-current="page">MINHA MOTO</a></nav><div class="perfil"><span class="avatar" aria-hidden="true">IM</span><div class="perfil-info"><strong>Perfil</strong><small>Plano atual</small></div></div></aside>
+<main><header class="page-header"><div><p class="eyebrow">VEÍCULO</p><h1>Cadastrar moto</h1></div></header><section class="card" style="max-width:800px"><h2>Dados da sua moto</h2><p>Cadastre seu veículo para começar a registrar trabalho, abastecimentos e manutenções.</p><form class="formulario" id="form-moto"><div class="campo"><label for="marca">Marca</label><input id="marca" type="text" placeholder="Ex.: Honda" required></div><div class="campo"><label for="modelo">Modelo</label><input id="modelo" type="text" placeholder="Ex.: CG 160" required></div><div class="campo"><label for="ano">Ano</label><input id="ano" type="number" min="1900" max="2100" required></div><div class="campo"><label for="quilometragem">Quilometragem atual</label><input id="quilometragem" type="number" min="0" step="1" placeholder="0 km" required></div><div class="campo"><label for="consumo">Consumo médio (km/L)</label><input id="consumo" type="number" min="0" step="0.1" placeholder="Ex.: 35" required></div><button class="button" id="btn-moto" type="submit">CADASTRAR MOTO</button></form><p class="status" id="mensagem-moto" role="status" aria-live="polite"></p></section></main><script src="js/app.js"></script><script>
+(() => {
+  const { requisicao, mensagemErro } = window.MotoboyApi;
+  const form = document.getElementById("form-moto"), botao = document.getElementById("btn-moto"), mensagem = document.getElementById("mensagem-moto");
+  document.getElementById("ano").value = new Date().getFullYear();
+  form.addEventListener("submit", async evento => {
+    evento.preventDefault(); botao.disabled = true; botao.textContent = "CADASTRANDO..."; mensagem.textContent = ""; mensagem.classList.remove("status--erro");
+    try {
+      await requisicao("/moto/create", { method:"POST", body:JSON.stringify({ marca:document.getElementById("marca").value.trim(), modelo:document.getElementById("modelo").value.trim(), ano:Number(document.getElementById("ano").value), quilometragem:Number(document.getElementById("quilometragem").value), consumo:Number(document.getElementById("consumo").value) }) });
+      mensagem.textContent = "Moto cadastrada com sucesso. Redirecionando...";
+      setTimeout(() => window.location.assign("minha-moto.html"), 900);
+    } catch (erro) { mensagem.textContent = mensagemErro(erro); mensagem.classList.add("status--erro"); botao.disabled = false; botao.textContent = "CADASTRAR MOTO"; }
+  });
+})();
+</script></body></html>

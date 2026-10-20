@@ -25,6 +25,11 @@ def registra_moto(moto:MotoCreate,session:Session,motoboy_id:int):
 
     salvar_objeto(session,moto)
 
+    # A primeira moto cadastrada é a moto usada pelo painel e pelos registros.
+    motoboy = busca_motoboy_id(session=session, motoboy_id=motoboy_id)
+    if motoboy and motoboy.moto_ativa is None:
+        definir_moto_ativa_motoboy(session=session, motoboy_id=motoboy_id, moto=moto)
+
     return moto
 
 
