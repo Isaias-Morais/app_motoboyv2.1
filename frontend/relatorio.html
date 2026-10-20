@@ -3,232 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Relatório - APP MOTOBOY</title>
-
     <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
-
 <aside class="sidebar">
-
-    <div class="logo">
-        <img src="img/logo-icon.png" alt="Logo">
-    </div>
-
+    <div class="logo"><img src="img/logo-icon.png" alt="Logo"></div>
     <nav class="menu">
-
-        <a href="index.html" class="inicio">
-            INÍCIO
-        </a>
-
-        <a href="registrar.html" class="registrar">
-            REGISTRAR
-        </a>
-
-        <a href="gastos.html" class="gastos">
-            GASTOS
-        </a>
-
-        <a href="relatorio.html" class="relatorio">
-            RELATÓRIO
-        </a>
-
-        <a href="minha-moto.html" class="minha-moto">
-            MINHA MOTO
-        </a>
-
+        <a href="index.html" class="inicio">INÍCIO</a>
+        <a href="registrar.html" class="registrar">REGISTRAR</a>
+        <a href="gastos.html" class="gastos">GASTOS</a>
+        <a href="relatorio.html" class="relatorio">RELATÓRIO</a>
+        <a href="minha-moto.html" class="minha-moto">MINHA MOTO</a>
     </nav>
-
     <div class="perfil">
-
         <img src="img/perfil.jpg" alt="Foto de perfil">
-
-        <div>
-            <strong>Perfil</strong>
-            <small>Plano</small>
-        </div>
-
+        <div><strong>Perfil</strong><small>Plano</small></div>
     </div>
-
 </aside>
 
-
 <main>
-
     <header>
-
-        <div>
-            <small>ANÁLISE</small>
-            <h1>Relatório</h1>
-        </div>
-
-        <div class="alerta-oleo">
-            🛢️
-            <span>Troca de óleo em breve</span>
-        </div>
-
+        <div><small>ANÁLISE</small><h1>Relatório</h1></div>
+        <div class="alerta-oleo">🛢️ <span>Troca de óleo em breve</span></div>
     </header>
 
-
     <section class="tela-relatorio">
-
         <div class="filtro-relatorio">
-
             <h2>Período</h2>
-
-            <div class="filtros">
-
+            <form class="filtros" id="form-relatorio">
                 <div class="campo">
-
-                    <label for="data-inicio">
-                        Data inicial
-                    </label>
-
-                    <input
-                            type="date"
-                            id="data-inicio"
-                            name="data-inicio"
-                    >
-
+                    <label for="data-inicio">Data inicial</label>
+                    <input type="date" id="data-inicio" name="data-inicio" required>
                 </div>
-
-
                 <div class="campo">
-
-                    <label for="data-fim">
-                        Data final
-                    </label>
-
-                    <input
-                            type="date"
-                            id="data-fim"
-                            name="data-fim"
-                    >
-
+                    <label for="data-fim">Data final</label>
+                    <input type="date" id="data-fim" name="data-fim" required>
                 </div>
-
-                <button type="button">
-                    GERAR RELATÓRIO
-                </button>
-
-            </div>
-
+                <button type="submit" id="btn-relatorio">GERAR RELATÓRIO</button>
+            </form>
+            <p id="mensagem-relatorio" role="status" aria-live="polite"></p>
         </div>
-
 
         <div class="resumo-relatorio">
-
-            <div class="card-relatorio">
-
-                <small>GANHOS</small>
-
-                <strong>
-                    R$ 0,00
-                </strong>
-
-            </div>
-
-
-            <div class="card-relatorio">
-
-                <small>GASTOS</small>
-
-                <strong>
-                    R$ 0,00
-                </strong>
-
-            </div>
-
-
-            <div class="card-relatorio">
-
-                <small>LUCRO LÍQUIDO</small>
-
-                <strong>
-                    R$ 0,00
-                </strong>
-
-            </div>
-
-
-            <div class="card-relatorio">
-
-                <small>KM RODADOS</small>
-
-                <strong>
-                    0 km
-                </strong>
-
-            </div>
-
+            <div class="card-relatorio"><small>GANHOS</small><strong id="total-ganhos">R$ 0,00</strong></div>
+            <div class="card-relatorio"><small>GASTOS</small><strong id="total-gastos">R$ 0,00</strong></div>
+            <div class="card-relatorio"><small>LUCRO LÍQUIDO</small><strong id="lucro-liquido">R$ 0,00</strong></div>
+            <div class="card-relatorio"><small>KM RODADOS</small><strong id="km-rodados">0 km</strong></div>
         </div>
-
 
         <div class="relatorio-detalhes">
-
             <h2>Resumo do período</h2>
-
-            <div class="linha-relatorio">
-
-                <span>Total de dias trabalhados</span>
-
-                <strong>
-                    0 dias
-                </strong>
-
-            </div>
-
-
-            <div class="linha-relatorio">
-
-                <span>Média de ganhos por dia</span>
-
-                <strong>
-                    R$ 0,00
-                </strong>
-
-            </div>
-
-
-            <div class="linha-relatorio">
-
-                <span>Média de gastos por dia</span>
-
-                <strong>
-                    R$ 0,00
-                </strong>
-
-            </div>
-
-
-            <div class="linha-relatorio">
-
-                <span>Lucro médio por dia</span>
-
-                <strong>
-                    R$ 0,00
-                </strong>
-
-            </div>
-
-
-            <div class="linha-relatorio">
-
-                <span>Custo por km</span>
-
-                <strong>
-                    R$ 0,00
-                </strong>
-
-            </div>
-
+            <div class="linha-relatorio"><span>Total de dias trabalhados</span><strong id="dias-trabalhados">0 dias</strong></div>
+            <div class="linha-relatorio"><span>Média de ganhos por dia</span><strong id="media-ganhos">R$ 0,00</strong></div>
+            <div class="linha-relatorio"><span>Média de gastos por dia</span><strong id="media-gastos">R$ 0,00</strong></div>
+            <div class="linha-relatorio"><span>Lucro médio por dia</span><strong id="media-lucro">R$ 0,00</strong></div>
+            <div class="linha-relatorio"><span>Custo por km</span><strong id="custo-km">R$ 0,00</strong></div>
         </div>
-
     </section>
-
 </main>
 
+<script>
+(() => {
+    // API publicada no Render; pode ser sobrescrita antes deste script se necessário.
+    const API_BASE_URL = "https://app-motoboyv2-1.onrender.com";
+    const form = document.getElementById("form-relatorio");
+    const inicioInput = document.getElementById("data-inicio");
+    const fimInput = document.getElementById("data-fim");
+    const botao = document.getElementById("btn-relatorio");
+    const mensagem = document.getElementById("mensagem-relatorio");
+
+    const moeda = valor => new Intl.NumberFormat("pt-BR", {
+        style: "currency", currency: "BRL"
+    }).format(Number(valor) || 0);
+
+    const numero = valor => new Intl.NumberFormat("pt-BR", {
+        maximumFractionDigits: 1
+    }).format(Number(valor) || 0);
+
+    function definirTexto(id, valor) {
+        document.getElementById(id).textContent = valor;
+    }
+
+    function tokenSalvo() {
+        // Compatível com os nomes mais comuns usados pelo login do frontend.
+        return localStorage.getItem("access_token")
+            || localStorage.getItem("token")
+            || sessionStorage.getItem("access_token")
+            || sessionStorage.getItem("token");
+    }
+
+    function exibirDados(dados) {
+        definirTexto("total-ganhos", moeda(dados.ganhos));
+        definirTexto("total-gastos", moeda(dados.gastos));
+        definirTexto("lucro-liquido", moeda(dados.lucro_liquido));
+        definirTexto("km-rodados", numero(dados.km_rodados) + " km");
+        definirTexto("dias-trabalhados", numero(dados.total_dias_trabalhados) + " dias");
+        definirTexto("media-ganhos", moeda(dados.media_ganhos_por_dia));
+        definirTexto("media-gastos", moeda(dados.media_gastos_por_dia));
+        definirTexto("media-lucro", moeda(dados.lucro_medio_por_dia));
+        definirTexto("custo-km", moeda(dados.custo_por_km));
+    }
+
+    function mensagemStatus(texto, erro = false) {
+        mensagem.textContent = texto;
+        mensagem.style.color = erro ? "#b42318" : "";
+    }
+
+    form.addEventListener("submit", async evento => {
+        evento.preventDefault();
+
+        const dataInicio = inicioInput.value;
+        const dataFim = fimInput.value;
+
+        if (!dataInicio || !dataFim) {
+            mensagemStatus("Informe a data inicial e a data final.", true);
+            return;
+        }
+        if (dataInicio > dataFim) {
+            mensagemStatus("A data inicial não pode ser posterior à data final.", true);
+            return;
+        }
+
+        const token = tokenSalvo();
+        if (!token) {
+            mensagemStatus("Você precisa entrar na sua conta primeiro. O token de login não foi encontrado no armazenamento do navegador.", true);
+            return;
+        }
+
+        botao.disabled = true;
+        botao.textContent = "CARREGANDO...";
+        mensagemStatus("Buscando os dados do período...");
+
+        try {
+            const parametros = new URLSearchParams({
+                data_inicio: dataInicio,
+                data_fim: dataFim
+            });
+            const resposta = await fetch(
+                API_BASE_URL + "/dashboard/relatorio?" + parametros.toString(),
+                {
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    }
+                }
+            );
+
+            const dados = await resposta.json().catch(() => ({}));
+
+            if (resposta.status === 401) {
+                throw new Error("Sua sessão expirou ou o token é inválido. Entre novamente e tente de novo.");
+            }
+            if (!resposta.ok) {
+                const detalhe = typeof dados.detail === "string" ? dados.detail : "Não foi possível gerar o relatório.";
+                throw new Error(detalhe);
+            }
+
+            exibirDados(dados);
+            mensagemStatus("Relatório atualizado com sucesso.");
+        } catch (erro) {
+            mensagemStatus(
+                erro instanceof TypeError
+                    ? "Não foi possível conectar à API. Confira sua conexão e se o backend permite acesso CORS para o endereço do frontend."
+                    : erro.message,
+                true
+            );
+        } finally {
+            botao.disabled = false;
+            botao.textContent = "GERAR RELATÓRIO";
+        }
+    });
+
+    // Sugere o mês atual ao abrir a página, sem enviar uma consulta automática.
+    const hoje = new Date();
+    const ano = hoje.getFullYear();
+    const mes = String(hoje.getMonth() + 1).padStart(2, "0");
+    const ultimoDia = new Date(ano, hoje.getMonth() + 1, 0).getDate();
+    inicioInput.value = ano + "-" + mes + "-01";
+    fimInput.value = ano + "-" + mes + "-" + String(ultimoDia).padStart(2, "0");
+})();
+</script>
 </body>
 </html>
