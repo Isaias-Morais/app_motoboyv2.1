@@ -1,5 +1,5 @@
 (() => {
-    const API_BASE_URL = window.APP_API_BASE_URL || "https://app-motoboyv2-1.onrender.com";
+    const API_BASE_URL = window.APP_API_BASE_URL || "http://127.0.0.1:8000";
 
     const tokenSalvo = () =>
         localStorage.getItem("access_token") ||
