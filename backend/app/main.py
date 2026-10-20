@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from backend.app.database.base import Base
 from backend.app.database.engine import engine
 from backend.app.routers.motoboy_router import router as router_motoboy
@@ -10,6 +11,16 @@ from backend.app.routers.dashboard_router import router as router_dashboard
 from backend.app.routers.dashboard_periodo_router import router as router_dashboard_periodo
 
 app = FastAPI()
+
+# O frontend envia o JWT no header Authorization (não usa cookies).
+# Depois de definir o domínio definitivo do frontend, substitua "*" pelos domínios autorizados.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allow_headers=["Authorization", "Content-Type", "Accept"],
+)
 
 
 @app.get("/")
