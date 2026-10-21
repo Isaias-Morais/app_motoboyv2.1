@@ -1,234 +1,40 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Relatório - APP MOTOBOY</title>
-
-    <link rel="stylesheet" href="css/style.css">
-</head>
-
-<body>
-
-<aside class="sidebar">
-
-    <div class="logo">
-        <img src="img/logo-icon.png" alt="Logo">
-    </div>
-
-    <nav class="menu">
-
-        <a href="index.html" class="inicio">
-            INÍCIO
-        </a>
-
-        <a href="registrar.html" class="registrar">
-            REGISTRAR
-        </a>
-
-        <a href="gastos.html" class="gastos">
-            GASTOS
-        </a>
-
-        <a href="relatorio.html" class="relatorio">
-            RELATÓRIO
-        </a>
-
-        <a href="minha-moto.html" class="minha-moto">
-            MINHA MOTO
-        </a>
-
-    </nav>
-
-    <div class="perfil">
-
-        <img src="img/perfil.jpg" alt="Foto de perfil">
-
-        <div>
-            <strong>Perfil</strong>
-            <small>Plano</small>
-        </div>
-
-    </div>
-
-</aside>
-
-
-<main>
-
-    <header>
-
-        <div>
-            <small>ANÁLISE</small>
-            <h1>Relatório</h1>
-        </div>
-
-        <div class="alerta-oleo">
-            🛢️
-            <span>Troca de óleo em breve</span>
-        </div>
-
-    </header>
-
-
-    <section class="tela-relatorio">
-
-        <div class="filtro-relatorio">
-
-            <h2>Período</h2>
-
-            <div class="filtros">
-
-                <div class="campo">
-
-                    <label for="data-inicio">
-                        Data inicial
-                    </label>
-
-                    <input
-                            type="date"
-                            id="data-inicio"
-                            name="data-inicio"
-                    >
-
-                </div>
-
-
-                <div class="campo">
-
-                    <label for="data-fim">
-                        Data final
-                    </label>
-
-                    <input
-                            type="date"
-                            id="data-fim"
-                            name="data-fim"
-                    >
-
-                </div>
-
-                <button type="button">
-                    GERAR RELATÓRIO
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="resumo-relatorio">
-
-            <div class="card-relatorio">
-
-                <small>GANHOS</small>
-
-                <strong>
-                    R$ 0,00
-                </strong>
-
-            </div>
-
-
-            <div class="card-relatorio">
-
-                <small>GASTOS</small>
-
-                <strong>
-                    R$ 0,00
-                </strong>
-
-            </div>
-
-
-            <div class="card-relatorio">
-
-                <small>LUCRO LÍQUIDO</small>
-
-                <strong>
-                    R$ 0,00
-                </strong>
-
-            </div>
-
-
-            <div class="card-relatorio">
-
-                <small>KM RODADOS</small>
-
-                <strong>
-                    0 km
-                </strong>
-
-            </div>
-
-        </div>
-
-
-        <div class="relatorio-detalhes">
-
-            <h2>Resumo do período</h2>
-
-            <div class="linha-relatorio">
-
-                <span>Total de dias trabalhados</span>
-
-                <strong>
-                    0 dias
-                </strong>
-
-            </div>
-
-
-            <div class="linha-relatorio">
-
-                <span>Média de ganhos por dia</span>
-
-                <strong>
-                    R$ 0,00
-                </strong>
-
-            </div>
-
-
-            <div class="linha-relatorio">
-
-                <span>Média de gastos por dia</span>
-
-                <strong>
-                    R$ 0,00
-                </strong>
-
-            </div>
-
-
-            <div class="linha-relatorio">
-
-                <span>Lucro médio por dia</span>
-
-                <strong>
-                    R$ 0,00
-                </strong>
-
-            </div>
-
-
-            <div class="linha-relatorio">
-
-                <span>Custo por km</span>
-
-                <strong>
-                    R$ 0,00
-                </strong>
-
-            </div>
-
-        </div>
-
-    </section>
-
-</main>
-
-</body>
-</html>
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0b0b0b"><meta name="mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="img/pwa-icon.svg"><title>Relatório | APP MOTOBOY</title><link rel="stylesheet" href="css/style.css"></head>
+<body><aside class="sidebar"><a class="logo" href="index.html" aria-label="APP MOTOBOY - início"><img src="img/logo-icon.png" alt="APP MOTOBOY"></a><nav class="menu" aria-label="Navegação principal"><a href="index.html">INÍCIO</a><a href="registrar.html">REGISTRAR</a><a href="gastos.html">GASTOS</a><a href="relatorio.html" aria-current="page">RELATÓRIO</a><a href="minha-moto.html">MINHA MOTO</a></nav><div class="perfil"><span class="avatar" aria-hidden="true">IM</span><div class="perfil-info"><strong>Perfil</strong><small>Plano atual</small></div></div></aside>
+<main><header class="page-header"><div><p class="eyebrow">ANÁLISE</p><h1>Relatório</h1></div><div class="alerta-oleo">🛢️ <span>Troca de óleo em breve</span></div></header>
+<section class="tela-relatorio"><article class="card"><h2>Período</h2><form class="filtros" id="form-relatorio"><div class="campo"><label for="data-inicio">Data inicial</label><input type="date" id="data-inicio" name="data-inicio" required></div><div class="campo"><label for="data-fim">Data final</label><input type="date" id="data-fim" name="data-fim" required></div><button class="button" type="submit" id="btn-relatorio">GERAR RELATÓRIO</button></form><p class="status" id="mensagem-relatorio" role="status" aria-live="polite"></p></article>
+<section class="resumo-relatorio" aria-label="Resumo financeiro"><article class="card metric-card"><small>GANHOS</small><strong id="total-ganhos">R$ 0,00</strong></article><article class="card metric-card"><small>GASTOS</small><strong id="total-gastos">R$ 0,00</strong></article><article class="card metric-card"><small>LUCRO LÍQUIDO</small><strong id="lucro-liquido">R$ 0,00</strong></article><article class="card metric-card"><small>KM RODADOS</small><strong id="km-rodados">0 km</strong></article></section>
+<section class="card"><h2>Resumo do período</h2><div class="lista"><div class="linha-relatorio"><span>Total de dias trabalhados</span><strong id="dias-trabalhados">0 dias</strong></div><div class="linha-relatorio"><span>Média de ganhos por dia</span><strong id="media-ganhos">R$ 0,00</strong></div><div class="linha-relatorio"><span>Média de gastos por dia</span><strong id="media-gastos">R$ 0,00</strong></div><div class="linha-relatorio"><span>Lucro médio por dia</span><strong id="media-lucro">R$ 0,00</strong></div><div class="linha-relatorio"><span>Custo por km</span><strong id="custo-km">R$ 0,00</strong></div></div></section></section></main>
+<script src="js/app.js"></script><script>
+(() => {
+  const API_BASE_URL = window.MotoboyApi.baseUrl;
+  const form = document.getElementById("form-relatorio"), inicio = document.getElementById("data-inicio"), fim = document.getElementById("data-fim"), botao = document.getElementById("btn-relatorio"), mensagem = document.getElementById("mensagem-relatorio");
+  const moeda = valor => new Intl.NumberFormat("pt-BR", { style:"currency", currency:"BRL" }).format(Number(valor) || 0);
+  const numero = valor => new Intl.NumberFormat("pt-BR", { maximumFractionDigits:1 }).format(Number(valor) || 0);
+  const definirTexto = (id, valor) => { document.getElementById(id).textContent = valor; };
+  const tokenSalvo = () => localStorage.getItem("access_token") || localStorage.getItem("token") || sessionStorage.getItem("access_token") || sessionStorage.getItem("token");
+  const mensagemStatus = (texto, erro = false) => { mensagem.textContent = texto; mensagem.classList.toggle("status--erro", erro); };
+  const exibirDados = dados => {
+    definirTexto("total-ganhos", moeda(dados.ganhos)); definirTexto("total-gastos", moeda(dados.gastos)); definirTexto("lucro-liquido", moeda(dados.lucro_liquido)); definirTexto("km-rodados", numero(dados.km_rodados) + " km"); definirTexto("dias-trabalhados", numero(dados.total_dias_trabalhados) + " dias"); definirTexto("media-ganhos", moeda(dados.media_ganhos_por_dia)); definirTexto("media-gastos", moeda(dados.media_gastos_por_dia)); definirTexto("media-lucro", moeda(dados.lucro_medio_por_dia)); definirTexto("custo-km", moeda(dados.custo_por_km));
+  };
+  form.addEventListener("submit", async evento => {
+    evento.preventDefault();
+    if (!inicio.value || !fim.value) return mensagemStatus("Informe a data inicial e a data final.", true);
+    if (inicio.value > fim.value) return mensagemStatus("A data inicial não pode ser posterior à data final.", true);
+    const token = tokenSalvo();
+    if (!token) return mensagemStatus("Você precisa entrar na sua conta primeiro. O token de login não foi encontrado no armazenamento do navegador.", true);
+    botao.disabled = true; botao.textContent = "CARREGANDO..."; mensagemStatus("Buscando os dados do período...");
+    try {
+      const parametros = new URLSearchParams({ data_inicio:inicio.value, data_fim:fim.value });
+      const resposta = await fetch(API_BASE_URL + "/dashboard/relatorio?" + parametros, { headers:{ Authorization:"Bearer " + token, Accept:"application/json" } });
+      const dados = await resposta.json().catch(() => ({}));
+      if (resposta.status === 401) throw new Error("Sua sessão expirou ou o token é inválido. Entre novamente e tente de novo.");
+      if (!resposta.ok) throw new Error(typeof dados.detail === "string" ? dados.detail : "Não foi possível gerar o relatório.");
+      exibirDados(dados); mensagemStatus("Relatório atualizado com sucesso.");
+    } catch (erro) { mensagemStatus(erro instanceof TypeError ? "Não foi possível conectar à API. Confira sua conexão e se o backend permite acesso CORS para o endereço do frontend." : erro.message, true); }
+    finally { botao.disabled = false; botao.textContent = "GERAR RELATÓRIO"; }
+  });
+  const hoje = new Date(), ano = hoje.getFullYear(), mes = String(hoje.getMonth() + 1).padStart(2, "0"), ultimoDia = new Date(ano, hoje.getMonth() + 1, 0).getDate();
+  inicio.value = ano + "-" + mes + "-01"; fim.value = ano + "-" + mes + "-" + String(ultimoDia).padStart(2, "0");
+})();
+</script></body></html>

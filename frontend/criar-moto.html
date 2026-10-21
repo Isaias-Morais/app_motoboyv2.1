@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b0b0b">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="img/pwa-icon.svg">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Cadastrar moto | APP MOTOBOY</title>
+</head>
+
+<body>
+    <aside class="sidebar">
+        <a
+            class="logo"
+            href="index.html"
+            aria-label="APP MOTOBOY - início"
+        >
+            <img src="img/logo-icon.png" alt="APP MOTOBOY">
+        </a>
+
+        <nav class="menu" aria-label="Navegação principal">
+            <a href="index.html">INÍCIO</a>
+            <a href="registrar.html">REGISTRAR</a>
+            <a href="gastos.html">GASTOS</a>
+            <a href="relatorio.html">RELATÓRIO</a>
+            <a href="minha-moto.html" aria-current="page">MINHA MOTO</a>
+        </nav>
+
+        <div class="perfil">
+            <span class="avatar" aria-hidden="true">IM</span>
+
+            <div class="perfil-info">
+                <strong>Perfil</strong>
+                <small>Plano atual</small>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <header class="page-header">
+            <div>
+                <p class="eyebrow">VEÍCULO</p>
+                <h1>Cadastrar moto</h1>
+            </div>
+        </header>
+
+        <section class="card" style="max-width: 800px;">
+            <h2>Dados da sua moto</h2>
+
+            <p>
+                Cadastre seu veículo para começar a registrar trabalho,
+                abastecimentos e manutenções.
+            </p>
+
+            <form class="formulario" id="form-moto">
+                <div class="campo">
+                    <label for="marca">Marca</label>
+                    <input
+                        id="marca"
+                        name="marca"
+                        type="text"
+                        placeholder="Ex.: Honda"
+                        required
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="modelo">Modelo</label>
+                    <input
+                        id="modelo"
+                        name="modelo"
+                        type="text"
+                        placeholder="Ex.: CG 160"
+                        required
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="ano">Ano</label>
+                    <input
+                        id="ano"
+                        name="ano"
+                        type="number"
+                        min="1900"
+                        max="2100"
+                        required
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="quilometragem">Quilometragem atual</label>
+                    <input
+                        id="quilometragem"
+                        name="quilometragem"
+                        type="number"
+                        min="0"
+                        step="1"
+                        placeholder="0 km"
+                        required
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="consumo">Consumo médio (km/L)</label>
+                    <input
+                        id="consumo"
+                        name="consumo"
+                        type="number"
+                        min="0"
+                        step="0.1"
+                        placeholder="Ex.: 35"
+                        required
+                    >
+                </div>
+
+                <button class="button" id="btn-moto" type="submit">
+                    CADASTRAR MOTO
+                </button>
+            </form>
+
+            <p
+                class="status"
+                id="mensagem-moto"
+                role="status"
+                aria-live="polite"
+            ></p>
+        </section>
+    </main>
+
+    <!-- Configuração compartilhada da API -->
+    <script src="js/app.js"></script>
+
+    <!-- Lógica de cadastro da moto -->
+    <script src="js/cadastrar_moto.js"></script>
+</body>
+</html>

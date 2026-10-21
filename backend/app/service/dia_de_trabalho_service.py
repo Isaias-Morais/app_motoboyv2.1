@@ -29,8 +29,8 @@ def registra_dia_de_trabalho_service(
 
     dia_verific = buscar_dia_de_trabalho_data(session=session,moto_id=moto.id,data=data_trabalhada)
 
-    if dia.quilometragem_inicial < km_anterior:
-        raise HTTPException(status_code=400,detail='quilometragem nao pode ser menor q a atual')
+    if ( km_anterior is not None and dia.quilometragem_inicial < km_anterior):
+        raise HTTPException(status_code=400,detail="A quilometragem inicial não pode ser menor que a quilometragem final do dia anterior.")
 
     if dia.quilometragem_inicial >= dia.quilometragem_final:
         raise HTTPException(status_code=400,detail='quilometragem inicial não pode ser menor que a quilometragem final')

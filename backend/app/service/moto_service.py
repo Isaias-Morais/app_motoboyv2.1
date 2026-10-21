@@ -2,7 +2,7 @@ from fastapi import HTTPException
 from backend.app.repository.base_repository import salvar_objeto, atualizar_objeto, deletar_objeto
 from backend.app.schermas.moto_scherma import MotoCreate, MotoUpdate
 from backend.app.service.motoboy_service import buscar_motoboy_service
-from backend.app.repository.motoboy_repository import busca_motoboy_id
+from backend.app.repository.motoboy_repository import busca_motoboy_id,definir_moto_ativa_motoboy
 from backend.app.models.moto_model import Moto
 from sqlalchemy.orm import Session
 from backend.app.repository.moto_repository import *
@@ -24,6 +24,11 @@ def registra_moto(moto:MotoCreate,session:Session,motoboy_id:int):
     )
 
     salvar_objeto(session,moto)
+
+    # A primeira moto cadastrada é a moto usada pelo painel e pelos registros.
+    motoboy = busca_motoboy_id(session=session, motoboy_id=motoboy_id)
+    if motoboy and motoboy.moto_ativa is None:
+        definir_moto_ativa_motoboy(session=session, motoboy_id=motoboy_id, moto=moto)
 
     return moto
 
