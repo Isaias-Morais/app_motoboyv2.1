@@ -1,5 +1,5 @@
 (() => {
-    const API_BASE_URL = window.APP_API_BASE_URL || "http://127.0.0.1:8000";
+    const API_BASE_URL = window.APP_API_BASE_URL || "http://192.168.1.108:8000";
 
     if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
