@@ -8,19 +8,9 @@ Projeto desenvolvido com foco em **aprendizado prático**, organização de cód
 
 ---
 
-## 🌐 API Online
+## 🌐 API
 
-A API está disponível em:
-
-```
-https://app-motoboyv2-1.onrender.com
-```
-
-Documentação Swagger:
-
-```
-https://app-motoboyv2-1.onrender.com/docs
-```
+A API não está publicada no momento. Para usá-la localmente, inicie o backend; a API ficará disponível em `http://127.0.0.1:8000` e a documentação Swagger em `http://127.0.0.1:8000/docs`.
 
 ---
 
@@ -158,36 +148,41 @@ pip install -r requirements.txt
 
 Configure as variáveis de ambiente:
 
-Crie um arquivo `.env` baseado no:
+Crie um arquivo `.env` na raiz do projeto e configure `DATABASE_URL` com a conexão PostgreSQL e `SECRET_KEY` com um valor aleatório de pelo menos 32 bytes. A API rejeita inicialização se a chave JWT estiver ausente ou curta. Opcionalmente, defina `CORS_ALLOWED_ORIGINS` como uma lista separada por vírgulas com as origens permitidas do frontend. Para validar mudanças, prefira um banco local separado do banco com seus dados reais. Exemplo de formato (substitua pelos dados do seu PostgreSQL):
 
+```env
+DATABASE_URL=postgresql+psycopg://usuario:senha@127.0.0.1:5432/app_motoboy_teste
+SECRET_KEY=coloque_aqui_uma_chave_aleatoria_com_pelo_menos_32_bytes
 ```
-.env.example
-```
-
-Configure `SECRET_KEY` com um valor aleatório de pelo menos 32 bytes e `DATABASE_URL` com a conexão do banco. A API rejeita inicialização se a chave JWT estiver ausente ou curta. Em produção, configure também `CORS_ALLOWED_ORIGINS` como uma lista separada por vírgulas contendo apenas as origens do frontend, por exemplo `https://seu-frontend.example`.
 
 Execute:
 
 ```bash
-uvicorn main:app --reload
+uvicorn backend.app.main:app --reload
 ```
 
-### Teste ponta a ponta
+### Teste local ponta a ponta
 
-Instale as dependências JavaScript e o Chromium do Playwright uma vez:
+Com o PostgreSQL local preparado e o `.env` apontando para o banco de teste, abra um terminal na raiz do projeto e inicie a API:
+
+```bash
+uvicorn backend.app.main:app --reload
+```
+
+Confirme que `http://127.0.0.1:8000/docs` abre. Em outro terminal, na raiz do projeto, instale as dependências JavaScript e o Chromium do Playwright uma vez:
 
 ```bash
 npm install
 npx playwright install chromium
 ```
 
-Com a API local rodando em `http://127.0.0.1:8000`, execute:
+Com a API ainda rodando, execute:
 
 ```bash
 npm run test:e2e
 ```
 
-O teste inicia automaticamente o servidor estático do frontend em `http://127.0.0.1:4173`, cria uma conta com e-mail aleatório e percorre cadastro, login, moto, trabalho, abastecimento, manutenção, dashboard e relatório. Os registros de teste ficam no banco usado pela API.
+O teste inicia automaticamente o servidor estático do frontend em `http://127.0.0.1:4173`, cria uma conta com e-mail aleatório e percorre cadastro, login, moto, trabalho, abastecimento, manutenção, dashboard e relatório. Os registros criados ficam no banco configurado em `DATABASE_URL`; por isso, aponte para um banco de teste separado quando quiser manter seus dados reais intactos. O teste não apaga esses registros.
 
 Para usar outros endereços, configure `E2E_API_URL` e `E2E_BASE_URL` antes de executar o teste.
 
@@ -200,7 +195,7 @@ Para usar outros endereços, configure `E2E_API_URL` e `E2E_BASE_URL` antes de e
 * Melhorar relatórios financeiros
 * Adicionar gráficos
 * Implementar notificações
-* Criar testes automatizados
+* Ampliar os testes automatizados para cenários de erro e segurança
 
 ---
 
