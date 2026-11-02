@@ -49,13 +49,13 @@ def registra_dia_de_trabalho_service(
 
     validacao_quilometregem(moto_id=moto.id, data=data_trabalhada, km_nova=dia.quilometragem_final, session=session)
 
-    if dia.quilometragem_final <= moto.quilometragem and data_trabalhada == date.today():
-        raise HTTPException(status_code=400, detail='quilometragem não pode ser menor q a atual')
+    atualizar_quilometragem_service(
+        moto=moto,
+        km_nova=dia.quilometragem_final,
+        session=session
+    )
 
     novo_dia_trabalhado = salvar_objeto(session,dia_de_trabalho)
-
-    if dia.quilometragem_final > moto.quilometragem:
-        atualizar_quilometragem_service(moto=moto, km_nova=dia.quilometragem_final,session=session)
 
     return novo_dia_trabalhado
 

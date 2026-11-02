@@ -105,6 +105,15 @@ def validacao_quilometregem(moto_id:int,data:date,km_nova:int,session:Session):
 
 def atualizar_quilometragem_service(moto:Moto,km_nova:int,session:Session):
 
+    if km_nova < moto.quilometragem:
+        raise HTTPException(
+            status_code=400,
+            detail="A quilometragem não pode ser menor que a quilometragem atual da moto."
+        )
+
+    if km_nova == moto.quilometragem:
+        return moto
+
     quilometragem = MotoKmUpdate(
         quilometragem = km_nova
     )

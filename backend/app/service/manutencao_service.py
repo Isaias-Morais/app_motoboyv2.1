@@ -5,7 +5,7 @@ from backend.app.repository.base_repository import salvar_objeto, atualizar_obje
 from backend.app.repository.manutencao_repository import listar_manutencao, listar_manutencao_data, buscar_manutencao
 from backend.app.service.motoboy_service import busca_moto_ativa_service, buscar_motoboy_service
 from backend.app.models.moto_model import Moto
-from backend.app.service.quilometragem_service import atualizar_quilometragem_service
+from backend.app.service.quilometragem_service import atualizar_quilometragem_service, validacao_quilometregem
 from datetime import date
 from backend.app.schermas.manutencao_schermas import ManutencaoCreate, ManutencaoUpdate
 
@@ -29,8 +29,18 @@ def registra_manutencao_service(manutencao:ManutencaoCreate,session:Session,moto
     if not manutencao:
         raise HTTPException(status_code=400,detail='dados invalidos')
 
+    validacao_quilometregem(
+        moto_id=moto.id,
+        data=data,
+        km_nova=manutencao.quilometragem_manutencao,
+        session=session
+    )
+    atualizar_quilometragem_service(
+        moto=moto,
+        km_nova=manutencao.quilometragem_manutencao,
+        session=session
+    )
     nova_manutencao = salvar_objeto(session,manutencao)
-    atualizar_quilometragem_service(moto=moto, km_nova=manutencao.quilometragem_manutencao,session=session)
 
     return nova_manutencao
 

@@ -70,12 +70,18 @@ def atualizar_moto_service(session:Session,motoboy_id:int,moto_id:int,moto_updat
 
 def deletar_moto_service(session:Session,moto_id:int,motoboy_id:int):
 
-    buscar_motoboy_service(session=session,motoboy_id=motoboy_id)
+    motoboy = buscar_motoboy_service(session=session,motoboy_id=motoboy_id)
 
     moto : Moto = busca_moto(session=session,id_motoboy=motoboy_id,id_moto=moto_id)
 
     if not moto:
         raise HTTPException(status_code=404,detail='moto nao encontrada')
+
+    if motoboy.moto_ativa == moto.id:
+        raise HTTPException(
+            status_code=400,
+            detail='Não é possível excluir a moto ativa. Ative outra moto antes de excluir esta.'
+        )
 
     return deletar_objeto(session=session,objeto=moto)
 
