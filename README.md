@@ -44,6 +44,14 @@ Criar uma solução para que motoboys possam:
 * PostgreSQL
 * SQL
 
+### Frontend
+
+* HTML5
+* CSS3
+* JavaScript sem framework
+* PWA com Service Worker
+* Playwright e Chromium para testes ponta a ponta
+
 ### Arquitetura
 
 * Programação Orientada a Objetos (POO)
@@ -161,6 +169,16 @@ Execute:
 uvicorn backend.app.main:app --reload
 ```
 
+### Testar o frontend manualmente
+
+Com a API rodando no primeiro terminal, abra um segundo terminal na raiz do projeto e sirva os arquivos estáticos:
+
+```bash
+python -m http.server 4173 --directory frontend
+```
+
+Abra `http://127.0.0.1:4173/login.html` no navegador. Crie uma conta de teste, entre, cadastre uma moto e percorra as telas de registro, gastos, dashboard e relatório. O frontend usa a API local em `http://127.0.0.1:8000` por padrão. Use dados de teste e um banco separado para não misturar esses registros aos dados reais.
+
 ### Teste local ponta a ponta
 
 Com o PostgreSQL local preparado e o `.env` apontando para o banco de teste, abra um terminal na raiz do projeto e inicie a API:
@@ -190,8 +208,7 @@ Para usar outros endereços, configure `E2E_API_URL` e `E2E_BASE_URL` antes de e
 
 ## 🛣️ Próximos Passos
 
-* Criar frontend web/mobile
-* Criar PWA para uso no celular
+* Melhorar a experiência mobile e o uso offline
 * Melhorar relatórios financeiros
 * Adicionar gráficos
 * Implementar notificações
