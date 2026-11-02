@@ -1,4 +1,4 @@
-const CACHE_NAME = "app-motoboy-shell-v2";
+const CACHE_NAME = "app-motoboy-shell-v4";
 const APP_SHELL = [
   "./",
   "index.html",

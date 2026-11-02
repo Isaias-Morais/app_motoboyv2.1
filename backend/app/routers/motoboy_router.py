@@ -1,13 +1,13 @@
 from fastapi import APIRouter, Depends
 from backend.app.schermas.moto_scherma import MotoResponse
 from backend.app.database.db import get_db
-from backend.app.schermas.motoboy_scherma import MotoboyMotoUpdate
+from backend.app.schermas.motoboy_scherma import MotoboyMotoUpdate, MotoboyResponse
 from backend.app.service.motoboy_service import *
 from backend.app.security.depends import get_current_user, get_current_user_id
 
 router = APIRouter(prefix="/Motoboy",tags=["Motoboy"])
 
-@router.post('/create',response_model=MotoboyCreate)
+@router.post('/create',response_model=MotoboyResponse)
 def cria_motoboy(motoboy:MotoboyCreate,session:Session=Depends(get_db)):
     return registrar_motoboy(session=session,motoboy=motoboy)
 
@@ -18,7 +18,7 @@ def loginUser(data: OAuth2PasswordRequestForm = Depends(),db:Session=Depends(get
     return resultado
 
 
-@router.get('/me')
+@router.get('/me', response_model=MotoboyResponse)
 def meu_user(user = Depends(get_current_user)):
     return user
 
@@ -33,12 +33,12 @@ async def busca_moto_ativa(db:Session = Depends(get_db),motoboy_id:int = Depends
     return busca_moto_ativa_service(session=db,motoboy_id=motoboy_id)
 
 
-@router.patch('/atualizar')
+@router.patch('/atualizar', response_model=MotoboyResponse)
 def atualizar_motoboy(motoboy : MotoboyUpdate, db:Session = Depends(get_db),motoboy_id:int = Depends(get_current_user_id)):
     return atualizar_dados_motoboy(session=db,motoboy_id=motoboy_id,motoboy_update=motoboy)
 
 
-@router.patch('/atualizar_senha')
+@router.patch('/atualizar_senha', response_model=MotoboyResponse)
 def atualizar_senha_motoboy(motoboy : MotoboyPassUpdate, db:Session = Depends(get_db),motoboy_id:int = Depends(get_current_user_id)):
 
     return atualizar_senha_motoboy_service(session=db,motoboy_id=motoboy_id,motoboy_update=motoboy)

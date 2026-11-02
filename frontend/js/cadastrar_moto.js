@@ -1,4 +1,4 @@
-const { requisicao, mensagemErro } = window.MotoboyApi;
+const { requisicao: chamarApi, mensagemErro: formatarErro } = window.MotoboyApi;
 
 const form = document.getElementById("form-moto");
 const botao = document.getElementById("btn-moto");
@@ -39,7 +39,7 @@ form.addEventListener("submit", async (evento) => {
     };
 
     try {
-        await requisicao("/moto/create", {
+        await chamarApi("/moto/create", {
             method: "POST",
             body: JSON.stringify(dadosMoto)
         });
@@ -52,7 +52,7 @@ form.addEventListener("submit", async (evento) => {
         }, 900);
 
     } catch (erro) {
-        mensagem.textContent = mensagemErro(erro);
+        mensagem.textContent = formatarErro(erro);
         mensagem.classList.add("status--erro");
 
         definirEstadoBotao(false);

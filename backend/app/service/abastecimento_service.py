@@ -34,11 +34,12 @@ def registra_abastecimento_service(abastecimento:AbastecimentoCreate,session:Ses
 
         validacao_quilometregem(moto_id=moto.id, data=data, km_nova=abastecimento.quilometragem_abastecimento, session=session)
 
-        atualizar_quilometragem_service(
-            moto=moto,
-            km_nova=abastecimento.quilometragem_abastecimento,
-            session=session
-        )
+        if abastecimento.quilometragem_abastecimento > moto.quilometragem:
+            atualizar_quilometragem_service(
+                moto=moto,
+                km_nova=abastecimento.quilometragem_abastecimento,
+                session=session
+            )
 
         novo_abastecimento = salvar_objeto(session, novo_abastecimento)
 

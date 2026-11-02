@@ -3,9 +3,9 @@ from datetime import date
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-from backend.app.models.abastecimento_model import Abastecimento
-from backend.app.models.dia_de_trabalho_model import Dia_de_trabalho
-from backend.app.models.manutencao_model import Manutencao
+from backend.app.repository.abastecimento_repository import listar_abastecimentos_periodo
+from backend.app.repository.dia_de_trabalho_repositorio import listar_dias_de_trabalho_periodo
+from backend.app.repository.manutencao_repository import listar_manutencoes_periodo
 from backend.app.service.motoboy_service import busca_moto_ativa_service
 
 
@@ -24,36 +24,9 @@ def dashboard_periodo_service(
 
     moto = busca_moto_ativa_service(session=session, motoboy_id=motoboy_id)
 
-    dias = (
-        session.query(Dia_de_trabalho)
-        .filter(
-            Dia_de_trabalho.moto_id == moto.id,
-            Dia_de_trabalho.data_trabalhada >= data_inicio,
-            Dia_de_trabalho.data_trabalhada <= data_fim,
-        )
-        .order_by(Dia_de_trabalho.data_trabalhada.asc())
-        .all()
-    )
-
-    abastecimentos = (
-        session.query(Abastecimento)
-        .filter(
-            Abastecimento.moto_id == moto.id,
-            Abastecimento.data_abastecimento >= data_inicio,
-            Abastecimento.data_abastecimento <= data_fim,
-        )
-        .all()
-    )
-
-    manutencoes = (
-        session.query(Manutencao)
-        .filter(
-            Manutencao.moto_id == moto.id,
-            Manutencao.data_manutencao >= data_inicio,
-            Manutencao.data_manutencao <= data_fim,
-        )
-        .all()
-    )
+    dias = listar_dias_de_trabalho_periodo(session, moto.id, data_inicio, data_fim)
+    abastecimentos = listar_abastecimentos_periodo(session, moto.id, data_inicio, data_fim)
+    manutencoes = listar_manutencoes_periodo(session, moto.id, data_inicio, data_fim)
 
     total_dias = len(dias)
     ganhos = sum(float(dia.ganho_bruto) for dia in dias)

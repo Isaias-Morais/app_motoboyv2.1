@@ -1,4 +1,4 @@
-const { requisicao, mensagemErro, moeda } = window.MotoboyApi;
+const { requisicao: chamarApi, mensagemErro: formatarErro, moeda: formatarMoeda } = window.MotoboyApi;
 const form = document.getElementById("form-gasto");
 const tipo = document.getElementById("tipo");
 const mensagem = document.getElementById("mensagem-gasto");
@@ -21,10 +21,33 @@ function atualizarTipo() {
 function formatarData(valor) { return valor ? new Intl.DateTimeFormat("pt-BR").format(new Date(`${valor}T00:00:00`)) : ""; }
 function renderizarGastos(abastecimentos, manutencoes) {
     const gastos = [...abastecimentos.map((item) => ({ titulo: "Abastecimento", data: item.data_abastecimento, valor: item.valor })), ...manutencoes.map((item) => ({ titulo: item.tipo || "Manutenção", data: item.data_manutencao, valor: item.valor }))].sort((a, b) => String(b.data).localeCompare(String(a.data))).slice(0, 6);
-    lista.innerHTML = gastos.length ? gastos.map((item) => `<article class="lista-item"><div><strong>${item.titulo}</strong><small>${formatarData(item.data)}</small></div><strong class="valor">${moeda(item.valor)}</strong></article>`).join("") : '<p class="status">Nenhum gasto registrado.</p>';
+    lista.replaceChildren();
+    if (!gastos.length) {
+        const vazio = document.createElement("p");
+        vazio.className = "status";
+        vazio.textContent = "Nenhum gasto registrado.";
+        lista.append(vazio);
+        return;
+    }
+
+    gastos.forEach((item) => {
+        const linha = document.createElement("article");
+        linha.className = "lista-item";
+        const detalhes = document.createElement("div");
+        const titulo = document.createElement("strong");
+        titulo.textContent = item.titulo;
+        const data = document.createElement("small");
+        data.textContent = formatarData(item.data);
+        const valor = document.createElement("strong");
+        valor.className = "valor";
+        valor.textContent = formatarMoeda(item.valor);
+        detalhes.append(titulo, data);
+        linha.append(detalhes, valor);
+        lista.append(linha);
+    });
 }
 async function carregarGastos() {
-    const resultados = await Promise.allSettled([requisicao("/abastecimento/list"), requisicao("/manutencao/list")]);
+    const resultados = await Promise.allSettled([chamarApi("/abastecimento/list"), chamarApi("/manutencao/list")]);
     renderizarGastos(resultados[0].status === "fulfilled" ? resultados[0].value : [], resultados[1].status === "fulfilled" ? resultados[1].value : []);
 }
 tipo.addEventListener("change", atualizarTipo);
@@ -38,9 +61,14 @@ form.addEventListener("submit", async (evento) => {
     botao.disabled = true; botao.textContent = "SALVANDO..."; mensagem.textContent = ""; mensagem.classList.remove("status--erro");
     try {
         const corpo = abastecimento ? { data: campoData.value, posto: document.getElementById("posto").value, litros: Number(document.getElementById("litros").value), valor, tanque_completo: document.getElementById("tanque-completo").checked, quilometragem_abastecimento: quilometragem } : { data_manutencao: campoData.value, tipo: "Manutenção", descricao: document.getElementById("descricao").value, valor, quilometragem_manutencao: quilometragem };
-        await requisicao(abastecimento ? "/abastecimento/create" : "/manutencao/create", { method: "POST", body: JSON.stringify(corpo) });
+        await chamarApi(abastecimento ? "/abastecimento/create" : "/manutencao/create", { method: "POST", body: JSON.stringify(corpo) });
         mensagem.textContent = "Gasto registrado com sucesso."; form.reset(); tipo.value = abastecimento ? "abastecimento" : "manutencao"; campoData.value = new Date().toISOString().slice(0, 10); atualizarTipo(); await carregarGastos();
-    } catch (erro) { mensagem.textContent = mensagemErro(erro); mensagem.classList.add("status--erro"); }
+    } catch (erro) { mensagem.textContent = formatarErro(erro); mensagem.classList.add("status--erro"); }
     finally { botao.disabled = false; botao.textContent = "REGISTRAR GASTO"; }
 });
-carregarGastos().catch((erro) => { lista.innerHTML = `<p class="status status--erro">${mensagemErro(erro)}</p>`; });
+carregarGastos().catch((erro) => {
+    const falha = document.createElement("p");
+    falha.className = "status status--erro";
+    falha.textContent = formatarErro(erro);
+    lista.replaceChildren(falha);
+});

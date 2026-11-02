@@ -1,4 +1,4 @@
-from sqlalchemy import Date, Numeric, Integer, ForeignKey
+from sqlalchemy import Date, Numeric, Integer, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import date
 from backend.app.database.base import Base
@@ -6,9 +6,16 @@ from decimal import Decimal
 
 class Dia_de_trabalho(Base):
     __tablename__ = 'dia_de_trabalho'
+    __table_args__ = (
+        UniqueConstraint(
+            'moto_id',
+            'data_trabalhada',
+            name='uq_dia_de_trabalho_moto_data',
+        ),
+    )
 
     id : Mapped[int] = mapped_column(primary_key=True)
-    data_trabalhada : Mapped[date] = mapped_column(Date,nullable=False,unique=True)
+    data_trabalhada : Mapped[date] = mapped_column(Date,nullable=False)
     quilometragem_inicial : Mapped[int] = mapped_column(nullable=False)
     quilometragem_final : Mapped[int] = mapped_column(nullable=False)
     ganho_bruto : Mapped[Decimal] = mapped_column(Numeric(10, 2),nullable=False)

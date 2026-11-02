@@ -1,4 +1,4 @@
-from pydantic import BaseModel,EmailStr
+from pydantic import BaseModel, ConfigDict, EmailStr
 
 class MotoboyBase(BaseModel):
     id:int
@@ -14,8 +14,10 @@ class MotoboyCreate(BaseModel):
 
 
 class MotoboyResponse(MotoboyBase):
-    idade:int
-    moto_ativa:int
+    model_config = ConfigDict(from_attributes=True)
+
+    idade: int
+    moto_ativa: int | None = None
 
 
 class MotoboyMoto(BaseModel):

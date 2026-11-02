@@ -164,11 +164,32 @@ Crie um arquivo `.env` baseado no:
 .env.example
 ```
 
+Configure `SECRET_KEY` com um valor aleatório de pelo menos 32 bytes e `DATABASE_URL` com a conexão do banco. A API rejeita inicialização se a chave JWT estiver ausente ou curta. Em produção, configure também `CORS_ALLOWED_ORIGINS` como uma lista separada por vírgulas contendo apenas as origens do frontend, por exemplo `https://seu-frontend.example`.
+
 Execute:
 
 ```bash
 uvicorn main:app --reload
 ```
+
+### Teste ponta a ponta
+
+Instale as dependências JavaScript e o Chromium do Playwright uma vez:
+
+```bash
+npm install
+npx playwright install chromium
+```
+
+Com a API local rodando em `http://127.0.0.1:8000`, execute:
+
+```bash
+npm run test:e2e
+```
+
+O teste inicia automaticamente o servidor estático do frontend em `http://127.0.0.1:4173`, cria uma conta com e-mail aleatório e percorre cadastro, login, moto, trabalho, abastecimento, manutenção, dashboard e relatório. Os registros de teste ficam no banco usado pela API.
+
+Para usar outros endereços, configure `E2E_API_URL` e `E2E_BASE_URL` antes de executar o teste.
 
 ---
 

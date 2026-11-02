@@ -35,11 +35,12 @@ def registra_manutencao_service(manutencao:ManutencaoCreate,session:Session,moto
         km_nova=manutencao.quilometragem_manutencao,
         session=session
     )
-    atualizar_quilometragem_service(
-        moto=moto,
-        km_nova=manutencao.quilometragem_manutencao,
-        session=session
-    )
+    if manutencao.quilometragem_manutencao > moto.quilometragem:
+        atualizar_quilometragem_service(
+            moto=moto,
+            km_nova=manutencao.quilometragem_manutencao,
+            session=session
+        )
     nova_manutencao = salvar_objeto(session,manutencao)
 
     return nova_manutencao

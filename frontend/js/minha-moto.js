@@ -1,4 +1,4 @@
-const { requisicao, mensagemErro, numero } = window.MotoboyApi;
+const { requisicao: chamarApi, mensagemErro: formatarErro, numero: formatarNumero } = window.MotoboyApi;
 
 const mensagem = document.getElementById("mensagem-moto");
 const titulo = document.getElementById("moto-titulo");
@@ -12,12 +12,12 @@ function exibirMoto(moto) {
     titulo.textContent = `${moto.marca} ${moto.modelo}`;
     modelo.textContent = moto.modelo;
     ano.textContent = moto.ano;
-    quilometragem.textContent = `${numero(moto.quilometragem)} km`;
-    consumo.textContent = `${numero(moto.consumo)} km/L`;
+    quilometragem.textContent = `${formatarNumero(moto.quilometragem)} km`;
+    consumo.textContent = `${formatarNumero(moto.consumo)} km/L`;
 }
 
 function exibirErro(erro) {
-    mensagem.textContent = `${mensagemErro(erro)} `;
+    mensagem.textContent = `${formatarErro(erro)} `;
     const link = document.createElement("a");
     link.href = "criar-moto.html";
     link.textContent = "Cadastrar moto";
@@ -51,7 +51,7 @@ function criarSeletorMoto(motos, motoAtiva) {
     motos.forEach((moto) => {
         const opcao = document.createElement("option");
         opcao.value = moto.id;
-        opcao.textContent = `${moto.marca} ${moto.modelo} — ${numero(moto.quilometragem)} km`;
+        opcao.textContent = `${moto.marca} ${moto.modelo} — ${formatarNumero(moto.quilometragem)} km`;
         opcao.selected = moto.id === motoAtiva.id;
         seletor.append(opcao);
     });
@@ -63,7 +63,7 @@ function criarSeletorMoto(motos, motoAtiva) {
         status.classList.remove("status--erro");
 
         try {
-            await requisicao(`/Motoboy/ativa/moto?moto_id=${motoId}`, {
+            await chamarApi(`/Motoboy/ativa/moto?moto_id=${motoId}`, {
                 method: "PATCH"
             });
 
@@ -71,7 +71,7 @@ function criarSeletorMoto(motos, motoAtiva) {
             exibirMoto(motoSelecionada);
             status.textContent = "Moto ativa alterada com sucesso.";
         } catch (erro) {
-            status.textContent = mensagemErro(erro);
+            status.textContent = formatarErro(erro);
             status.classList.add("status--erro");
         } finally {
             botao.disabled = false;
@@ -101,12 +101,12 @@ function criarSeletorMoto(motos, motoAtiva) {
         status.classList.remove("status--erro");
 
         try {
-            await requisicao(`/moto/delete?moto_id=${motoId}`, {
+            await chamarApi(`/moto/delete?moto_id=${motoId}`, {
                 method: "DELETE"
             });
             window.location.reload();
         } catch (erro) {
-            status.textContent = mensagemErro(erro);
+            status.textContent = formatarErro(erro);
             status.classList.add("status--erro");
             botaoExcluir.disabled = false;
         }
@@ -117,8 +117,8 @@ function criarSeletorMoto(motos, motoAtiva) {
 
 async function carregarPagina() {
     const [motoAtiva, motos] = await Promise.all([
-        requisicao("/Motoboy/busca/moto"),
-        requisicao("/moto/motos")
+        chamarApi("/Motoboy/busca/moto"),
+        chamarApi("/moto/motos")
     ]);
 
     exibirMoto(motoAtiva);

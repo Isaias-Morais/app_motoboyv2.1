@@ -36,6 +36,18 @@ def historico_abastecimentos(session:Session,moto_id:int):
 
     return abastecimentos
 
+
+def listar_abastecimentos_periodo(session: Session, moto_id: int, data_inicio: date, data_fim: date):
+    return (
+        session.query(Abastecimento)
+        .filter(
+            Abastecimento.moto_id == moto_id,
+            Abastecimento.data_abastecimento >= data_inicio,
+            Abastecimento.data_abastecimento <= data_fim,
+        )
+        .all()
+    )
+
 def historico_abastecimentos_recentes(session:Session,moto_id:int,quantidade:int,data:date):
 
     abastecimentos = session.query(

@@ -4,3 +4,6 @@ __pycache__/
 teste.py
 .env
 .venv/
+node_modules/
+playwright-report/
+test-results/

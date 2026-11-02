@@ -1,15 +1,22 @@
 from fastapi import HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
+from sqlalchemy.orm import Session
+
 from backend.app.models.motoboy_model import Motoboy
 from backend.app.repository.base_repository import salvar_objeto, atualizar_objeto
 from backend.app.repository.moto_repository import busca_moto
-from backend.app.security.hash import *
+from backend.app.security.hash import gerar_hash, verificar_senha
 from backend.app.security.jwt import criar_token
-from sqlalchemy.orm import Session
-from backend.app.schermas.motoboy_scherma import MotoboyCreate, MotoboyUpdate, MotoboyPassUpdate
-from backend.app.security.hash import gerar_hash
-from backend.app.repository.motoboy_repository import definir_moto_ativa_motoboy, busca_motoboy_id, \
-    consultar_motoboy_email
+from backend.app.repository.motoboy_repository import (
+    busca_motoboy_id,
+    consultar_motoboy_email,
+    definir_moto_ativa_motoboy,
+)
+from backend.app.schermas.motoboy_scherma import (
+    MotoboyCreate,
+    MotoboyPassUpdate,
+    MotoboyUpdate,
+)
 
 
 def registrar_motoboy(session:Session,motoboy:MotoboyCreate):
@@ -35,14 +42,7 @@ def registrar_motoboy(session:Session,motoboy:MotoboyCreate):
 
 
 def login_user(user: OAuth2PasswordRequestForm,session:Session):
-    usuario : Motoboy=session.query(Motoboy).filter(Motoboy.email==user.username).first()
-
-
-    print("Usuario:", usuario)
-
-    if usuario:
-        print("Hash:", usuario.senha)
-        print("Verify:", verificar_senha(user.password, usuario.senha))
+    usuario = consultar_motoboy_email(session, user.username)
 
     if not usuario:
         raise HTTPException(status_code=404,detail='credenciais invalidas')
@@ -50,12 +50,11 @@ def login_user(user: OAuth2PasswordRequestForm,session:Session):
     if not verificar_senha(user.password,usuario.senha):
         raise HTTPException(status_code=404,detail='credenciais invalidas')
 
-    if verificar_senha(user.password, usuario.senha):
-        token = criar_token({'sub': str(usuario.id)})
-        return {
-            "access_token": token,
-            "token_type": "bearer"
-        }
+    token = criar_token({'sub': str(usuario.id)})
+    return {
+        "access_token": token,
+        "token_type": "bearer"
+    }
 
 
 def definir_moto_ativa_service(session:Session,motoboy_id:int,moto_id:int):

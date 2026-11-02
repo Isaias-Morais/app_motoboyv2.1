@@ -1,4 +1,4 @@
-const { baseUrl, mensagemErro } = window.MotoboyApi;
+const { baseUrl, mensagemErro: formatarErro } = window.MotoboyApi;
 
 const form = document.getElementById("form-cadastro");
 const botao = document.getElementById("btn-cadastro");
@@ -80,7 +80,7 @@ form.addEventListener("submit", async (evento) => {
             window.location.assign("login.html");
         }, 1200);
     } catch (erro) {
-        exibirErro(mensagemErro(erro));
+        exibirErro(formatarErro(erro));
         definirEstadoBotao(false);
     }
 });

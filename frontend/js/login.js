@@ -1,4 +1,4 @@
-const { baseUrl, mensagemErro } = window.MotoboyApi;
+const { baseUrl, mensagemErro: formatarErro } = window.MotoboyApi;
 const form = document.getElementById("form-login");
 const botao = document.getElementById("btn-login");
 const mensagem = document.getElementById("mensagem-login");
@@ -17,7 +17,7 @@ form.addEventListener("submit", async (evento) => {
         localStorage.setItem("access_token", resultado.access_token);
         window.location.assign("index.html");
     } catch (erro) {
-        mensagem.textContent = mensagemErro(erro);
+        mensagem.textContent = formatarErro(erro);
         mensagem.classList.add("status--erro");
         botao.disabled = false;
         botao.textContent = "ENTRAR";

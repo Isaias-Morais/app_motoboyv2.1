@@ -16,6 +16,19 @@ def listar_dia_de_trabalho(session:Session,moto_id:int):
     return historico_dia_de_trabalho
 
 
+def listar_dias_de_trabalho_periodo(session: Session, moto_id: int, data_inicio: date, data_fim: date):
+    return (
+        session.query(Dia_de_trabalho)
+        .filter(
+            Dia_de_trabalho.moto_id == moto_id,
+            Dia_de_trabalho.data_trabalhada >= data_inicio,
+            Dia_de_trabalho.data_trabalhada <= data_fim,
+        )
+        .order_by(Dia_de_trabalho.data_trabalhada.asc())
+        .all()
+    )
+
+
 
 def buscar_dia_de_trabalho_data(session:Session,moto_id:int,data:date):
     dia_de_trabalho = session.query(

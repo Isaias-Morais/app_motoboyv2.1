@@ -7,6 +7,7 @@ from backend.app.service.motoboy_service import busca_moto_ativa_service, buscar
 from backend.app.service.quilometragem_service import atualizar_quilometragem_service
 from backend.app.repository.dia_de_trabalho_repositorio import *
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import IntegrityError
 
 
 def registra_dia_de_trabalho_service(
@@ -55,7 +56,14 @@ def registra_dia_de_trabalho_service(
         session=session
     )
 
-    novo_dia_trabalhado = salvar_objeto(session,dia_de_trabalho)
+    try:
+        novo_dia_trabalhado = salvar_objeto(session,dia_de_trabalho)
+    except IntegrityError:
+        session.rollback()
+        raise HTTPException(
+            status_code=409,
+            detail='dia já foi registrado para esta moto',
+        )
 
     return novo_dia_trabalhado
 

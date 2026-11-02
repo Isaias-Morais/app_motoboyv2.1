@@ -31,9 +31,4 @@ def definir_moto_ativa_motoboy(session:Session,motoboy_id:int,moto:Moto):
 
 
 def consultar_motoboy_email(session:Session,email:str):
-    motoboy = session.query(Motoboy).filter(Motoboy.email == email).all()
-
-    if not motoboy:
-        return None
-
-    return motoboy
+    return session.query(Motoboy).filter(Motoboy.email == email).first()

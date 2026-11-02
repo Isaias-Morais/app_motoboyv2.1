@@ -1,3 +1,5 @@
+import os
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from backend.app.database.base import Base
@@ -12,11 +14,19 @@ from backend.app.routers.dashboard_periodo_router import router as router_dashbo
 
 app = FastAPI()
 
-# O frontend envia o JWT no header Authorization (não usa cookies).
-# Depois de definir o domínio definitivo do frontend, substitua "*" pelos domínios autorizados.
+origens_permitidas = [
+    origem.strip()
+    for origem in os.getenv(
+        "CORS_ALLOWED_ORIGINS",
+        "http://127.0.0.1:4173,http://localhost:4173",
+    ).split(",")
+    if origem.strip()
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origens_permitidas,
+    allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$",
     allow_credentials=False,
     allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allow_headers=["Authorization", "Content-Type", "Accept"],
